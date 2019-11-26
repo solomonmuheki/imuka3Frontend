@@ -1,0 +1,82 @@
+<nav
+  class="navbar navbar-expand-md navbar-dark bg-blue"
+  style="margin-bottom:0px; padding-bottom:0px; padding-top:0px;"
+>
+  <div class="container" style="padding:0px; margin-top: 0px;">
+    <a
+      class="navbar-brand"
+      routerLink="/"
+      style="margin-top: 0px; margin-bottom: 0px; padding: 0px;"
+    >
+      <img
+        src="favicon.ico"
+        class="logo img-responsive"
+        alt="Cinque Terre"
+        alt="Imuka Access"
+        style="margin-top: 0px; margin-bottom: 0px; padding: 0px;"
+      />
+    </a>
+    <button
+      type="button"
+      class="navbar-toggler"
+      data-toggle="collapse"
+      data-target="#navbarCollapse"
+      aria-controls="navbarCollapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      style="padding: 0px;"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/dealspage"
+            data-toggle="tooltip"
+            title="See Available Deals"
+            >Deals
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/aboutuspage"
+            data-toggle="tooltip"
+            title="See Available Deals"
+            >About Us</a
+          >
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="/dashboard" routerLinkActive="acitve" class="nav-link"
+            >Blog</a
+          >
+        </li>
+      </ul>
+      <ul class="navbar-nav  ml-auto">
+        <li class="nav-item">
+          <!-- <li class="nav-item" *ngIf="!isLoggedIn"> -->
+          <a
+            class="nav-link "
+            routerLink="/signup"
+            class="btn btn-success btn-sm navbar-btn"
+            style="margin-right:5px;"
+            >SIGNUP</a
+          >
+        </li>
+        <li class="nav-item">
+          <!-- <li class="nav-item" *ngIf="!isLoggedIn"> -->
+          <a
+            class="nav-link"
+            routerLink="/login"
+            class="btn btn-danger btn-sm navbar-btn"
+            >LOGIN</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

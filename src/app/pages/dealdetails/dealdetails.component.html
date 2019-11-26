@@ -1,0 +1,67 @@
+<div class="card">
+  <div class="card-header" style="background-color: #007edb;">
+    Deal Details
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <table class="table table-borderless">
+          <tbody>
+            <tr>
+              <td colspan="2">
+                <img src="/{{ dealData.image_url }}" alt="Company Logo" />
+              </td>
+            </tr>
+            <tr>
+              <td><label> Name</label></td>
+              <td>
+                <span class="label2">{{ dealData.companyName }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td><label>Company Industry</label></td>
+              <td>
+                <span class="label2">{{ dealData.companyIndustry }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label>Company Address</label>
+              </td>
+              <td>
+                <span class="label2"> {{ dealData.companyAddress }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td><label>Company Tel:</label></td>
+              <td>
+                <span class="label2">{{ dealData.companyTel }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td><label>Amount Needed</label></td>
+              <td>
+                <span class="label2"> {{ dealData.raisedAmount }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td><label>Start Date</label></td>
+              <td>
+                <span class="label2"> {{ dealData.createdDate }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-6">
+        <div style="margin-top:30px;">
+          <span class="label">Brief Deal Description</span>
+          <p>{{ dealData.BriefDealDesc }}</p>
+          <br />
+          <span class="label">Detailed Deal Description</span>
+          <p>{{ dealData.DealDetailedDesc }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

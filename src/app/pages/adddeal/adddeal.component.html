@@ -1,0 +1,454 @@
+<!--  Entreprenuer Validation Form-->
+<div class="card">
+  <div class="card-header" style="background-color: #007edb;">
+    Create a new Deal
+  </div>
+  <div class="card-body">
+    <div id="main_warpper">
+      <!-- Bootstrap Container -->
+      <div class="container-fluid">
+        <!-- First form row -->
+        <form [formGroup]="registerDeal" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-sm-6">
+              <!-- The Company Deatils Section -->
+
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="companyName">Company Name:</label>
+                  <input
+                    type="text"
+                    formControlName="companyName"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.companyName.errors
+                    }"
+                  />
+                  <div
+                    *ngIf="
+                      submitted && registerDeal.controls['companyName'].errors
+                    "
+                    class="invalid-feedback"
+                  >
+                    <div
+                      *ngIf="
+                        registerDeal.controls['companyName'].errors.required
+                      "
+                    >
+                      Company Name is required
+                    </div>
+                  </div>
+                  <small class="form-text text-muted"
+                    ><i
+                      class="fa fa-info-circle fa-lg"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="This is the official name, as with Companies House, and will be
+                          used on legal documentation like MOU"
+                    ></i
+                  ></small>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputCompanyType" style="display: block;"
+                    >Company Type:</label
+                  >
+                  <select
+                    class="form-control"
+                    class="custom-select d-block w-100"
+                    (change)="changeCompanyType($event)"
+                    formControlName="companyType"
+                  >
+                    <option selected>Choose...</option>
+                    <option
+                      *ngFor="let company_Type of CompanyType"
+                      [ngValue]="company_Type"
+                      >{{ company_Type }}</option
+                    >
+                  </select>
+                  <small class="form-text text-muted"
+                    ><i
+                      class="fa fa-info-circle fa-lg"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Chooose the Company Type"
+                    ></i
+                  ></small>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputIndustry">Company Industry:</label>
+                  <select
+                    class="form-control"
+                    formControlName="companyIndustry"
+                    name="companyIndustry"
+                  >
+                    <option selected>Choose...</option>
+                    <option
+                      *ngFor="let company_Industry of CompanyIndustry"
+                      [ngValue]="company_Industry"
+                      >{{ company_Industry }}
+                    </option>
+                  </select>
+
+                  <small class="form-text text-muted"
+                    ><i
+                      class="fa fa-info-circle fa-lg"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Choose the Company Industry"
+                    ></i
+                  ></small>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-8">
+                  <label for="inputAddress">Address Location:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="companyAddress"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.companyAddress.errors
+                    }"
+                  />
+                  <div
+                    *ngIf="registerDeal.controls['companyAddress'].errors"
+                    class="invalid-feedback"
+                  >
+                    <div
+                      *ngIf="
+                        registerDeal.controls['companyAddress'].errors.required
+                      "
+                    >
+                      Address is required
+                    </div>
+                  </div>
+                  <small class="form-text text-muted"
+                    ><i
+                      class="fa fa-info-circle fa-lg"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="This is the Company Address and Location"
+                    ></i
+                  ></small>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="phoneNumber">Phone Number:</label>
+                  <input
+                    formControlName="companyTel"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.companyTel.errors
+                    }"
+                    type="tel"
+                  />
+                  <div
+                    *ngIf="registerDeal.controls['companyTel'].errors"
+                    class="invalid-feedback"
+                  >
+                    <div
+                      *ngIf="
+                        registerDeal.controls['companyTel'].errors.required
+                      "
+                    >
+                      Telephone is required
+                    </div>
+                  </div>
+                  <small class="form-text text-muted"
+                    ><i
+                      class="fa fa-info-circle fa-lg"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="+256 78543213"
+                    ></i
+                  ></small>
+                </div>
+              </div>
+              <!-- </form> -->
+            </div>
+            <!-- Raise Money Details Section -->
+            <div class="col-sm-6">
+              <div class="form-group ">
+                <label for="Email">Email:</label>
+                <input
+                  formControlName="companyEmail"
+                  class="form-control"
+                  placeholder=""
+                  type="email"
+                  [ngClass]="{
+                    'is-invalid': submitted && f.companyEmail.errors
+                  }"
+                />
+                <div
+                  *ngIf="
+                    submitted && registerDeal.controls['companyEmail'].errors
+                  "
+                  class="invalid-feedback"
+                >
+                  <div
+                    *ngIf="
+                      registerDeal.controls['companyEmail'].errors.required
+                    "
+                  >
+                    Email is required
+                  </div>
+                  <div
+                    *ngIf="registerDeal.controls['companyEmail'].errors.email"
+                  >
+                    Email must be a valid email address
+                  </div>
+                </div>
+                <small class="form-text text-muted"
+                  ><i
+                    class="fa fa-info-circle fa-lg"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="+256 78543213"
+                  ></i
+                ></small>
+              </div>
+              <div class="form-group ">
+                <label for="phoneNumber">Amount to Raise: </label>
+                <input
+                  formControlName="raisedAmount"
+                  class="form-control"
+                  [ngClass]="{
+                    'is-invalid': submitted && f.raisedAmount.errors
+                  }"
+                />
+                <div
+                  *ngIf="registerDeal.controls['raisedAmount'].errors"
+                  class="invalid-feedback"
+                >
+                  <div
+                    *ngIf="
+                      registerDeal.controls['raisedAmount'].errors.required
+                    "
+                  >
+                    Amount to be Raised is required
+                  </div>
+                </div>
+                <small class="form-text text-muted"
+                  ><i
+                    class="fa fa-info-circle fa-lg"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Enter the minimum amount of money the business want to
+                          raise?"
+                  ></i
+                ></small>
+              </div>
+
+              <div class="form-group">
+                <label for="startDate" id="startDate">Date Created:</label>
+                <input
+                  id="startDate"
+                  type="date"
+                  class="form-control"
+                  
+                  
+                />
+                <small class="form-text text-muted"
+                  ><i
+                    class="fa fa-info-circle fa-lg"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Please Select The Date you're adding the deal"
+                  ></i
+                ></small>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <!-- Second Form Row -->
+          <div class="row">
+            <div class="col-sm-6">
+              <legend class="lagend">Deal Details</legend>
+             
+              <div class="mb-3">
+                <label for="validationTextarea" for="companyDesc"
+                  >Deal Detailed Description</label
+                >
+                <textarea
+                  class="form-control"
+                  [ngClass]="{
+                    'is-invalid': submitted && f.DealDetailedDesc.errors
+                  }"
+                  formControlName="DealDetailedDesc"
+                ></textarea>
+                <div
+                  *ngIf="registerDeal.controls['DealDetailedDesc'].errors"
+                  class="invalid-feedback"
+                >
+                  <div
+                    *ngIf="
+                      registerDeal.controls['DealDetailedDesc'].errors.required
+                    "
+                  >
+                    Company/Deal Description is required
+                  </div>
+                </div>
+                <small class="form-text text-muted"
+                  ><i
+                    class="fa fa-info-circle fa-lg"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Enter detailed Description of the deal Here"
+                  ></i
+                ></small>
+              </div>
+              <div>
+                <input
+                  type="file"  (change)="uploadFile($event)"
+                  class="form-control" formControlName="image" [ngClass]="{
+                    'is-invalid': submitted && f.image.errors
+                  }"
+                />
+              </div>
+              <small class="form-text text-muted"
+                >300 x 300px recommended. JPGs, JPEGs, and PNGs
+                supported.</small
+              >
+              <div
+                *ngIf="registerDeal.controls['image'].errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="registerDeal.controls['image'].errors.required">
+                  Image is required
+                </div>
+              </div>
+ <!-- Image Preview -->//
+ <div class="form-group">
+  <div class="preview" *ngIf="preview && preview !== null">
+    <img [src]="preview" [alt]="registerDeal.value.companyName" style="height: 100px; width: 100px;">
+  </div>
+</div>
+
+
+            </div>
+            <!-- Second colum of the second row -->
+            <div class="col-sm-6">
+              <legend class="lagend">Company Documents</legend>
+              <div class="form-group">
+                <strong
+                  ><label for="docsVerify"
+                    >Which of the folowing Documents have you verified Exist
+                    from the Business Owner?</label
+                  ></strong
+                >
+              </div>
+              <div class="custom-control custom-checkbox ">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="customCheck1"
+                  (change)="changed($event)" 
+                />
+                <label class="custom-control-label" for="customCheck1"
+                  >Business Plan</label
+                >
+              </div>
+
+              <div class="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="customCheck2"
+                  (change)="changedCb2($event)"
+                />
+                <label class="custom-control-label" for="customCheck2"
+                  >Memorandum of Understanding</label
+                >
+              </div>
+
+              <div class="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="customCheck3"
+                  (change)="changedCb3($event)"
+                />
+                <label class="custom-control-label" for="customCheck3"
+                  >Certificate of Registration</label
+                >
+              </div>
+
+              <div class="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="customCheck4"
+                  (change)="changedCb4($event)"
+                />
+                <label class="custom-control-label" for="customCheck4"
+                  >Financial Statement</label
+                >
+              </div>
+
+              <div class="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="customCheck5"
+                  (change)="changedCb5($event)"
+                />
+                <label class="custom-control-label" for="customCheck5"
+                  >Cash flow Statement or Projects</label
+                >
+              </div>
+
+              <div class="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="customCheck6"
+                  (change)="changedCb6($event)"
+                />
+                <label class="custom-control-label" for="customCheck6"
+                  >Contract Document</label
+                >
+              </div>
+              <div class="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="customCheck7"
+                  (change)="changedCb7($event)"
+                />
+                <label class="custom-control-label" for="customCheck7"
+                  >Certified or Audited Accounts</label
+                >
+              </div>
+              <small class="form-text text-muted"
+                ><i
+                  class="fa fa-info-circle fa-lg"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Choose all the Documents you have verified from the Business Owner"
+                ></i
+              ></small>
+            </div>
+          </div>
+          <!-- Buttons -->
+          <div class="form-row">
+            <div class="form-group" style=" margin: auto;">
+              <button
+                type="button"
+                style="margin: 2px;"
+                class="btn btn-secondary gap-right"
+                (click)="ResetForm()"
+              >
+                Reset
+              </button>
+
+              <button  class="btn btn-success">
+                Save
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
