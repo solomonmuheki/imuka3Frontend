@@ -1,0 +1,72 @@
+<div class="card">
+  <div class="card-header" style="background-color: #007edb;">
+    Deal List
+  </div>
+  <div class="card-body">
+    <div class="container custom-container-2">
+      <!-- Show it when there is no employee -->
+      <div class="no-data text-center" *ngIf="Deal.length == 0">
+        <p>There is no Deal added yet!</p>
+        <button class="btn btn-outline-primary" routerLink="/create-employee">
+          Add Deal
+        </button>
+      </div>
+
+      <!-- Employees list table, it hides when there is no employee -->
+      <div *ngIf="Deal.length !== 0">
+        <div class="table-responsive-lg">
+          <table class="table table-bordered table-striped ">
+            <thead>
+              <tr>
+                <th scope="col">User Id</th>
+                <th scope="col">CompanyName</th>
+                <th scope="col">Crated Date</th>
+                <th scope="col">Phone No</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let deal of Deal
+                    | paginate: { itemsPerPage: count, currentPage: p }
+                "
+              >
+                <td>{{ deal.id }}</td>
+                <td>{{ deal.companyName }}</td>
+                <td>{{ deal. 
+                  created_at }}</td>
+                <td>{{ deal.telephone  }}</td>
+                <td>{{ deal. 
+                  AmountToRaise  }}</td>
+                <td>
+                  <span
+                    class="btn btn-primary btn-sm "
+                    style="margin: 2px;"
+                    routerLink="/dealdetails/{{ deal.id }}"
+                    ><i class="fa fa-info"></i>
+                  </span>
+                  <span
+                    class="btn btn-success btn-sm "
+                    style="margin: 2px;"
+                    routerLink="/editdeal/{{ deal.id }}"
+                    ><i class="fa fa-edit"></i>
+                  </span>
+                  <span
+                    class="btn btn-danger btn-sm "
+                    (click)="deleteDeal(deal.id)"
+                    ><i class="fa fa-trash"></i>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="text-right">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,146 @@
+<!-- <div class="main_container">
+  <h2 class="text-center">Trending deals</h2>
+  <div class="card-deck">
+
+    <div class="card mb-4" *ngFor="let deal of Deal">
+    
+      <div class="view overlay">
+        <img
+          class="card-img-top"
+          src="/{{ deal.image_url }}"
+          alt="Card image cap"
+        />
+        <a href="#!">
+          <div class="mask rgba-white-slight"></div>
+        </a>
+      </div>
+
+      <div class="card-body">
+        <p class="card-text">
+          {{ deal.Brief_description }}
+        </p>
+
+        <a routerLink="/login" class="btn btn-info">Read more</a>
+
+        <div>
+          <div class="row no-gutters mt-auto mb-2 justify-content-center">
+            <div class="col-6 text-center">
+              <i class="fa fa-info-circle"></i>Details
+            </div>
+            <div class="col-6 text-center"><i class="fa fa-edit"></i>Edit</div>
+          </div>
+          <a
+            class="nav-link"
+            href="#"
+            data-toggle="tooltip"
+            title="Remaining Days"
+            >Days Left <span class="badge badge-pill badge-danger">90</span></a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- Masthead -->
+<header class="masthead text-white text-center">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-9 mx-auto">
+        <h1 class="mb-5">
+          Connect to Business Opportunities.
+        </h1>
+      </div>
+      <div class="col-md-12 col-lg-12 col-xl-10 mx-auto">
+        <form>
+          <div class="form-row">
+            <div class="col-12 col-md-3 mb-2 mb-md-0">
+              <select
+                class="form-control form-control-lg"
+                id="sel1"
+                style="width: 100%;"
+              >
+                <option>All Industry</option>
+                <option>Agriculture</option>
+                <option>Education</option>
+                <option>Poultry</option>
+                <option>Medicine</option>
+                <option>Catering</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-3 mb-2 mb-md-0">
+              <select
+                class="form-control form-control-lg"
+                id="sel1"
+                style="width: 100%;"
+              >
+                <option value=""> All Location</option>
+                <option value="Bundibugyo">Bundibugyo</option>
+                <option value="Mubende">Mubende</option>
+                <option value="Hoima">Hoima</option>
+                <option value="Gulu">Gulu</option>
+                <option value="Fort Portal">Fort Portal</option>
+                <option value="Kasese">Kasese</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-3 mb-2 mb-md-0">
+              <select
+                class="form-control form-control-lg"
+                id="sel1"
+                style="width: 100%;"
+              >
+                <option selected disabled>All Deal Value / Range</option>
+                <option>100,000-500,000</option>
+                <option>600,000-1,000,000</option>
+                <option>1M - 5M</option>
+                <option>6M - 10M</option>
+                <option>11M - 50M</option>
+                <option>60M - 100M</option>
+                <option>Over 100M</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-3">
+              <button type="submit" class="btn btn-block btn-lg btn-primary">
+                Search
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="featured-blog mtb-40">
+  <h2 class="deals-head">Latest deals</h2>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4" *ngFor="let deal of Deal; let i = index">
+        <div class="blog-box" style=" margin-bottom: 40px;">
+          <img src="http://localhost:8000/uploads/{{deal.image}}" alt="blog1" />
+          <div style="text-align: center;">
+            <label class="label">{{ deal.companyName }}</label>
+          </div>
+          <div style="text-align: center;">
+            <p>
+              Needs
+              <span> {{ deal.raisedAmount }}</span> Uganda Shillings<br />
+              Expires in
+              <span
+                class="badge badge-pill badge-danger"
+                style="color: white;"
+                >{{ backDays(deal.createdDate) }}</span
+              >
+              Day(s) time
+            </p>
+            <p>{{ deal.BriefDealDesc }}</p>
+          </div>
+
+          <div style="text-align: center;">
+            <a routerLink="/login" class="btn btn-info ">Read more</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

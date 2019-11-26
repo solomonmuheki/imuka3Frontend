@@ -1,0 +1,32 @@
+.bg-footer {
+  background-color: #2d3246;
+  color: whitesmoke;
+}
+
+/* styling the partners section */
+.partners div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px !important;
+  width: 100px !important;
+  margin: auto;
+}
+.partners img {
+  object-fit: cover !important;
+  width: 100% !important;
+  box-sizing: border-box;
+}
+a {
+  color: whitesmoke;
+}
+img {
+  padding: 7px;
+}
+h1 {
+  font-style: italic;
+  padding: 0px;
+  margin-bottom: 0px;
+  font-family: "Times New Roman", Times, serif;
+}
+/* end of partners section */
