@@ -38,14 +38,14 @@ export class DealspageComponent implements OnInit {
       console.log("date before current date: " + new Date(dt2));
       //filter records to return only deals registered 30days ago
       var result = this.Deal.filter(function(item) {
-        var itemTime = new Date(item.createdDate).getTime();
+        var itemTime = new Date(item.updated_at ).getTime();
         return itemTime >= dt2;
       });
       this.Deal2 = result;
       //Sorting an array of deals with the newest first
       this.Deal2 = result.sort(
         (a, b) =>
-          new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()
+          new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
       );
       //get the first 6 elements
       this.Deal3 = this.Deal2.slice(0, 6);

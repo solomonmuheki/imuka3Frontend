@@ -13,7 +13,12 @@ export class FileUploadService {
   baseURL = "http://localhost:8000/api";
   baseURL2 = "http://localhost:8000/api/deals";
   headers = new HttpHeaders().set('Content-Type', 'application/json');
-
+ // Http Options
+ httpOptions = {
+  headers: new HttpHeaders({
+    "Content-Type": "application/json"
+  })
+};
   constructor(private http: HttpClient) { }
 
   // Get Users
@@ -70,6 +75,49 @@ export class FileUploadService {
       observe: 'events'
     })
   }
+ // HttpClient API put() method => Update employee
+ updateDeal(id, companyName: string,
+  companyType: string,
+  companyIndustry: string,
+  companyAddress: string,
+  companyTel: string,
+  companyEmail: string,
+  raisedAmount: string,
+  DealDetailedDesc: string,
+  profileImage: File,
+  cbBussinessPlan: number,
+  cbMou: number,
+  cbCertificateOfRegistration: number,
+  cbFinancialStatement: number,
+  cbCashFlowStatement: number,
+  cbContractDocument: number,
+  cbAuditedAccounts: number): Observable<any> {
+  var formData: any = new FormData();
+    
+  formData.append("companyName", companyName);
+  formData.append("companyType", companyType);
+  formData.append("companyIndustry", companyIndustry);
+  formData.append("Address", companyAddress);
+  formData.append("telephone", companyTel);
+  formData.append("email", companyEmail);
+  formData.append("AmountToRaise", raisedAmount);
+  formData.append("detailedDescription", DealDetailedDesc);
+  formData.append("image", profileImage);
+  formData.append("businessPlan", cbBussinessPlan);
+  formData.append("MOU", cbMou);
+  formData.append("certificateOfRegistration", cbCertificateOfRegistration);
+  formData.append("financialStatement", cbFinancialStatement);
+  formData.append("cashFlowStatement", cbCashFlowStatement);
+  formData.append("contractDocument", cbContractDocument);
+  formData.append("auditedAccounts", cbAuditedAccounts);
+  return this.http
+    .put<Deal>(
+      this.baseURL + "/deals/" + id,{ reportProgress: true,
+        observe: 'events'}
+     
+    )
+    .pipe(retry(1), catchError(this.handleError));
+}
 
   // Error handling 
   errorMgmt(error: HttpErrorResponse) {

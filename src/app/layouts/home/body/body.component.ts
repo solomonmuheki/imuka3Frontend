@@ -31,13 +31,13 @@ export class BodyComponent implements OnInit {
       let createdDealDate: Date = new Date(this.startDate);
 
       console.log("start" + new Date("2019-10-2").getTime());
+
+     // get dates 30 days ago
       let currentDate = new Date();
       var dt2 = currentDate.setDate(currentDate.getDate() - 1);
       console.log("date before current date: " + new Date(dt2));
-      // var young = this.Deal.filter(function(valid) {
-      //   return valid.Time < dt2;
-      // });
-
+     
+//deals created within 30 days from now
       var result = this.Deal.filter(function(item) {
         var itemTime = new Date(item. 
           created_at).getTime();
@@ -48,15 +48,15 @@ export class BodyComponent implements OnInit {
       this.Deal2 = result.sort(
         (a, b) =>
           new Date(b. 
-            created_at ).getTime() - new Date(a. 
-              created_at ).getTime()
+            created_at).getTime() - new Date(a. 
+              created_at).getTime()
       );
       //get the first 6 elements
       this.Deal3 = this.Deal2.slice(0, 6);
       //loop through all deals
       for (let item of this.Deal3) {
         var a: Date = new Date(item. 
-          created_at );
+          created_at);
 
         var dt3 = a.setDate(a.getDate() - 30);
         // var dt2 = currentDate.setDate(currentDate.getDate() - 1);
@@ -97,20 +97,18 @@ export class BodyComponent implements OnInit {
   }
   backDays(dealIndex) {
     //let diff = Math.abs(event.date1 - event.date2);
-    var a: Date = new Date(dealIndex);
+    var updatedDealDate: Date = new Date(dealIndex);//date deal was updated
     var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-    var dt3 = a.setDate(a.getDate() - 30);
+    var dateAfter_Days = updatedDealDate.setDate(updatedDealDate.getDate() + 30);//date after 30days
+    
+   
     var firstDate = new Date().getTime(); // current date
-    this.noDays = Math.round(Math.abs((firstDate - dt3) / oneDay));
+    this.noDays = Math.round(Math.abs(( dateAfter_Days-firstDate) / oneDay));
+    
+    
     console.log("days Left in loop : " + this.noDays + " left");
     return this.noDays;
   }
   // Delete deal
-  deleteDeals(id) {
-    if (window.confirm("Are you sure, you want to delete?")) {
-      this.restApi.deleteDeal(id).subscribe(data => {
-        this.loadDeals();
-      });
-    }
-  }
+
 }

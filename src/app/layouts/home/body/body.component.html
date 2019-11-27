@@ -115,25 +115,31 @@
   <h2 class="deals-head">Latest deals</h2>
   <div class="container">
     <div class="row">
-      <div class="col-md-4" *ngFor="let deal of Deal; let i = index">
-        <div class="blog-box" style=" margin-bottom: 40px;">
-          <img src="http://localhost:8000/uploads/{{deal.image}}" alt="blog1" />
+        <div class="no-data text-center" *ngIf="Deal.length == 0">
+            <p>There is no recent Deal added yet!</p>
+            <button class="btn btn-outline-primary" routerLink="/login">
+              Add Deal
+            </button>
+          </div>
+      <div class="col-md-4" *ngFor="let deal of Deal3; let i = index">
+        <div class="blog-box" style=" margin-bottom: 40px; padding-bottom: 10px;">
+          <img src="http://localhost:8000/uploads/{{deal.image}}" class="img-fluid" alt="blog1" style="object-fit: cover;" />
           <div style="text-align: center;">
             <label class="label">{{ deal.companyName }}</label>
           </div>
           <div style="text-align: center;">
             <p>
               Needs
-              <span> {{ deal.raisedAmount }}</span> Uganda Shillings<br />
+              <span> {{ deal.AmountToRaise }}</span> Uganda Shillings<br />
               Expires in
               <span
                 class="badge badge-pill badge-danger"
                 style="color: white;"
-                >{{ backDays(deal.createdDate) }}</span
+                >{{ backDays(deal.updated_at) }}</span
               >
               Day(s) time
             </p>
-            <p>{{ deal.BriefDealDesc }}</p>
+            <p>{{ deal.detailedDescription }}</p>
           </div>
 
           <div style="text-align: center;">

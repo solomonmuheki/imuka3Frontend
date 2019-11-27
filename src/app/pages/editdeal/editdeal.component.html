@@ -57,15 +57,17 @@
                   <select
                     class="form-control"
                     class="custom-select d-block w-100"
-                    (change)="changeCompanyType($event)"
                     formControlName="companyType"
                   >
-                    <option selected>Choose...</option>
-                    <option
-                      *ngFor="let company_Type of CompanyType"
-                      [ngValue]="company_Type"
-                      >{{ company_Type }}</option
-                    >
+                 
+                    <option value="PUBLIC_COMPANY">Public company</option>
+                    <option value="SELF_EMPLOYED">Self-employed</option>
+                    <option value="GOVERNMENT_AGENCY">Government agency</option>
+                    <option value="NON_PROFIT">Nonprofit</option>
+                    <option value="SELF_OWNED">Sole proprietorship</option>
+                    <option value="PRIVATELY_HELD">Privately held</option>
+                    <option value="PARTNERSHIP">Partnership</option>
+                    
                   </select>
                   <small class="form-text text-muted"
                     ><i
@@ -83,12 +85,20 @@
                     formControlName="companyIndustry"
                     name="companyIndustry"
                   >
-                    <option selected>Choose...</option>
-                    <option
-                      *ngFor="let company_Industry of CompanyIndustry"
-                      [ngValue]="company_Industry"
-                      >{{ company_Industry }}
-                    </option>
+                  <option selected>Choose...</option>
+                  <option value="Agriculture/Agribusiness/ Value-addition ">Agriculture/Agribusiness/ Value-addition
+                  </option>
+                  <option value="Clean Energy/Recycling/Upcycling and Environmental Conservation ">Clean Energy/Recycling/Upcycling and Environmental Conservation
+                  </option>
+                  <option value="Technology/ ICT and IT-Enabled Services">Technology/ ICT and IT-Enabled Services</option>
+                  <option value="Tourism and Hospitality">Tourism and Hospitality</option>
+                  <option value="Healthcare and Pharmaceuticals">Healthcare and Pharmaceuticals</option>
+                  <option value="Education">Education</option>
+                  <option value="Manufacturing">Manufacturing</option>
+                  <option value="Trade(Retail and Wholesale)" >Trade(Retail and Wholesale)</option>
+                  <option value="Transport and Logistics">Transport and Logistics</option>
+                  <option value="Services">Services</option>
+                
                   </select>
 
                   <small class="form-text text-muted"
@@ -301,23 +311,14 @@
               <div>
                 <input
                   type="file"  (change)="uploadFile($event)"
-                  class="form-control" formControlName="image" [ngClass]="{
-                    'is-invalid': submitted && f.image.errors
-                  }"
+                  class="form-control" 
                 />
               </div>
               <small class="form-text text-muted"
                 >300 x 300px recommended. JPGs, JPEGs, and PNGs
                 supported.</small
               >
-              <div
-                *ngIf="registerDeal.controls['image'].errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="registerDeal.controls['image'].errors.required">
-                  Image is required
-                </div>
-              </div>
+             
  <!-- Image Preview -->//
  <div class="form-group">
   <div class="preview" *ngIf="preview && preview !== null">
@@ -366,7 +367,7 @@
                 <input
                   type="checkbox"
                   class="custom-control-input"
-                  id="customCheck3"
+                  id="customCheck3" name="customCheck3"
                   (change)="changedCb3($event)"
                 />
                 <label class="custom-control-label" for="customCheck3"
@@ -379,7 +380,7 @@
                   type="checkbox"
                   class="custom-control-input"
                   id="customCheck4"
-                  (change)="changedCb4($event)"
+                  (change)="changedCb4($event)" [checked]=true
                 />
                 <label class="custom-control-label" for="customCheck4"
                   >Financial Statement</label
@@ -403,6 +404,7 @@
                   type="checkbox"
                   class="custom-control-input"
                   id="customCheck6"
+                  name="customCheck6"
                   (change)="changedCb6($event)"
                 />
                 <label class="custom-control-label" for="customCheck6"
