@@ -239,25 +239,17 @@
                   ></i
                 ></small>
               </div>
-
-              <div class="form-group">
-                <label for="startDate" id="startDate">Date Created:</label>
+              <small class="form-text text-muted"
+              >300 x 300px recommended. JPGs, JPEGs, and PNGs
+              supported.</small
+            >
+              <div>
                 <input
-                  id="startDate"
-                  type="date"
-                  class="form-control"
-                  
-                  
+                  type="file"  (change)="uploadFile($event)"
+                  class="form-control" 
                 />
-                <small class="form-text text-muted"
-                  ><i
-                    class="fa fa-info-circle fa-lg"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Please Select The Date you're adding the deal"
-                  ></i
-                ></small>
               </div>
+            
             </div>
           </div>
           <hr />
@@ -298,18 +290,7 @@
                   ></i
                 ></small>
               </div>
-              <div>
-                <input
-                  type="file"  (change)="uploadFile($event)"
-                  class="form-control" formControlName="image" [ngClass]="{
-                    'is-invalid': submitted && f.image.errors
-                  }"
-                />
-              </div>
-              <small class="form-text text-muted"
-                >300 x 300px recommended. JPGs, JPEGs, and PNGs
-                supported.</small
-              >
+             
               <div
                 *ngIf="registerDeal.controls['image'].errors"
                 class="invalid-feedback"
@@ -318,7 +299,7 @@
                   Image is required
                 </div>
               </div>
- <!-- Image Preview -->//
+ <!-- Image Preview -->
  <div class="form-group">
   <div class="preview" *ngIf="preview && preview !== null">
     <img [src]="preview" [alt]="registerDeal.value.companyName" style="height: 100px; width: 100px;">

@@ -14,6 +14,8 @@ import { EditdealComponent } from "../../pages/editdeal/editdeal.component";
 import { NgxPaginationModule } from "ngx-pagination";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
+
+
 @NgModule({
   imports: [
     CommonModule,

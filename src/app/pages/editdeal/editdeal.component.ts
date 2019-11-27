@@ -18,6 +18,7 @@ export class EditdealComponent implements OnInit {
   submitted = false;
   registerDeal: FormGroup;
   percentDone: any = 0;
+  preview: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,35 +26,81 @@ export class EditdealComponent implements OnInit {
     public restApi: DealrestApiService,
     public actRoute: ActivatedRoute,
     public router: Router
-  ) {}
+  ) {
+    this.registerDeal = this.formBuilder.group({
+      companyName: ["", Validators.required],
+      companyIndustry: ["", Validators.required],
+      companyType: ["", Validators.required],
+      companyAddress: ["", Validators.required],
+      companyTel: ["", [Validators.required, Validators.pattern("^[0-9]+$")]],
+      companyEmail: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")
+        ]
+      ],
+      raisedAmount: ["", Validators.required],
+      DealDetailedDesc: ["", Validators.required],
+      image: [null,Validators.required],
+      
+     
+    });
+
+  }
 
   ngOnInit() {
     // this.restApi.getDeal(this.id).subscribe((data: {}) => {
     //   this.dealData = data;
     // });
-    this.updateDealData();   // Call updateStudentData() as soon as the component is ready 
+    //this.updateDealData();   // Call updateStudentData() as soon as the component is ready 
     const id = this.actRoute.snapshot.paramMap.get('id');  // Getting current component's id or information using ActivatedRoute service
     this.restApi.getDeal(id).subscribe(data =>
       
       {
-      this.dealData = data;
-      console.log("hello:"+data)
-      console.log("hello2:"+data)
-      console.log("hello:"+JSON.stringify(data))
-      console.log("hello:"+this.dealData.companyName)
-      //this.registerDeal.setValue(this.dealData) 
-      this.registerDeal.patchValue({
-        companyName:data.companyName,
-        companyIndustry:data.companyIndustry,
-      companyType:data.companyType,
-      companyAddress:this.dealData.companyAddress,
-      companyTel: data.companyName,
-      companyEmail:data.companyName,
-      raisedAmount:data.companyName,
-      DealDetailedDesc:data.companyName,
-      image: data.companyName,
-      }) // Using SetValue() method, It's a ReactiveForm's API to store intial value of reactive form 
+        
+     
+
+      console.log(data);
+
+     
+      console.log("hello2:"+data[0]['companyName'])
+    
+      this.updateThisDealData(data); 
     })
+  }
+  // Image Preview
+  uploadFile(event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.registerDeal.patchValue({
+      image: file
+     
+    });
+    console.log(file)
+    this.registerDeal.get('image').updateValueAndValidity()
+
+    // File Preview
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.preview = reader.result as string;
+    }
+    reader.readAsDataURL(file)
+  }
+  updateThisDealData(data){
+    console.log("hello:"+data[0]['companyName']);
+
+    this.registerDeal.patchValue({
+      companyName:data[0]['companyName'],
+      companyIndustry:data[0]['companyIndustry'],
+      companyType:data[0]['companyType'],
+    companyAddress:data[0]['Address'],
+    companyTel:data[0]['telephone'],
+    companyEmail:data[0]['email'],
+    raisedAmount:data[0]['AmountToRaise'],
+    DealDetailedDesc:data[0]['detailedDescription'],
+    //image: data[0]['image'],
+    }) // Using SetValue() method, It's a ReactiveForm's API to store intial value of reactive form 
   }
   // Contains Reactive Form logic
   updateDealData() {
@@ -151,9 +198,11 @@ export class EditdealComponent implements OnInit {
     }else{this.cbAuditedAccounts=0}
     console.log(" Audited Accounts"+this.cbAuditedAccounts)
   }
-  submitDealData() {
-    console.log("image"+this.registerDeal.value.image+" hello"+this.registerDeal.value.companyAddress+" "+this.registerDeal.value.cbBp)
-    this.fileUploadService.addUser(
+  submitUpdateDealData() {
+    console.log("image:"+this.registerDeal.value.image+" hello"+this.registerDeal.value.companyAddress+" "+this.registerDeal.value.cbBp)
+    const id = this.actRoute.snapshot.paramMap.get('id');
+    this.fileUploadService.updateDeal(
+      id,
       this.registerDeal.value.companyName,
       this.registerDeal.value.companyType,
       this.registerDeal.value.companyIndustry,
@@ -237,6 +286,6 @@ export class EditdealComponent implements OnInit {
     }
 
     alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerDeal.value))
-    this.submitDealData();
+    this.submitUpdateDealData();
 }
 }

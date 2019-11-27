@@ -62,11 +62,18 @@ export class DealrestApiService {
   }
 
   // HttpClient API delete() method => Delete employee
-  deleteDeal(id) {
-    return this.http
-      .delete<Deal>(this.apiURL + "/deal/" + id, this.httpOptions)
-      .pipe(retry(1), catchError(this.handleError));
-  }
+  // deleteDeal(id) {
+  //   return this.http
+  //     .delete<Deal>(this.apiURL + "/deal/delete/" + id, this.httpOptions)
+  //     .pipe(retry(1), catchError(this.handleError));
+  // }
+  
+  deleteDeal(id:string): Observable<number> {  
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
+    return this.http.delete<number>(this.apiURL + '/deals/delete/'+id,  
+ httpOptions)
+ .pipe(retry(1), catchError(this.handleError));  
+  } 
 
   // Error handling
   handleError(error) {

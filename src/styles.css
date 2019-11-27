@@ -5,7 +5,7 @@
   }
   .blog-box {
     text-align: center;
-    margin-top: 100px;
+    margin-top: 8px;
   }
   .blog-box:hover {
     box-shadow: 0 8px 26px 0 rgba(0, 0, 0, 0.3);
@@ -25,6 +25,7 @@
   }
   .blog-box img {
     width: 100%;
+    height: auto;
   }
   .mtb-40 {
     margin: 40px 0;

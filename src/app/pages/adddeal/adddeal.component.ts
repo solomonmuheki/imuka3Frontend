@@ -156,7 +156,7 @@ export class AdddealComponent implements OnInit {
     console.log(" Audited Accounts"+this.cbAuditedAccounts)
   }
   submitDealData() {
-    console.log("image"+this.registerDeal.value.image+" hello"+this.registerDeal.value.companyAddress+" "+this.registerDeal.value.cbBp)
+    console.log("image:"+this.registerDeal.value.image+" hello:"+this.registerDeal.value.companyAddress+" "+this.registerDeal.value.cbBp)
     this.fileUploadService.addUser(
       this.registerDeal.value.companyName,
       this.registerDeal.value.companyType,
