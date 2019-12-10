@@ -4,6 +4,7 @@ import { Deal } from "../sharedservice/deal";
 import { Observable, throwError } from "rxjs";
 import { retry, catchError } from "rxjs/operators";
 
+
 @Injectable({
   providedIn: "root"
 })

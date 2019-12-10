@@ -1,7 +1,9 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
 import { HomeComponent } from "./layouts/home/home.component";
+import { AfterLoginService } from "./sharedservice/login_services/after-login.service";
+import { BeforeLoginService } from "./sharedservice/login_services/before-login.service";
 
 export const AppRoutes: Routes = [
   {
@@ -12,6 +14,7 @@ export const AppRoutes: Routes = [
   {
     path: "",
     component: HomeComponent,
+    canActivate: [BeforeLoginService],
     children: [
       {
         path: "",
@@ -25,7 +28,9 @@ export const AppRoutes: Routes = [
     path: "",
     component: AdminLayoutComponent,
 
-    loadChildren: "./layouts/admin-layout/admin-layout.module#AdminLayoutModule"
+    loadChildren:
+      "./layouts/admin-layout/admin-layout.module#AdminLayoutModule",
+    canActivate: [AfterLoginService]
   },
   {
     path: "**",

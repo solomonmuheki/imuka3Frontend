@@ -1,5 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { JarwisService } from "../../../sharedservice/login_services/jarwis.service";
+import { TokenService } from "../../../sharedservice/login_services/token.service";
+import { Router } from "@angular/router";
+import { AuthService } from "../../../sharedservice/login_services/auth.service";
 
 @Component({
   selector: "app-login",
@@ -7,34 +11,36 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
   styleUrls: ["./login.component.scss"]
 })
 export class LoginComponent implements OnInit {
-  constructor() {}
+  public form = {
+    email: null,
+    password: null
+  };
 
-  formdata;
-  title = "angularlaravelauth";
-  onClickSubmit(data) {
-    if (this.formdata.invalid) {
-      this.formdata.get("email").markAsTouched();
-      this.formdata.get("password").markAsTouched();
-    } else {
-      alert("Now you are done with angularauthlign Part 1.");
-    }
+  public error = null;
+
+  constructor(
+    private Jarwis: JarwisService,
+    private Token: TokenService,
+    private router: Router,
+    private Auth: AuthService
+  ) {}
+
+  onSubmit() {
+    this.Jarwis.login(this.form).subscribe(
+      data => this.handleResponse(data),
+      error => this.handleError(error)
+    );
   }
-  ngOnInit() {
-    /*Login form validation*/
-    this.formdata = new FormGroup({
-      email: new FormControl(
-        "",
-        Validators.compose([
-          Validators.required,
-          Validators.pattern("[^ @]*@[^ @]*")
-        ])
-      ),
-      password: new FormControl("", this.passwordvalidation)
-    });
+
+  handleResponse(data) {
+    console.log("my login data" + data);
+    this.Token.handle(data.access_token, data.user_role, data.user_id);
+    this.Auth.changeAuthStatus(true);
+    this.router.navigateByUrl("/dashboard");
   }
-  passwordvalidation(formcontrol) {
-    if (formcontrol.value.length < 5) {
-      return { password: true };
-    }
+
+  handleError(error) {
+    this.error = error.error.error;
   }
+  ngOnInit() {}
 }

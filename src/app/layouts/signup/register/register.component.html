@@ -1,52 +1,127 @@
-<div class="login-form">
-  <div class="login-details">
-    <div class="head">Signup</div>
-    <div class="row" style=" padding: 0px;">
-      <div class="col-sm-6">
-        <form action="/examples/actions/confirmation.php" method="post">
-          <div class="form-group">
-            <label for="email">Your Full Name:</label>
-            <input type="text" class="form-control" id="name" />
-          </div>
-          <div class="form-group">
-            <label for="email">Email address:</label>
-            <input type="email" class="form-control" id="email" />
-          </div>
-
-          <div class="form-group">
-            <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" />
-          </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary login-btn btn-block">
-              Sign up
-            </button>
-          </div>
-        </form>
-      </div>
-      <div class="col-sm-6">
-        <div class="or-seperator"><i>or</i></div>
-        <p class="text-center">Sign up with your social media account</p>
-        <div class="text-center social-btn">
-          <div>
-            <a href="#" class="btn btn-primary socialmedia-btn2 btn-block">
-              <i class="fa fa-facebook "> Facebook</i>
-            </a>
-          </div>
-          <div>
-            <a href="#" class="btn btn-danger socialmedia-btn2 btn-block">
-              <i class="fa fa-google  "> Google</i>
-            </a>
+<div class="mt-4 col-8 offset-2">
+  <div class="card">
+    <div
+      class="card-header"
+      style=" text-align: center; font-size: 30px;
+      font-weight: bold;"
+    >
+      Register
+    </div>
+    <div class="card-body">
+      <form #signupForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="form-group row">
+          <label for="inputName3" class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              name="name"
+              class="form-control"
+              id="inputname3"
+              placeholder="Name"
+              [(ngModel)]="form.name"
+              required
+            />
+            <div class="alert alert-danger" [hidden]="!error.name">
+              {{ error.name }}
+            </div>
           </div>
         </div>
 
-        <p class="text-center text-muted small">
-          I have an account?
-          <a routerLink="/login" routerLinkActive="router-link-active"
-            >Sign in here!</a
+        <div class="form-group row">
+          <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              id="inputEmail3"
+              placeholder="Email"
+              [(ngModel)]="form.email"
+              required
+            />
+            <div class="alert alert-danger" [hidden]="!error.email">
+              {{ error.email }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="inputrole" class="col-sm-2 col-form-label"
+            >User Role</label
           >
-        </p>
-      </div>
+          <div class="col-sm-10">
+            <select
+              class="form-control"
+              name="user_role"
+              [(ngModel)]="form.user_role"
+              #user_role="ngModel"
+              required
+            >
+              <!-- <option [ngValue]="null">---Select---</option> -->
+              <option *ngFor="let user_role of user_roles" [value]="user_role">
+                {{ user_role }}
+              </option>
+            </select>
+
+            <div class="alert alert-danger" [hidden]="!error.user_role">
+              {{ error.user_role }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label
+            for="inputPasswordConfirmation3"
+            class="col-sm-2 col-form-label"
+            >Password</label
+          >
+          <div class="col-sm-10">
+            <input
+              type="password"
+              name="password"
+              class="form-control"
+              id="inputPasswordConfirmation3"
+              placeholder="Password"
+              [(ngModel)]="form.password"
+              required
+            />
+            <div class="alert alert-danger" [hidden]="!error.password">
+              {{ error.password }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="inputPassword3" class="col-sm-2 col-form-label"
+            >Confirm Password</label
+          >
+          <div class="col-sm-10">
+            <input
+              type="password"
+              name="password_confirmation"
+              class="form-control"
+              id="inputPassword3"
+              placeholder="Confirm Password"
+              [(ngModel)]="form.password_confirmation"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-sm-10 offset-2">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!signupForm.valid"
+            >
+              Sign Up
+            </button>
+
+            <a routerLink="/login" class="btn btn-info float-right">Sign in</a>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>

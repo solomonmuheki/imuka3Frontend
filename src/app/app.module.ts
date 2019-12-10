@@ -1,34 +1,35 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
 import { ToastrModule } from "ngx-toastr";
 import { HttpClientModule } from "@angular/common/http";
 // Forms module
 import { FormsModule } from "@angular/forms";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
-import { AppComponent } from './app.component';
+import { AppComponent } from "./app.component";
 
 import { SidebarModule } from "./sidebar/sidebar.module";
 import { FooterModule } from "./shared/footer/footer.module";
 import { NavbarModule } from "./shared/navbar/navbar.module";
 import { FixedPluginModule } from "./shared/fixedplugin/fixedplugin.module";
 
-
-//import { AppRoutes } from "./app.routing.module";
-
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
-//import { RegisterComponent } from "./layouts/login/register/register.component";
-//import { BodyComponent } from "./layouts/home/body/body.component";
+
 import { HeaderComponent } from "./layouts/home/header/header.component";
 import { FooterComponent } from "./layouts/home/footer/footer.component";
 
 import { HomeComponent } from "./layouts/home/home.component";
-// import { LoginComponent } from "./layouts/signup/login/login.component";
-// import { RegisterComponent } from "./layouts/signup/register/register.component";
+
 import { DevTblService } from "./sharedservice/table.service";
 import { NgxPaginationModule } from "ngx-pagination";
 import { AppRoutes } from "./app-routing.module";
 
+import { JarwisService } from "./sharedservice/login_services/jarwis.service";
+import { TokenService } from "./sharedservice/login_services/token.service";
+import { AuthService } from "./sharedservice/login_services/auth.service";
+import { AfterLoginService } from "./sharedservice/login_services/after-login.service";
+import { BeforeLoginService } from "./sharedservice/login_services/before-login.service";
+import { SnotifyModule, SnotifyService, ToastDefaults } from "ng-snotify";
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { AppRoutes } from "./app-routing.module";
     HomeComponent
   ],
   imports: [
+    SnotifyModule,
     BrowserModule,
     HttpClientModule,
     FormsModule,
@@ -56,7 +58,15 @@ import { AppRoutes } from "./app-routing.module";
     FooterModule,
     FixedPluginModule
   ],
-  providers: [],
+  providers: [
+    JarwisService,
+    TokenService,
+    AuthService,
+    AfterLoginService,
+    BeforeLoginService,
+    { provide: "SnotifyToastConfig", useValue: ToastDefaults },
+    SnotifyService
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

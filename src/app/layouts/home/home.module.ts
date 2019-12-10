@@ -7,6 +7,8 @@ import { SearchFilterComponent } from "./search-filter/search-filter.component";
 import { HomeRoutingModule } from "./home-routing.module";
 import { AboutuspageComponent } from "../aboutuspage/aboutuspage.component";
 import { DealspageComponent } from "../../dealspage/dealspage.component";
+import { RequestResetComponent } from "../signup/password/request-reset/request-reset.component";
+import { ResponseResetComponent } from "../signup/password/response-reset/response-reset.component";
 import { NgxPaginationModule } from "ngx-pagination";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
@@ -16,6 +18,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     LoginComponent,
     RegisterComponent,
     DealspageComponent,
+    RequestResetComponent,
+    ResponseResetComponent,
     AboutuspageComponent,
     SearchFilterComponent
   ],

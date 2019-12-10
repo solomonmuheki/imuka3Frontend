@@ -8,7 +8,7 @@
       <!-- Bootstrap Container -->
       <div class="container-fluid">
         <!-- First form row -->
-        <form [formGroup]="registerDeal" (ngSubmit)="onSubmit()">
+        <form [formGroup]="registerDeal" (ngSubmit)="onSubmit(registerDeal.value)">
           <div class="row">
             <div class="col-sm-6">
               <!-- The Company Deatils Section -->
@@ -56,10 +56,10 @@
                   >
                   <select
                     class="form-control"
-                    class="custom-select d-block w-100"
                     formControlName="companyType"
+                    name="companyType"
                   >
-                 
+                  <option selected>Choose...</option>
                     <option value="PUBLIC_COMPANY">Public company</option>
                     <option value="SELF_EMPLOYED">Self-employed</option>
                     <option value="GOVERNMENT_AGENCY">Government agency</option>
@@ -67,6 +67,7 @@
                     <option value="SELF_OWNED">Sole proprietorship</option>
                     <option value="PRIVATELY_HELD">Privately held</option>
                     <option value="PARTNERSHIP">Partnership</option>
+                    <option value="others">Others</option>
                     
                   </select>
                   <small class="form-text text-muted"
@@ -81,11 +82,11 @@
                 <div class="form-group col-md-6">
                   <label for="inputIndustry">Company Industry:</label>
                   <select
-                    class="form-control"
+                    class="form-control"  (change)="updatecompanyIndustry($event.target.value)"
                     formControlName="companyIndustry"
-                    name="companyIndustry"
+                   
                   >
-                  <option selected>Choose...</option>
+                  <option >Choose...</option>
                   <option value="Agriculture/Agribusiness/ Value-addition ">Agriculture/Agribusiness/ Value-addition
                   </option>
                   <option value="Clean Energy/Recycling/Upcycling and Environmental Conservation ">Clean Energy/Recycling/Upcycling and Environmental Conservation
@@ -97,8 +98,12 @@
                   <option value="Manufacturing">Manufacturing</option>
                   <option value="Trade(Retail and Wholesale)" >Trade(Retail and Wholesale)</option>
                   <option value="Transport and Logistics">Transport and Logistics</option>
-                  <option value="Services">Services</option>
-                
+                  
+                  <option value="others">Others</option>
+                 <!-- error -->
+          <div class="invalid-feedback" *ngIf="submitted && f.companyIndustry.errors?.required">
+            Choose the  company type.
+          </div>
                   </select>
 
                   <small class="form-text text-muted"
@@ -111,8 +116,8 @@
                   ></small>
                 </div>
               </div>
-              <div class="form-row">
-                <div class="form-group col-md-8">
+              
+                <div class="form-group ">
                   <label for="inputAddress">Address Location:</label>
                   <input
                     type="text"
@@ -143,38 +148,8 @@
                     ></i
                   ></small>
                 </div>
-                <div class="form-group col-md-4">
-                  <label for="phoneNumber">Phone Number:</label>
-                  <input
-                    formControlName="companyTel"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.companyTel.errors
-                    }"
-                    type="tel"
-                  />
-                  <div
-                    *ngIf="registerDeal.controls['companyTel'].errors"
-                    class="invalid-feedback"
-                  >
-                    <div
-                      *ngIf="
-                        registerDeal.controls['companyTel'].errors.required
-                      "
-                    >
-                      Telephone is required
-                    </div>
-                  </div>
-                  <small class="form-text text-muted"
-                    ><i
-                      class="fa fa-info-circle fa-lg"
-                      data-toggle="tooltip"
-                      data-placement="top"
-                      title="+256 78543213"
-                    ></i
-                  ></small>
-                </div>
-              </div>
+               
+              
               <!-- </form> -->
             </div>
             <!-- Raise Money Details Section -->
@@ -249,25 +224,48 @@
                   ></i
                 ></small>
               </div>
-
-              <div class="form-group">
-                <label for="startDate" id="startDate">Date Created:</label>
+              <div class="form-group ">
+                <label for="phoneNumber">Phone Number:</label>
                 <input
-                  id="startDate"
-                  type="date"
+                  formControlName="companyTel"
                   class="form-control"
-                  
-                  
+                  [ngClass]="{
+                    'is-invalid': submitted && f.companyTel.errors
+                  }"
+                  type="tel"
                 />
+                <div
+                  *ngIf="registerDeal.controls['companyTel'].errors"
+                  class="invalid-feedback"
+                >
+                  <div
+                    *ngIf="
+                      registerDeal.controls['companyTel'].errors.required
+                    "
+                  >
+                    Telephone is required
+                  </div>
+                 
+                </div>
                 <small class="form-text text-muted"
                   ><i
                     class="fa fa-info-circle fa-lg"
                     data-toggle="tooltip"
                     data-placement="top"
-                    title="Please Select The Date you're adding the deal"
+                    title="+256 78543213"
                   ></i
                 ></small>
               </div>
+              <!-- <small class="form-text text-muted"
+              >300 x 300px recommended. JPGs, JPEGs, and PNGs
+              supported.</small
+            > -->
+              <!-- <div>
+                <input
+                  type="file"  (change)="uploadFile($event)"
+                  class="form-control" 
+                />
+              </div> -->
             </div>
           </div>
           <hr />
@@ -308,23 +306,15 @@
                   ></i
                 ></small>
               </div>
-              <div>
-                <input
-                  type="file"  (change)="uploadFile($event)"
-                  class="form-control" 
-                />
-              </div>
-              <small class="form-text text-muted"
-                >300 x 300px recommended. JPGs, JPEGs, and PNGs
-                supported.</small
-              >
+            
+              
              
- <!-- Image Preview -->//
- <div class="form-group">
+ <!-- Image Preview -->
+ <!-- <div class="form-group">
   <div class="preview" *ngIf="preview && preview !== null">
     <img [src]="preview" [alt]="registerDeal.value.companyName" style="height: 100px; width: 100px;">
   </div>
-</div>
+</div> -->
 
 
             </div>
@@ -343,8 +333,8 @@
                 <input
                   type="checkbox"
                   class="custom-control-input"
-                  id="customCheck1"
-                  (change)="changed($event)" 
+                  id="customCheck1" formControlName="cbBp"
+                  
                 />
                 <label class="custom-control-label" for="customCheck1"
                   >Business Plan</label
@@ -355,8 +345,8 @@
                 <input
                   type="checkbox"
                   class="custom-control-input"
-                  id="customCheck2"
-                  (change)="changedCb2($event)"
+                  id="customCheck2" formControlName="cbMou"
+                 
                 />
                 <label class="custom-control-label" for="customCheck2"
                   >Memorandum of Understanding</label
@@ -367,8 +357,8 @@
                 <input
                   type="checkbox"
                   class="custom-control-input"
-                  id="customCheck3" name="customCheck3"
-                  (change)="changedCb3($event)"
+                  id="customCheck3" formControlName="cbCor"
+              
                 />
                 <label class="custom-control-label" for="customCheck3"
                   >Certificate of Registration</label
@@ -379,8 +369,8 @@
                 <input
                   type="checkbox"
                   class="custom-control-input"
-                  id="customCheck4"
-                  (change)="changedCb4($event)" [checked]=true
+                  id="customCheck4" formControlName="cbFs"
+                  
                 />
                 <label class="custom-control-label" for="customCheck4"
                   >Financial Statement</label
@@ -391,8 +381,8 @@
                 <input
                   type="checkbox"
                   class="custom-control-input"
-                  id="customCheck5"
-                  (change)="changedCb5($event)"
+                  id="customCheck5" formControlName="cbCashflow"
+                
                 />
                 <label class="custom-control-label" for="customCheck5"
                   >Cash flow Statement or Projects</label
@@ -404,8 +394,8 @@
                   type="checkbox"
                   class="custom-control-input"
                   id="customCheck6"
-                  name="customCheck6"
-                  (change)="changedCb6($event)"
+                  formControlName="cbCd"
+                  
                 />
                 <label class="custom-control-label" for="customCheck6"
                   >Contract Document</label
@@ -415,8 +405,8 @@
                 <input
                   type="checkbox"
                   class="custom-control-input"
-                  id="customCheck7"
-                  (change)="changedCb7($event)"
+                  id="customCheck7" formControlName="cbAuditedAccounts"
+                
                 />
                 <label class="custom-control-label" for="customCheck7"
                   >Certified or Audited Accounts</label
@@ -444,7 +434,7 @@
                 Reset
               </button>
 
-              <button  class="btn btn-success" [disabled]="!registerDeal.valid">
+              <button  class="btn btn-success" >
                 Update
               </button>
             </div>
