@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
   // public chartEmail;
   // public chartHours;
   Deal: any = [];
-  constructor(public restApi: DealrestApiService) {}
+  constructor(public restApi: DealrestApiService) { }
   ngOnInit() {
     this.loadDeals();
     this.chartColor = "#FFFFFF";
@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit {
     };
 
     var dataThird = {
-      data: [0, 8, 15, 20, 12, 24, 80, 30, 22, 35, 25, 53],
+      data: [0, 8, 15, 20, 12, 24, 20, 30, 22, 35, 25, 53],
       fill: false,
       borderColor: "#5cb85c",
       backgroundColor: "transparent",
@@ -102,31 +102,32 @@ export class DashboardComponent implements OnInit {
       this.Deal = data;
 
       var array = [
-          {
-            title: "a",
-            date: "2018-03-29"
-          },
-          {
-            title: "b",
-            date: "2018-04-13"
-          },
-          {
-            title: "c",
-            date: "2018-04-12"
-          },
-          {
-            title: "leave",
-            date: "2018-04-11"
-          },
-          {
-            title: "d",
-            date: "2019-11-16"
-          },
-          {
-            title: "d",
-            date: "2019-11-10"
-          }
-        ],
+        {
+          title: "a",
+          date: "2018-03-29"
+        },
+        {
+          title: "b",
+          date: "2018-04-13"
+        },
+        {
+          title: "c",
+          date: "2018-04-12"
+        },
+        {
+          title: "leave",
+          date: "2018-04-11"
+        },
+        {
+          title: "d",
+          date: "2019-11-16"
+        },
+        {
+          title: "d",
+          date: "2019-11-10"
+        }
+
+      ],
         currentYear = new Date().getFullYear();
 
       // currentMonth = new Date().getMonth() + 1,

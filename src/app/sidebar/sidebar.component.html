@@ -13,7 +13,11 @@
       routerLinkActive="active"
       class="{{ menuItem.class }}"
     >
-      <a [routerLink]="[menuItem.path]" style="font-size: 14px;">
+      <a
+        [routerLink]="[menuItem.path]"
+        style="font-size: 14px;"
+        *ngIf="loggedIn"
+      >
         <i class=" {{ menuItem.icon }}"></i>
         <p>{{ menuItem.title }}</p>
       </a>

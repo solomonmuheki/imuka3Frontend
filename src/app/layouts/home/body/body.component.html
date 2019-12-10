@@ -113,14 +113,15 @@
 
 <section class="featured-blog mtb-40">
   <h2 class="deals-head">Latest deals</h2>
+  
   <div class="container">
-    <div class="row">
-        <div class="no-data text-center" *ngIf="Deal.length == 0">
-            <p>There is no recent Deal added yet!</p>
+      <div class="" *ngIf="Deal.length == 0" style="text-align: center;">
+          <div class="alert alert-info"> <p>There is no recent Deal added yet!</p></div> 
             <button class="btn btn-outline-primary" routerLink="/login">
               Add Deal
             </button>
           </div>
+    <div class="row">
       <div class="col-md-4" *ngFor="let deal of Deal3; let i = index">
         <div class="blog-box" style=" margin-bottom: 40px; padding-bottom: 10px;">
           <img src="http://localhost:8000/uploads/{{deal.image}}" class="img-fluid" alt="blog1" style="object-fit: cover;" />

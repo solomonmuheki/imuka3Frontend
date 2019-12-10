@@ -2,10 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { DealrestApiService } from "../../sharedservice/dealrest-api.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
-import { HttpEvent, HttpEventType } from '@angular/common/http';
+
 import { FileUploadService } from "../../sharedservice/file-upload.service";
 import { Deal } from 'src/app/sharedservice/deal';
-
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { ToastrService } from 'ngx-toastr'; // Alert message using NGX toastr
 
 @Component({
   selector: "app-editdeal",
@@ -14,22 +15,23 @@ import { Deal } from 'src/app/sharedservice/deal';
 })
 export class EditdealComponent implements OnInit {
   id = this.actRoute.snapshot.params["id"];
+ // const id = this.actRoute.snapshot.paramMap.get('id');
   dealData: any = {};
   submitted = false;
   registerDeal: FormGroup;
-  percentDone: any = 0;
-  preview: string;
+  
 
   constructor(
     private formBuilder: FormBuilder,
     public fileUploadService: FileUploadService,
     public restApi: DealrestApiService,
     public actRoute: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    public toastr: ToastrService
   ) {
     this.registerDeal = this.formBuilder.group({
       companyName: ["", Validators.required],
-      companyIndustry: ["", Validators.required],
+      companyIndustry: ["",[Validators.required]],
       companyType: ["", Validators.required],
       companyAddress: ["", Validators.required],
       companyTel: ["", [Validators.required, Validators.pattern("^[0-9]+$")]],
@@ -43,7 +45,15 @@ export class EditdealComponent implements OnInit {
       ],
       raisedAmount: ["", Validators.required],
       DealDetailedDesc: ["", Validators.required],
-      image: [null,Validators.required],
+     
+      cbBp:[],
+  cbMou:[],
+  cbCor:[],
+  cbFs:[],
+  cbCashflow:[],
+  cbCd:[],
+  cbAuditedAccounts:[]
+     //image: [null],
       
      
     });
@@ -51,45 +61,62 @@ export class EditdealComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.restApi.getDeal(this.id).subscribe((data: {}) => {
-    //   this.dealData = data;
-    // });
-    //this.updateDealData();   // Call updateStudentData() as soon as the component is ready 
+  
     const id = this.actRoute.snapshot.paramMap.get('id');  // Getting current component's id or information using ActivatedRoute service
     this.restApi.getDeal(id).subscribe(data =>
       
       {
-        
-     
-
-      console.log(data);
-
-     
-      console.log("hello2:"+data[0]['companyName'])
+   
     
       this.updateThisDealData(data); 
     })
   }
-  // Image Preview
-  uploadFile(event) {
-    const file = (event.target as HTMLInputElement).files[0];
-    this.registerDeal.patchValue({
-      image: file
-     
-    });
-    console.log(file)
-    this.registerDeal.get('image').updateValueAndValidity()
-
-    // File Preview
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.preview = reader.result as string;
-    }
-    reader.readAsDataURL(file)
-  }
+  //function for setting default values from db
   updateThisDealData(data){
-    console.log("hello:"+data[0]['companyName']);
-
+   //changing values from database(1/0) to true or false respectively
+    var cbBpvalue ;
+    var cbMouvalue;
+    var cbCorvalue 
+    var cbFsvalue ;
+    var cbCashflowvalue ;
+    var cbCdvalue ;
+    var cbAuditedAccountsvalue ;
+if(data[0]['businessPlan']==1){
+  cbBpvalue=true;
+}else{
+   cbBpvalue=false;
+  }
+  if(data[0]['MOU']==1){
+    cbMouvalue=true;
+  }else{
+    cbMouvalue=false;
+    }
+    if(data[0]['certificateOfRegistration']==1){
+      cbCorvalue=true;
+    }else{
+      cbCorvalue=false;
+      }
+      if(data[0]['financialStatement']==1){
+        cbFsvalue =true;
+      }else{
+        cbFsvalue =false;
+        }
+        if(data[0]['cashFlowStatement']==1){
+          cbCashflowvalue =true;
+        }else{
+          cbCashflowvalue =false;
+          }
+          if(data[0]['contractDocument']==1){
+            cbCdvalue =true;
+          }else{
+            cbCdvalue =false;
+            }
+            if(data[0]['auditedAccounts']==1){
+              cbAuditedAccountsvalue=true;
+            }else{
+              cbAuditedAccountsvalue=false;
+              }
+              //setting default values to form controls
     this.registerDeal.patchValue({
       companyName:data[0]['companyName'],
       companyIndustry:data[0]['companyIndustry'],
@@ -99,143 +126,24 @@ export class EditdealComponent implements OnInit {
     companyEmail:data[0]['email'],
     raisedAmount:data[0]['AmountToRaise'],
     DealDetailedDesc:data[0]['detailedDescription'],
+    cbBp:cbBpvalue ,
+    cbMou:cbMouvalue,
+    cbCor:cbCorvalue,
+    cbFs:cbFsvalue ,
+    cbCashflow:cbCashflowvalue,
+    cbCd:cbCdvalue, 
+    cbAuditedAccounts:cbAuditedAccountsvalue 
+
     //image: data[0]['image'],
-    }) // Using SetValue() method, It's a ReactiveForm's API to store intial value of reactive form 
+    }) 
   }
-  // Contains Reactive Form logic
-  updateDealData() {
-    this.registerDeal = this.formBuilder.group({
-      companyName: ["", Validators.required],
-      companyIndustry: ["", Validators.required],
-      companyType: ["", Validators.required],
-      companyAddress: ["", Validators.required],
-      companyTel: ["", [Validators.required, Validators.pattern("^[0-9]+$")]],
-      companyEmail: [
-        "",
-        [
-          Validators.required,
-          Validators.email,
-          Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")
-        ]
-      ],
-      raisedAmount: ["", Validators.required],
-      DealDetailedDesc: ["", Validators.required],
-      image: [null,Validators.required],
-      
-     
-    });
-  }
-  // Update employee data
-  updateEmployee() {
-    if (window.confirm("Are you sure, you want to update?")) {
-      this.restApi.updateDeal(this.id, this.dealData).subscribe(data => {
-        this.router.navigate(["/alldeals"]);
-      });
-    }
-  }
-  isChecked:any
-  cbBp:number=0;
-  cbMou:number=0;
-  cbCor:number=0;
-  cbFs:number=0;
-  cbCashflow:number=0;
-  cbCd:number=0;
-  cbAuditedAccounts:number=0;
   
-  changed = (evt) => {    
-    this.isChecked = evt.target.checked;
-   
-    if(this.isChecked==true){
-    this.cbBp=1
-    }else{this.cbBp=0}
-    console.log("Business Plan"+this.cbBp)
-  }
-  changedCb2 = (evt) => {    
-    this.isChecked = evt.target.checked;
-   
-    if(this.isChecked==true){
-    this.cbMou=1
-    }else{this.cbMou=0}
-    console.log("mou"+this.cbMou)
-  }
-  changedCb3 = (evt) => {    
-    this.isChecked = evt.target.checked;
-   
-    if(this.isChecked==true){
-    this.cbCor=1
-    }else{this.cbCor=0}
-    console.log("Certificate of Registration"+this.cbCor)
-  }
-  changedCb4 = (evt) => {    
-    this.isChecked = evt.target.checked;
-   
-    if(this.isChecked==true){
-    this.cbFs=1
-    }else{this.cbFs=0}
-    console.log("Financial Statement"+this.cbFs)
-  }
-  changedCb5 = (evt) => {    
-    this.isChecked = evt.target.checked;
-   
-    if(this.isChecked==true){
-    this.cbCashflow=1
-    }else{this.cbCashflow=0}
-    console.log("Cash flow Statement"+this.cbCashflow)
-  }
-  changedCb6 = (evt) => {    
-    this.isChecked = evt.target.checked;
-   
-    if(this.isChecked==true){
-    this.cbCd=1
-    }else{this.cbCd=0}
-    console.log("Contract Document"+this.cbCd)
-  }
-  changedCb7 = (evt) => {    
-    this.isChecked = evt.target.checked;
-   
-    if(this.isChecked==true){
-    this.cbAuditedAccounts=1
-    }else{this.cbAuditedAccounts=0}
-    console.log(" Audited Accounts"+this.cbAuditedAccounts)
-  }
-  submitUpdateDealData() {
-    console.log("image:"+this.registerDeal.value.image+" hello"+this.registerDeal.value.companyAddress+" "+this.registerDeal.value.cbBp)
-    const id = this.actRoute.snapshot.paramMap.get('id');
-    this.fileUploadService.updateDeal(
-      id,
-      this.registerDeal.value.companyName,
-      this.registerDeal.value.companyType,
-      this.registerDeal.value.companyIndustry,
-      this.registerDeal.value.companyAddress,
-      this.registerDeal.value.companyTel,
-      this.registerDeal.value.companyEmail,
-      this.registerDeal.value.raisedAmount,
-      this.registerDeal.value.DealDetailedDesc,
-      this.registerDeal.value.image,
-    this.cbBp,
-    this.cbMou,
-    this.cbCor,
-    this.cbFs,
-    this. cbCashflow,
-    this.cbCd,
-    this.cbAuditedAccounts
-    ).subscribe((event: HttpEvent<any>) => {
-      switch (event.type) {
-        case HttpEventType.Sent:
-          console.log('Request has been made!');
-          break;
-        case HttpEventType.ResponseHeader:
-          console.log('Response header has been received!');
-          break;
-        case HttpEventType.UploadProgress:
-          this.percentDone = Math.round(event.loaded / event.total * 100);
-          console.log(`Uploaded! ${this.percentDone}%`);
-          break;
-        case HttpEventType.Response:
-          console.log('Deal successfully created!', event.body);
-          this.percentDone = false;
-          this.router.navigate(['/alldeals'])
-      }
+ 
+ 
+  // Choose company Industry with select dropdown
+  updatecompanyIndustry(e){
+    this.registerDeal.get('companyIndustry').setValue(e, {
+      onlySelf: true
     })
   }
   get f() {
@@ -276,7 +184,8 @@ export class EditdealComponent implements OnInit {
   get companyType() {
     return this.registerDeal.get("CompanyType");
   }
-  onSubmit() {
+  //function called when the button is clicked to update
+  onSubmit(values) {
     this.submitted = true;
 
     // stop here if form is invalid
@@ -284,8 +193,94 @@ export class EditdealComponent implements OnInit {
       alert('failure!! :-')
         return;
     }
+    
+//getting values from check boxes to 1 or 0
+    var cbBp1:any;
+    var cbMou1:any;
+    var cbCor1:any;
+    var cbFs1:any;
+    var cbCashflow1:any;
+    var cbCd1:any;
+    var cbAuditedAccounts1:any;
+   if(values.cbBp==true){
+     cbBp1=1;
+   }
+   else if(values.cbBp==false){
+     cbBp1=0;
+    }
+   if(values.cbMou==true){
+    cbMou1=1;
+  }
+  else  if(values.cbMou==false)
+  {cbMou1=0;}
+  if(values.cbCor==true){
+    cbCor1=1;
+  }
+  else if(values.cbCor==false)
+  {
+    cbCor1=0;}
+  if(values.cbFs==true){
+    cbFs1=1;
+  }
+  else if(values.cbFs==false)
+  {cbFs1=0;}
+  if(values.cbCashflow==true){
+    cbCashflow1=1;
+ }
+ else if(values.cbCashflow==false)
+ {cbCashflow1=0;}
+ if(values.cbCd==true){
+  cbCd1=1;
+ }else if(values.cbCd==false)
+ {cbCd1=0;}
+ if(values.cbAuditedAccounts==true){
+  cbAuditedAccounts1=1;
+ }
+ else if(values.cbAuditedAccounts==false)
+ {
+   cbAuditedAccounts1=0;
+  }
+   const  formData= new FormData();
+   
+   formData.append("companyName", values.companyName);
+  formData.append("companyType", values.companyType);
+  formData.append("companyIndustry", values.companyIndustry);
+  formData.append("Address", values.companyAddress);
+  formData.append("telephone", values.companyTel);
+  formData.append("email", values.companyEmail);
+  formData.append("AmountToRaise", values.raisedAmount);
+  formData.append("detailedDescription", values.DealDetailedDesc);
+ // formData.append("image", values.image);
+  formData.append("businessPlan", cbBp1);
+  formData.append("MOU", cbMou1);
+  formData.append("certificateOfRegistration", cbCor1);
+  formData.append("financialStatement", cbFs1);
+  formData.append("cashFlowStatement", cbCashflow1);
+  formData.append("contractDocument", cbCd1);
+  formData.append("auditedAccounts", cbAuditedAccounts1); 
 
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerDeal.value))
-    this.submitUpdateDealData();
+
+// Display the key/value pairs
+let object = {};
+formData.forEach(function(value, key){
+    console.log(object[key] = value);
+});
+let json = JSON.stringify(object);
+//console.log(json)
+
+if (window.confirm('Are you sure you want to update?')) {
+        let id = this.actRoute.snapshot.paramMap.get('id');
+        
+        this.fileUploadService.updateEmployee(id, json)
+          .subscribe(res => {
+            this.router.navigateByUrl('/alldeals');
+            console.log('Content updated successfully!')
+            this.toastr.success(' Deal updated successfully!'); 
+          }, (error) => {
+            console.log(error)
+            this.toastr.error(error); 
+          })
+      }
 }
+
 }

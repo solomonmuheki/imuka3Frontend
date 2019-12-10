@@ -2,9 +2,9 @@ import { Component, OnInit, Input } from "@angular/core";
 import { Router } from "@angular/router";
 import { DealrestApiService } from "../../sharedservice/dealrest-api.service";
 import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
-import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { HttpEvent, HttpEventType } from "@angular/common/http";
 import { FileUploadService } from "../../sharedservice/file-upload.service";
-
+import { ToastrService } from "ngx-toastr"; // Alert message using NGX toastr
 
 @Component({
   selector: "app-adddeal",
@@ -12,10 +12,9 @@ import { FileUploadService } from "../../sharedservice/file-upload.service";
   styleUrls: ["./adddeal.component.css"]
 })
 export class AdddealComponent implements OnInit {
+  user_id: any;
   registerDeal: FormGroup;
   submitted = false;
-
- 
 
   preview: string;
   //form: FormGroup;
@@ -42,11 +41,11 @@ export class AdddealComponent implements OnInit {
     "Transport and Logistics"
   ];
   constructor(
-   
     private formBuilder: FormBuilder,
     public fileUploadService: FileUploadService,
     public restApi: DealrestApiService,
-    public router: Router
+    public router: Router,
+    public toastr: ToastrService
   ) {
     this.registerDeal = this.formBuilder.group({
       companyName: ["", Validators.required],
@@ -64,134 +63,149 @@ export class AdddealComponent implements OnInit {
       ],
       raisedAmount: ["", Validators.required],
       DealDetailedDesc: ["", Validators.required],
-      image: [null,Validators.required],
-      
-     
+      image: [null, Validators.required]
     });
   }
 
   ngOnInit() {
-   
+    this.user_id = this.getUserId();
+    console.log("my id:" + this.user_id);
   }
+  //get the user id from local Storage
+  getUserId() {
+    return localStorage.getItem("user_id");
+  }
+
   // Image Preview
   uploadFile(event) {
     const file = (event.target as HTMLInputElement).files[0];
     this.registerDeal.patchValue({
       image: file
-     
     });
-    console.log(file)
-    this.registerDeal.get('image').updateValueAndValidity()
+    console.log(file);
+    this.registerDeal.get("image").updateValueAndValidity();
 
     // File Preview
     const reader = new FileReader();
     reader.onload = () => {
       this.preview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+  //change event called on checkboxes
+  isChecked: any;
+  cbBp: number = 0;
+  cbMou: number = 0;
+  cbCor: number = 0;
+  cbFs: number = 0;
+  cbCashflow: number = 0;
+  cbCd: number = 0;
+  cbAuditedAccounts: number = 0;
+
+  changed = evt => {
+    this.isChecked = evt.target.checked;
+
+    if (this.isChecked == true) {
+      this.cbBp = 1;
+    } else {
+      this.cbBp = 0;
     }
-    reader.readAsDataURL(file)
-  }
-  isChecked:any
-  cbBp:number=0;
-  cbMou:number=0;
-  cbCor:number=0;
-  cbFs:number=0;
-  cbCashflow:number=0;
-  cbCd:number=0;
-  cbAuditedAccounts:number=0;
-  
-  changed = (evt) => {    
+  };
+  changedCb2 = evt => {
     this.isChecked = evt.target.checked;
-   
-    if(this.isChecked==true){
-    this.cbBp=1
-    }else{this.cbBp=0}
-    console.log("Business Plan"+this.cbBp)
-  }
-  changedCb2 = (evt) => {    
+
+    if (this.isChecked == true) {
+      this.cbMou = 1;
+    } else {
+      this.cbMou = 0;
+    }
+  };
+  changedCb3 = evt => {
     this.isChecked = evt.target.checked;
-   
-    if(this.isChecked==true){
-    this.cbMou=1
-    }else{this.cbMou=0}
-    console.log("mou"+this.cbMou)
-  }
-  changedCb3 = (evt) => {    
+
+    if (this.isChecked == true) {
+      this.cbCor = 1;
+    } else {
+      this.cbCor = 0;
+    }
+  };
+  changedCb4 = evt => {
     this.isChecked = evt.target.checked;
-   
-    if(this.isChecked==true){
-    this.cbCor=1
-    }else{this.cbCor=0}
-    console.log("Certificate of Registration"+this.cbCor)
-  }
-  changedCb4 = (evt) => {    
+
+    if (this.isChecked == true) {
+      this.cbFs = 1;
+    } else {
+      this.cbFs = 0;
+    }
+  };
+  changedCb5 = evt => {
     this.isChecked = evt.target.checked;
-   
-    if(this.isChecked==true){
-    this.cbFs=1
-    }else{this.cbFs=0}
-    console.log("Financial Statement"+this.cbFs)
-  }
-  changedCb5 = (evt) => {    
+
+    if (this.isChecked == true) {
+      this.cbCashflow = 1;
+    } else {
+      this.cbCashflow = 0;
+    }
+  };
+  changedCb6 = evt => {
     this.isChecked = evt.target.checked;
-   
-    if(this.isChecked==true){
-    this.cbCashflow=1
-    }else{this.cbCashflow=0}
-    console.log("Cash flow Statement"+this.cbCashflow)
-  }
-  changedCb6 = (evt) => {    
+
+    if (this.isChecked == true) {
+      this.cbCd = 1;
+    } else {
+      this.cbCd = 0;
+    }
+  };
+  changedCb7 = evt => {
     this.isChecked = evt.target.checked;
-   
-    if(this.isChecked==true){
-    this.cbCd=1
-    }else{this.cbCd=0}
-    console.log("Contract Document"+this.cbCd)
-  }
-  changedCb7 = (evt) => {    
-    this.isChecked = evt.target.checked;
-   
-    if(this.isChecked==true){
-    this.cbAuditedAccounts=1
-    }else{this.cbAuditedAccounts=0}
-    console.log(" Audited Accounts"+this.cbAuditedAccounts)
-  }
+
+    if (this.isChecked == true) {
+      this.cbAuditedAccounts = 1;
+    } else {
+      this.cbAuditedAccounts = 0;
+    }
+  };
+
+  //method to save data to database
   submitDealData() {
-    console.log("image:"+this.registerDeal.value.image+" hello:"+this.registerDeal.value.companyAddress+" "+this.registerDeal.value.cbBp)
-    this.fileUploadService.addUser(
-      this.registerDeal.value.companyName,
-      this.registerDeal.value.companyType,
-      this.registerDeal.value.companyIndustry,
-      this.registerDeal.value.companyAddress,
-      this.registerDeal.value.companyTel,
-      this.registerDeal.value.companyEmail,
-      this.registerDeal.value.raisedAmount,
-      this.registerDeal.value.DealDetailedDesc,
-      this.registerDeal.value.image,
-    this.cbBp,
-    this.cbMou,
-    this.cbCor,
-    this.cbFs,
-    this. cbCashflow,
-    this.cbCd,
-    this.cbAuditedAccounts
-    ).subscribe((event: HttpEvent<any>) => {
-      switch (event.type) {
-        case HttpEventType.Sent:
-          console.log('Request has been made!');
-          break;
-        case HttpEventType.ResponseHeader:
-          console.log('Response header has been received!');
-          break;
-        case HttpEventType.UploadProgress:
-          this.percentDone = Math.round(event.loaded / event.total * 100);
-          console.log(`Uploaded! ${this.percentDone}%`);
-          break;
-        case HttpEventType.Response:
-          console.log('Deal successfully created!', event.body);
-          this.percentDone = false;
-          this.router.navigate(['/alldeals'])
-      }
-    })
+    this.fileUploadService
+      .addUser(
+        this.user_id,
+        this.registerDeal.value.companyName,
+        this.registerDeal.value.companyType,
+        this.registerDeal.value.companyIndustry,
+        this.registerDeal.value.companyAddress,
+        this.registerDeal.value.companyTel,
+        this.registerDeal.value.companyEmail,
+        this.registerDeal.value.raisedAmount,
+        this.registerDeal.value.DealDetailedDesc,
+        this.registerDeal.value.image,
+        this.cbBp,
+        this.cbMou,
+        this.cbCor,
+        this.cbFs,
+        this.cbCashflow,
+        this.cbCd,
+        this.cbAuditedAccounts
+      )
+      .subscribe((event: HttpEvent<any>) => {
+        switch (event.type) {
+          case HttpEventType.Sent:
+            console.log("Request has been made!");
+            break;
+          case HttpEventType.ResponseHeader:
+            console.log("Response header has been received!");
+            break;
+          case HttpEventType.UploadProgress:
+            this.percentDone = Math.round((event.loaded / event.total) * 100);
+            console.log(`Uploaded! ${this.percentDone}%`);
+            break;
+          case HttpEventType.Response:
+            console.log("Deal successfully created!", event.body);
+            this.percentDone = false;
+            this.router.navigate(["/alldeals"]);
+        }
+      });
   }
   // Choose city using select dropdown
   // changeCompanyType(e) {
@@ -203,7 +217,7 @@ export class AdddealComponent implements OnInit {
   get f() {
     return this.registerDeal.controls;
   }
- 
+
   // Accessing form control using getters
   get companyName() {
     return this.registerDeal.get("companyName");
@@ -238,16 +252,19 @@ export class AdddealComponent implements OnInit {
   get companyType() {
     return this.registerDeal.get("CompanyType");
   }
+  //function called on button click tosave deal in the database
   onSubmit() {
     this.submitted = true;
 
     // stop here if form is invalid
     if (this.registerDeal.invalid) {
-      alert('failure!! :-')
-        return;
+      alert("failure!! :-");
+      return;
     }
-
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerDeal.value))
+    this.toastr.success(
+      this.registerDeal.controls["companyName"].value + " successfully added!"
+    );
+    //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerDeal.value))
     this.submitDealData();
-}
+  }
 }

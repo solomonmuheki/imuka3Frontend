@@ -3,10 +3,17 @@ export class Deal {
   companyName: string;
   companyType: string;
   companyIndustry: string;
-  companyAddress: string;
-  companyTel: string;
-  companyEmail: string;
-  raisedAmount: string;
-  DealDetailedDesc: string;
+  Address : string;
+  telephone : string;
+  email : string;
+  AmountToRaise : string;
+  detailedDescription : string;
   image: string;
+  businessPlan : string
+  MOU : string
+  certificateOfRegistration: string
+  financialStatement :string
+  cashFlowStatement : string
+  contractDocument : string
+  auditedAccounts : string
 }

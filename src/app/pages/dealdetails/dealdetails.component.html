@@ -9,19 +9,19 @@
           <tbody>
             <tr>
               <td colspan="2">
-                <img src="/{{ dealData.image_url }}" alt="Company Logo" />
+                <img src="http://localhost:8000/uploads/{{image}}" alt="Company Logo" />
               </td>
             </tr>
             <tr>
               <td><label> Name</label></td>
               <td>
-                <span class="label2">{{ companyName }}</span>
+                <span class="label2">{{companyName }}</span>
               </td>
             </tr>
             <tr>
               <td><label>Company Industry</label></td>
               <td>
-                <span class="label2">{{ dealData.companyIndustry }}</span>
+                <span class="label2">{{ companyIndustry }}</span>
               </td>
             </tr>
             <tr>
@@ -29,25 +29,31 @@
                 <label>Company Address</label>
               </td>
               <td>
-                <span class="label2"> {{ dealData.companyAddress }}</span>
+                <span class="label2"> {{ Address }}</span>
               </td>
             </tr>
             <tr>
               <td><label>Company Tel:</label></td>
               <td>
-                <span class="label2">{{ dealData.companyTel }}</span>
+                <span class="label2">{{ telephone }}</span>
               </td>
             </tr>
             <tr>
               <td><label>Amount Needed</label></td>
               <td>
-                <span class="label2"> {{ dealData.raisedAmount }}</span>
+                <span class="label2"> {{ AmountToRaise }}</span>
               </td>
             </tr>
             <tr>
               <td><label>Start Date</label></td>
               <td>
-                <span class="label2"> {{ dealData.createdDate }}</span>
+                <span class="label2"> {{ created_at }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td><label>Updated Date</label></td>
+              <td>
+                <span class="label2"> {{ updated_at }}</span>
               </td>
             </tr>
           </tbody>
@@ -55,11 +61,18 @@
       </div>
       <div class="col-md-6">
         <div style="margin-top:30px;">
-          <span class="label">Brief Deal Description</span>
-          <p>{{ dealData.BriefDealDesc }}</p>
-          <br />
+          <span class="label">Verified existing documents</span>
+          <div class="no-data text-center" *ngIf="documents.length == 0" class="alert alert-info">
+            <p>There is no Verified documents yet!</p>
+            
+          </div>
+          <ul>
+            <li *ngFor="let doc of documents">
+              {{ doc }}
+            </li>
+          </ul>
           <span class="label">Detailed Deal Description</span>
-          <p>{{ dealData.DealDetailedDesc }}</p>
+          <p>{{ detailedDescription}}</p>
         </div>
       </div>
     </div>
