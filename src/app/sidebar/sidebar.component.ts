@@ -17,6 +17,7 @@ export const ROUTES: RouteInfo[] = [
     icon: "fa fa-home",
     class: ""
   },
+
   {
     path: "/adddeal",
     title: "Add Deal",
@@ -30,9 +31,27 @@ export const ROUTES: RouteInfo[] = [
     class: ""
   },
   {
-    path: "/dealdetails",
+    path: "/offers",
     title: "Bids and Offers",
     icon: "fa fa-money",
+    class: ""
+  },
+  {
+    path: "/investor-dashboard ",
+    title: "Investor-Dashboard ",
+    icon: "fa fa-home",
+    class: ""
+  },
+  {
+    path: "/investor-alldeals",
+    title: "All Deals",
+    icon: "fa fa-list",
+    class: ""
+  },
+  {
+    path: "/investor-alloffers",
+    title: "Offers",
+    icon: "fa fa-list",
     class: ""
   }
 ];

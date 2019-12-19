@@ -52,10 +52,10 @@ span {
 header.masthead {
   position: relative;
   background-color: #343a40;
-  background: url("/assets/imuka_investor.jpg") no-repeat center center;
+  background: url("/assets/imuka_investor.jpg") no-repeat;
   background-size: cover;
-  padding-top: 8rem;
-  padding-bottom: 8rem;
+  padding-top: 5rem;
+  padding-bottom: 0rem;
 }
 header.masthead .overlay {
   position: absolute;
@@ -64,7 +64,7 @@ header.masthead .overlay {
   width: 100%;
   top: 0;
   left: 0;
-  opacity: 0.3;
+  opacity: 0.5;
 }
 
 header.masthead h1 {
@@ -84,4 +84,26 @@ header.masthead h1 {
 
     background-size: cover;
   }
+}
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #666;
+  resize: vertical;
+}
+
+.star {
+  font-size: 1.5rem;
+  color: #b0c4de;
+}
+.filled {
+  color: #ffb81e;
+}
+.bad {
+  color: #deb0b0;
+}
+.filled.bad {
+  color: #ff1e1e;
 }

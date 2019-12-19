@@ -1,0 +1,52 @@
+<!--  Entreprenuer Validation Form-->
+<div class="card">
+  <div class="card-header" style="background-color: #007edb;">
+    Create a new Deal
+  </div>
+  <div class="card-body">
+    <div id="main_warpper">
+      <!-- Bootstrap Container -->
+      <div class="container-fluid">
+        <form
+          class="form-horizontal"
+          id="add-form"
+          [formGroup]="registerOffer"
+          (ngSubmit)="addNewOffer()"
+        >
+          <div class="form-group">
+            <label for="offer_amount">Offer Amount:</label>
+            <input
+              type="text"
+              formControlName="offer_amount"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': submitted && f.offer_amount.errors
+              }"
+            />
+            <div
+              *ngIf="submitted && registerOffer.controls['offer_amount'].errors"
+              class="invalid-feedback"
+            >
+              <div
+                *ngIf="registerDeal.controls['offer_amount'].errors.required"
+              >
+                Offer Amount is required
+              </div>
+            </div>
+            <small class="form-text text-muted"
+              ><i
+                class="fa fa-info-circle fa-lg"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="This is the Amount of money you are willing to offer
+                             "
+              ></i
+            ></small>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

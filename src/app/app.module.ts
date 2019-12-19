@@ -30,6 +30,7 @@ import { AuthService } from "./sharedservice/login_services/auth.service";
 import { AfterLoginService } from "./sharedservice/login_services/after-login.service";
 import { BeforeLoginService } from "./sharedservice/login_services/before-login.service";
 import { SnotifyModule, SnotifyService, ToastDefaults } from "ng-snotify";
+import { Ng2SmartTableModule } from "ng2-smart-table";
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { SnotifyModule, SnotifyService, ToastDefaults } from "ng-snotify";
     FormsModule,
     ReactiveFormsModule,
     NgxPaginationModule,
+    Ng2SmartTableModule,
     RouterModule.forRoot(AppRoutes, {
       useHash: true
     }),

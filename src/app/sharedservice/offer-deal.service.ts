@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 //import { User } from './user';
 import { Observable, throwError } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import {
   HttpHeaders,
   HttpErrorResponse,
@@ -8,10 +9,12 @@ import {
 } from "@angular/common/http";
 import { retry, catchError } from "rxjs/operators";
 import { Deal } from "../sharedservice/deal";
+import { Offer } from "../sharedservice/offer";
+
 @Injectable({
   providedIn: "root"
 })
-export class FileUploadService {
+export class OfferDealService {
   baseURL = "http://localhost:8000/api";
   baseURL2 = "http://localhost:8000/api/deals";
   headers = new HttpHeaders().set("Content-Type", "application/json");
@@ -21,7 +24,12 @@ export class FileUploadService {
       "Content-Type": "application/json"
     })
   };
-  constructor(private http: HttpClient) {}
+  offerIdSource = new BehaviorSubject<number>(0);
+  offerIdData: any;
+  constructor(private http: HttpClient) {
+    //this.baseURL ="https://localhost:44314/api/post/";
+    this.offerIdData = this.offerIdSource.asObservable();
+  }
 
   // Get Users
   getUsers() {
@@ -111,13 +119,101 @@ export class FileUploadService {
       .put<Deal>(this.baseURL + "/deals/" + id, deal, this.httpOptions)
       .pipe(retry(1), catchError(this.handleError));
   }
+  //investor update offer method
+  updateOffer2(id, offer): Observable<Offer> {
+    return this.http
+      .put<Offer>(this.baseURL + "/offers/" + id, offer, this.httpOptions)
+      .pipe(retry(1), catchError(this.handleError));
+  }
   updateEmployee(id, data): Observable<any> {
     let url = `${this.baseURL}/deal/update/${id}`;
     return this.http
       .put(url, data, { headers: this.headers })
       .pipe(catchError(this.errorMgmt));
   }
+  //confirm offer method
+  confirmOffer(id, data): Observable<any> {
+    let url = `${this.baseURL}/offer/reject-offer/${id}`;
+    return this.http
+      .put(url, data, { headers: this.headers })
+      .pipe(catchError(this.errorMgmt));
+  }
+  //reject offer method
+  rejectOffer(id, data): Observable<any> {
+    let url = `${this.baseURL}/offer/confirm-offer/${id}`;
+    return this.http
+      .put(url, data, { headers: this.headers })
+      .pipe(catchError(this.errorMgmt));
+  }
+  //get all offers
+  getOffers(): Observable<Offer> {
+    return this.http
+      .get<Offer>(this.baseURL + "/offers")
+      .pipe(retry(1), catchError(this.handleError));
+  }
+  //Register an offer
+  addOffer(
+    user_id: number,
+    deal_id: number,
+    offer_amount: string,
+    status: number
+  ): Observable<any> {
+    var formData: any = new FormData();
+    formData.append("user_id", user_id);
+    formData.append("deal_id", deal_id);
+    formData.append("offer_amount", offer_amount);
+    formData.append("status", status);
 
+    return this.http.post<Deal>(`${this.baseURL}/offer`, formData, {
+      reportProgress: true,
+      observe: "events"
+    });
+  }
+  changeOfferId(offerId: number) {
+    this.offerIdSource.next(offerId);
+  }
+  // updateOffer(post: any) {
+  //   let header = new HttpHeaders();
+  //   header.append("Content-Type", "applications/json");
+  //   return this.http.post(this.baseURL + "updatepost", post, {
+  //     headers: header
+  //   });
+  // }
+  updateOffer(id, offer): Observable<Offer> {
+    return this.http
+      .put<Offer>(
+        this.baseURL + "/offer/update/" + id,
+        JSON.stringify(offer),
+        this.httpOptions
+      )
+      .pipe(retry(1), catchError(this.handleError));
+  }
+  deleteOffer(id: string): Observable<number> {
+    const httpOptions = {
+      headers: new HttpHeaders({ "Content-Type": "application/json" })
+    };
+    return this.http
+      .delete<number>(this.baseURL + "/offer/delete/" + id, httpOptions)
+      .pipe(retry(1), catchError(this.handleError));
+  }
+  // getOffer(offerId: number) {
+  //   let header = new HttpHeaders();
+  //   header.append("Content-Type", "applications/json");
+  //   let url = `${this.baseURL}/offer/${offerId}`;
+  //   return this.http.get(url, {
+  //     headers: header
+  //   });
+  // }
+  getOffer(id): Observable<Offer> {
+    return this.http
+      .get<Offer>(this.baseURL + "/offer/" + id)
+      .pipe(retry(1), catchError(this.handleError));
+  }
+  getCategoryList() {
+    let header = new HttpHeaders();
+    header.append("Content-Type", "applications/json");
+    return this.http.get(this.baseURL + "getcategories", { headers: header });
+  }
   // Error handling
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = "";

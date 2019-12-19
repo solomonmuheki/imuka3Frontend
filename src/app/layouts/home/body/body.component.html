@@ -1,50 +1,7 @@
-<!-- <div class="main_container">
-  <h2 class="text-center">Trending deals</h2>
-  <div class="card-deck">
-
-    <div class="card mb-4" *ngFor="let deal of Deal">
-    
-      <div class="view overlay">
-        <img
-          class="card-img-top"
-          src="/{{ deal.image_url }}"
-          alt="Card image cap"
-        />
-        <a href="#!">
-          <div class="mask rgba-white-slight"></div>
-        </a>
-      </div>
-
-      <div class="card-body">
-        <p class="card-text">
-          {{ deal.Brief_description }}
-        </p>
-
-        <a routerLink="/login" class="btn btn-info">Read more</a>
-
-        <div>
-          <div class="row no-gutters mt-auto mb-2 justify-content-center">
-            <div class="col-6 text-center">
-              <i class="fa fa-info-circle"></i>Details
-            </div>
-            <div class="col-6 text-center"><i class="fa fa-edit"></i>Edit</div>
-          </div>
-          <a
-            class="nav-link"
-            href="#"
-            data-toggle="tooltip"
-            title="Remaining Days"
-            >Days Left <span class="badge badge-pill badge-danger">90</span></a
-          >
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
 <!-- Masthead -->
-<header class="masthead text-white text-center">
+<header class="masthead text-white text-center" style="">
   <div class="overlay"></div>
-  <div class="container">
+  <div class="container" style="margin-bottom: 0em;">
     <div class="row">
       <div class="col-xl-9 mx-auto">
         <h1 class="mb-5">
@@ -55,11 +12,7 @@
         <form>
           <div class="form-row">
             <div class="col-12 col-md-3 mb-2 mb-md-0">
-              <select
-                class="form-control form-control-lg"
-                id="sel1"
-                style="width: 100%;"
-              >
+              <select class="form-control-lg" id="sel1" style="width: 100%;">
                 <option>All Industry</option>
                 <option>Agriculture</option>
                 <option>Education</option>
@@ -69,11 +22,7 @@
               </select>
             </div>
             <div class="col-12 col-md-3 mb-2 mb-md-0">
-              <select
-                class="form-control form-control-lg"
-                id="sel1"
-                style="width: 100%;"
-              >
+              <select class=" form-control-lg" id="sel1" style="width: 100%;">
                 <option value=""> All Location</option>
                 <option value="Bundibugyo">Bundibugyo</option>
                 <option value="Mubende">Mubende</option>
@@ -84,11 +33,7 @@
               </select>
             </div>
             <div class="col-12 col-md-3 mb-2 mb-md-0">
-              <select
-                class="form-control form-control-lg"
-                id="sel1"
-                style="width: 100%;"
-              >
+              <select class=" form-control-lg" id="sel1" style="width: 100%;">
                 <option selected disabled>All Deal Value / Range</option>
                 <option>100,000-500,000</option>
                 <option>600,000-1,000,000</option>
@@ -99,8 +44,8 @@
                 <option>Over 100M</option>
               </select>
             </div>
-            <div class="col-12 col-md-3">
-              <button type="submit" class="btn btn-block btn-lg btn-primary">
+            <div class="col-12 col-md-3 mb-2 mb-md-0">
+              <button type="submit" class="btn  btn-primary btn-lg btn-block">
                 Search
               </button>
             </div>
@@ -113,18 +58,27 @@
 
 <section class="featured-blog mtb-40">
   <h2 class="deals-head">Latest deals</h2>
-  
   <div class="container">
-      <div class="" *ngIf="Deal.length == 0" style="text-align: center;">
-          <div class="alert alert-info"> <p>There is no recent Deal added yet!</p></div> 
-            <button class="btn btn-outline-primary" routerLink="/login">
-              Add Deal
-            </button>
-          </div>
+    <div class="" *ngIf="Deal.length == 0" style="text-align: center;">
+      <div class="alert alert-info">
+        <p>There is no recent Deal added yet!</p>
+      </div>
+      <button class="btn btn-outline-primary" routerLink="/login">
+        Add Deal
+      </button>
+    </div>
     <div class="row">
-      <div class="col-md-4" *ngFor="let deal of Deal3; let i = index">
-        <div class="blog-box" style=" margin-bottom: 40px; padding-bottom: 10px;">
-          <img src="http://localhost:8000/uploads/{{deal.image}}" class="img-fluid" alt="blog1" style="object-fit: cover;" />
+      <div class="col-md-4" *ngFor="let deal of Deal; let i = index">
+        <div
+          class="blog-box"
+          style=" margin-bottom: 40px; padding-bottom: 10px;"
+        >
+          <img
+            src="http://localhost:8000/uploads/{{ deal.image }}"
+            class="img-fluid"
+            alt="blog1"
+            style="object-fit: cover;"
+          />
           <div style="text-align: center;">
             <label class="label">{{ deal.companyName }}</label>
           </div>
@@ -146,6 +100,11 @@
           <div style="text-align: center;">
             <a routerLink="/login" class="btn btn-info ">Read more</a>
           </div>
+          <ngb-rating rate="{{ deal.rating }}">
+            <ng-template let-fill="fill" let-index="index">
+              <span class="star" [class.filled]="fill === 100">&#9733;</span>
+            </ng-template>
+          </ngb-rating>
         </div>
       </div>
     </div>

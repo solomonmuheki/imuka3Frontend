@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { NgbRatingConfig } from "@ng-bootstrap/ng-bootstrap";
 import { DealrestApiService } from "../../../sharedservice/dealrest-api.service";
 @Component({
   selector: "app-body",
@@ -6,6 +7,7 @@ import { DealrestApiService } from "../../../sharedservice/dealrest-api.service"
   styleUrls: ["./body.component.scss"]
 })
 export class BodyComponent implements OnInit {
+  currentRate = 8;
   Deal: any = [];
   Deal2: any = [];
   Deal3: any = [];
@@ -13,7 +15,10 @@ export class BodyComponent implements OnInit {
   noDays: any;
   currentDate = new Date().getTime(); // current date
 
-  constructor(public restApi: DealrestApiService) {}
+  constructor(public restApi: DealrestApiService, config: NgbRatingConfig) {
+    config.max = 5;
+    config.readonly = true;
+  }
 
   ngOnInit() {
     this.loadDeals();
@@ -23,40 +28,34 @@ export class BodyComponent implements OnInit {
     return this.restApi.getDeals().subscribe((data: {}) => {
       this.Deal = data;
       console.log(this.Deal);
-      console.log("mine:"+this.Deal[4]. 
-        created_at );
+      console.log("mine:" + this.Deal[4].created_at);
       console.log(this.Deal.length);
-      this.startDate = this.Deal. 
-      created_at ;
+      this.startDate = this.Deal.created_at;
       let createdDealDate: Date = new Date(this.startDate);
 
       console.log("start" + new Date("2019-10-2").getTime());
 
-     // get dates 30 days ago
+      // get dates 30 days ago
       let currentDate = new Date();
       var dt2 = currentDate.setDate(currentDate.getDate() - 1);
       console.log("date before current date: " + new Date(dt2));
-     
-//deals created within 30 days from now
+
+      //deals created within 30 days from now
       var result = this.Deal.filter(function(item) {
-        var itemTime = new Date(item. 
-          created_at).getTime();
+        var itemTime = new Date(item.created_at).getTime();
         return itemTime >= dt2;
       });
       this.Deal2 = result;
       //Sorting an array of deals with the newest first
       this.Deal2 = result.sort(
         (a, b) =>
-          new Date(b. 
-            created_at).getTime() - new Date(a. 
-              created_at).getTime()
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       );
       //get the first 6 elements
       this.Deal3 = this.Deal2.slice(0, 6);
       //loop through all deals
       for (let item of this.Deal3) {
-        var a: Date = new Date(item. 
-          created_at);
+        var a: Date = new Date(item.created_at);
 
         var dt3 = a.setDate(a.getDate() - 30);
         // var dt2 = currentDate.setDate(currentDate.getDate() - 1);
@@ -65,10 +64,8 @@ export class BodyComponent implements OnInit {
 
         //var secondDate = new Date().getTime(); // 2nd date
         //var Days = Math.floor((secondDate - firstDate) / (1000 * 60 * 60 * 24));
-        var x = new Date(this.Deal3. 
-          created_at ).getTime();
-        var y = new Date(item. 
-          created_at ).getTime();
+        var x = new Date(this.Deal3.created_at).getTime();
+        var y = new Date(item.created_at).getTime();
         var i = 0;
         while (this.Deal3[i]) {
           var firstDate = new Date().getTime(); // current date
@@ -97,18 +94,17 @@ export class BodyComponent implements OnInit {
   }
   backDays(dealIndex) {
     //let diff = Math.abs(event.date1 - event.date2);
-    var updatedDealDate: Date = new Date(dealIndex);//date deal was updated
+    var updatedDealDate: Date = new Date(dealIndex); //date deal was updated
     var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-    var dateAfter_Days = updatedDealDate.setDate(updatedDealDate.getDate() + 30);//date after 30days
-    
-   
+    var dateAfter_Days = updatedDealDate.setDate(
+      updatedDealDate.getDate() + 30
+    ); //date after 30days
+
     var firstDate = new Date().getTime(); // current date
-    this.noDays = Math.round(Math.abs(( dateAfter_Days-firstDate) / oneDay));
-    
-    
+    this.noDays = Math.round(Math.abs((dateAfter_Days - firstDate) / oneDay));
+
     console.log("days Left in loop : " + this.noDays + " left");
     return this.noDays;
   }
   // Delete deal
-
 }

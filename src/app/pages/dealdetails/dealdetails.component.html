@@ -9,13 +9,16 @@
           <tbody>
             <tr>
               <td colspan="2">
-                <img src="http://localhost:8000/uploads/{{image}}" alt="Company Logo" />
+                <img
+                  src="http://localhost:8000/uploads/{{ image }}"
+                  alt="Company Logo"
+                />
               </td>
             </tr>
             <tr>
               <td><label> Name</label></td>
               <td>
-                <span class="label2">{{companyName }}</span>
+                <span class="label2">{{ companyName }}</span>
               </td>
             </tr>
             <tr>
@@ -62,9 +65,12 @@
       <div class="col-md-6">
         <div style="margin-top:30px;">
           <span class="label">Verified existing documents</span>
-          <div class="no-data text-center" *ngIf="documents.length == 0" class="alert alert-info">
+          <div
+            class="no-data text-center"
+            *ngIf="documents.length == 0"
+            class="alert alert-info"
+          >
             <p>There is no Verified documents yet!</p>
-            
           </div>
           <ul>
             <li *ngFor="let doc of documents">
@@ -72,7 +78,7 @@
             </li>
           </ul>
           <span class="label">Detailed Deal Description</span>
-          <p>{{ detailedDescription}}</p>
+          <p>{{ detailedDescription }}</p>
         </div>
       </div>
     </div>

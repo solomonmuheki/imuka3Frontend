@@ -1,0 +1,56 @@
+<div class="conatiner" style="padding-top:20px;">
+  <div class="col-sm-5" style="padding-top:20px;padding-bottom:20px;">
+    <input
+      class="form-control"
+      type="text"
+      placeholder="Search......."
+      [(ngModel)]="filter"
+    />
+  </div>
+</div>
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Company Name</th>
+      <th scope="col">Crated Date</th>
+      <th scope="col">Phone No</th>
+      <th scope="col">Email</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="
+        let deal of Deal
+          | filter: filter
+          | paginate: { itemsPerPage: 6, currentPage: p }
+      "
+    >
+      <td>{{ deal.companyName }}</td>
+      <td>{{ deal.created_at | date }}</td>
+      <td>{{ deal.telephone }}</td>
+      <td>{{ deal.email }}</td>
+      <td>{{ deal.AmountToRaise }}</td>
+      <td>
+        <span
+          class="btn btn-info mr-1"
+          style="margin: 2px;"
+          routerLink="/investor-dealdetail/{{ deal.id }}"
+          >Details
+        </span>
+        <span
+          class="btn btn-primary btn-xs"
+          routerLink="/investor-makeoffer/{{ deal.id }}"
+          >Offer</span
+        >
+        <span class="btn btn-primary btn-xs" (click)="addNewOffer(deal.id)"
+          >Make Offer</span
+        >
+      </td>
+    </tr>
+  </tbody>
+  <ul class="pagination">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </ul>
+</table>

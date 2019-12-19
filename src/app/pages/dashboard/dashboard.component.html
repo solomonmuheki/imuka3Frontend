@@ -5,15 +5,22 @@
     <div class="card card-stats">
       <div class="card-body ">
         <div class="row">
-          <div class="col-5 col-md-4">
+          <div class="col-2 col-md-2">
             <div class="icon-big text-center icon-warning">
               <i class="fa fa-file-o text-info"></i>
             </div>
           </div>
-          <div class="col-7 col-md-8">
+          <div class="col-4 col-md-4">
             <div class="numbers">
               <p class="card-category">Total Deals</p>
-              <p class="card-title">1050</p>
+              <p class="card-title">{{ totalDeals }}</p>
+              <p></p>
+            </div>
+          </div>
+          <div class="col-6 col-md-6">
+            <div class="numbers">
+              <p class="card-category">Total Deals in a year</p>
+              <p class="card-title">{{ totalDealsThisYear }}</p>
               <p></p>
             </div>
           </div>
@@ -96,11 +103,21 @@
   <div class="col-md-12">
     <div class="card card-chart">
       <div class="card-header">
-
         <div class="panel-title pull-left">
-          <h5 class="card-title">Overview</h5>
+          <h5 class="card-title">Overview {{ year }}</h5>
         </div>
-        <div class="panel-title pull-right">Text on the right</div>
+        <div class="panel-title pull-right">
+          Year :
+          <input
+            type="text"
+            [(ngModel)]="year"
+            placeholder="2019"
+            style="
+              outline: 0;
+              border-width: 0 0 2px;
+              border-color: blue;"
+          />
+        </div>
       </div>
       <!-- chart-body -->
       <div class="card-body">

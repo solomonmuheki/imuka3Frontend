@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { DealrestApiService } from "../../sharedservice/dealrest-api.service";
 import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
 import { HttpEvent, HttpEventType } from "@angular/common/http";
-import { FileUploadService } from "../../sharedservice/file-upload.service";
+import { DealRegistrationApiService } from "../../sharedservice/deal-registration-api.service";
 import { ToastrService } from "ngx-toastr"; // Alert message using NGX toastr
 
 @Component({
@@ -42,7 +42,7 @@ export class AdddealComponent implements OnInit {
   ];
   constructor(
     private formBuilder: FormBuilder,
-    public fileUploadService: FileUploadService,
+    public DealRegistrationApi: DealRegistrationApiService,
     public restApi: DealrestApiService,
     public router: Router,
     public toastr: ToastrService
@@ -53,6 +53,7 @@ export class AdddealComponent implements OnInit {
       companyType: ["", Validators.required],
       companyAddress: ["", Validators.required],
       companyTel: ["", [Validators.required, Validators.pattern("^[0-9]+$")]],
+
       companyEmail: [
         "",
         [
@@ -61,6 +62,7 @@ export class AdddealComponent implements OnInit {
           Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")
         ]
       ],
+      rateDeal: ["", Validators.required],
       raisedAmount: ["", Validators.required],
       DealDetailedDesc: ["", Validators.required],
       image: [null, Validators.required]
@@ -168,44 +170,43 @@ export class AdddealComponent implements OnInit {
 
   //method to save data to database
   submitDealData() {
-    this.fileUploadService
-      .addUser(
-        this.user_id,
-        this.registerDeal.value.companyName,
-        this.registerDeal.value.companyType,
-        this.registerDeal.value.companyIndustry,
-        this.registerDeal.value.companyAddress,
-        this.registerDeal.value.companyTel,
-        this.registerDeal.value.companyEmail,
-        this.registerDeal.value.raisedAmount,
-        this.registerDeal.value.DealDetailedDesc,
-        this.registerDeal.value.image,
-        this.cbBp,
-        this.cbMou,
-        this.cbCor,
-        this.cbFs,
-        this.cbCashflow,
-        this.cbCd,
-        this.cbAuditedAccounts
-      )
-      .subscribe((event: HttpEvent<any>) => {
-        switch (event.type) {
-          case HttpEventType.Sent:
-            console.log("Request has been made!");
-            break;
-          case HttpEventType.ResponseHeader:
-            console.log("Response header has been received!");
-            break;
-          case HttpEventType.UploadProgress:
-            this.percentDone = Math.round((event.loaded / event.total) * 100);
-            console.log(`Uploaded! ${this.percentDone}%`);
-            break;
-          case HttpEventType.Response:
-            console.log("Deal successfully created!", event.body);
-            this.percentDone = false;
-            this.router.navigate(["/alldeals"]);
-        }
-      });
+    this.DealRegistrationApi.addDeal(
+      this.user_id,
+      this.registerDeal.value.companyName,
+      this.registerDeal.value.companyType,
+      this.registerDeal.value.companyIndustry,
+      this.registerDeal.value.companyAddress,
+      this.registerDeal.value.companyTel,
+      this.registerDeal.value.companyEmail,
+      this.registerDeal.value.rateDeal,
+      this.registerDeal.value.raisedAmount,
+      this.registerDeal.value.DealDetailedDesc,
+      this.registerDeal.value.image,
+      this.cbBp,
+      this.cbMou,
+      this.cbCor,
+      this.cbFs,
+      this.cbCashflow,
+      this.cbCd,
+      this.cbAuditedAccounts
+    ).subscribe((event: HttpEvent<any>) => {
+      switch (event.type) {
+        case HttpEventType.Sent:
+          console.log("Request has been made!");
+          break;
+        case HttpEventType.ResponseHeader:
+          console.log("Response header has been received!");
+          break;
+        case HttpEventType.UploadProgress:
+          this.percentDone = Math.round((event.loaded / event.total) * 100);
+          console.log(`Uploaded! ${this.percentDone}%`);
+          break;
+        case HttpEventType.Response:
+          console.log("Deal successfully created!", event.body);
+          this.percentDone = false;
+          this.router.navigate(["/alldeals"]);
+      }
+    });
   }
   // Choose city using select dropdown
   // changeCompanyType(e) {
@@ -236,6 +237,9 @@ export class AdddealComponent implements OnInit {
   }
   get companyEmail() {
     return this.registerDeal.get("companyEmail");
+  }
+  get rateDeal() {
+    return this.registerDeal.get("rateDeal");
   }
 
   get raisedAmount() {
