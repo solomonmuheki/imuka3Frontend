@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-xl-9 mx-auto">
         <h1 class="mb-5">
-          scale up your bussiness by Registering Here
+          Scale up your business by Registering Here
         </h1>
       </div>
       <div class="col-md-12 col-lg-12 col-xl-10 mx-auto">
@@ -78,14 +78,17 @@
         "
       >
         <div class="blog-box" style=" margin-bottom: 40px;">
-          <img src="http://localhost:8000/uploads/{{deal.image}}" alt="deal" />
+          <img
+            src="http://localhost:8000/uploads/{{ deal.image }}"
+            alt="deal"
+          />
           <div style="text-align: center;">
             <label class="label">{{ deal.companyName }}</label>
           </div>
           <div style="text-align: center;">
             <p>
               Needs
-              <span> {{ deal.AmountToRaise  }}</span> Uganda Shillings<br />
+              <span> {{ deal.AmountToRaise }}</span> Uganda Shillings<br />
               Expires in
               <span
                 class="badge badge-pill badge-danger"
@@ -94,7 +97,7 @@
               >
               Day(s) time
             </p>
-            <p>{{ deal.detailedDescription  }}</p>
+            <p>{{ deal.detailedDescription }}</p>
           </div>
 
           <div style="text-align: center;">
