@@ -8,7 +8,10 @@
       <!-- Bootstrap Container -->
       <div class="container-fluid">
         <!-- First form row -->
-        <form [formGroup]="registerDeal" (ngSubmit)="onSubmit(registerDeal.value)">
+        <form
+          [formGroup]="registerDeal"
+          (ngSubmit)="onSubmit(registerDeal.value)"
+        >
           <div class="row">
             <div class="col-sm-6">
               <!-- The Company Deatils Section -->
@@ -49,111 +52,6 @@
                   ></small>
                 </div>
               </div>
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="inputCompanyType" style="display: block;"
-                    >Company Type:</label
-                  >
-                  <select
-                    class="form-control"
-                    formControlName="companyType"
-                    name="companyType"
-                  >
-                  <option selected>Choose...</option>
-                    <option value="PUBLIC_COMPANY">Public company</option>
-                    <option value="SELF_EMPLOYED">Self-employed</option>
-                    <option value="GOVERNMENT_AGENCY">Government agency</option>
-                    <option value="NON_PROFIT">Nonprofit</option>
-                    <option value="SELF_OWNED">Sole proprietorship</option>
-                    <option value="PRIVATELY_HELD">Privately held</option>
-                    <option value="PARTNERSHIP">Partnership</option>
-                    <option value="others">Others</option>
-                    
-                  </select>
-                  <small class="form-text text-muted"
-                    ><i
-                      class="fa fa-info-circle fa-lg"
-                      data-toggle="tooltip"
-                      data-placement="top"
-                      title="Chooose the Company Type"
-                    ></i
-                  ></small>
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="inputIndustry">Company Industry:</label>
-                  <select
-                    class="form-control"  (change)="updatecompanyIndustry($event.target.value)"
-                    formControlName="companyIndustry"
-                   
-                  >
-                  <option >Choose...</option>
-                  <option value="Agriculture/Agribusiness/ Value-addition ">Agriculture/Agribusiness/ Value-addition
-                  </option>
-                  <option value="Clean Energy/Recycling/Upcycling and Environmental Conservation ">Clean Energy/Recycling/Upcycling and Environmental Conservation
-                  </option>
-                  <option value="Technology/ ICT and IT-Enabled Services">Technology/ ICT and IT-Enabled Services</option>
-                  <option value="Tourism and Hospitality">Tourism and Hospitality</option>
-                  <option value="Healthcare and Pharmaceuticals">Healthcare and Pharmaceuticals</option>
-                  <option value="Education">Education</option>
-                  <option value="Manufacturing">Manufacturing</option>
-                  <option value="Trade(Retail and Wholesale)" >Trade(Retail and Wholesale)</option>
-                  <option value="Transport and Logistics">Transport and Logistics</option>
-                  
-                  <option value="others">Others</option>
-                 <!-- error -->
-          <div class="invalid-feedback" *ngIf="submitted && f.companyIndustry.errors?.required">
-            Choose the  company type.
-          </div>
-                  </select>
-
-                  <small class="form-text text-muted"
-                    ><i
-                      class="fa fa-info-circle fa-lg"
-                      data-toggle="tooltip"
-                      data-placement="top"
-                      title="Choose the Company Industry"
-                    ></i
-                  ></small>
-                </div>
-              </div>
-              
-                <div class="form-group ">
-                  <label for="inputAddress">Address Location:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    formControlName="companyAddress"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.companyAddress.errors
-                    }"
-                  />
-                  <div
-                    *ngIf="registerDeal.controls['companyAddress'].errors"
-                    class="invalid-feedback"
-                  >
-                    <div
-                      *ngIf="
-                        registerDeal.controls['companyAddress'].errors.required
-                      "
-                    >
-                      Address is required
-                    </div>
-                  </div>
-                  <small class="form-text text-muted"
-                    ><i
-                      class="fa fa-info-circle fa-lg"
-                      data-toggle="tooltip"
-                      data-placement="top"
-                      title="This is the Company Address and Location"
-                    ></i
-                  ></small>
-                </div>
-               
-              
-              <!-- </form> -->
-            </div>
-            <!-- Raise Money Details Section -->
-            <div class="col-sm-6">
               <div class="form-group ">
                 <label for="Email">Email:</label>
                 <input
@@ -194,6 +92,153 @@
                 ></small>
               </div>
               <div class="form-group ">
+                <label for="phoneNumber">Phone Number:</label>
+                <input
+                  formControlName="companyTel"
+                  class="form-control"
+                  [ngClass]="{
+                    'is-invalid': submitted && f.companyTel.errors
+                  }"
+                  type="tel"
+                />
+                <div
+                  *ngIf="registerDeal.controls['companyTel'].errors"
+                  class="invalid-feedback"
+                >
+                  <div
+                    *ngIf="registerDeal.controls['companyTel'].errors.required"
+                  >
+                    Telephone is required
+                  </div>
+                </div>
+                <small class="form-text text-muted"
+                  ><i
+                    class="fa fa-info-circle fa-lg"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="+256 78543213"
+                  ></i
+                ></small>
+              </div>
+              <div class="form-group ">
+                <label for="inputAddress">Address Location:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="companyAddress"
+                  [ngClass]="{
+                    'is-invalid': submitted && f.companyAddress.errors
+                  }"
+                />
+                <div
+                  *ngIf="registerDeal.controls['companyAddress'].errors"
+                  class="invalid-feedback"
+                >
+                  <div
+                    *ngIf="
+                      registerDeal.controls['companyAddress'].errors.required
+                    "
+                  >
+                    Address is required
+                  </div>
+                </div>
+                <small class="form-text text-muted"
+                  ><i
+                    class="fa fa-info-circle fa-lg"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="This is the Company Address and Location"
+                  ></i
+                ></small>
+              </div>
+
+              <!-- </form> -->
+            </div>
+            <!-- Raise Money Details Section -->
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="inputCompanyType" style="display: block;"
+                  >Company Type:</label
+                >
+                <select
+                  class="form-control"
+                  formControlName="companyType"
+                  name="companyType"
+                >
+                  <option selected>Choose...</option>
+                  <option value="PUBLIC_COMPANY">Public company</option>
+                  <option value="SELF_EMPLOYED">Self-employed</option>
+                  <option value="GOVERNMENT_AGENCY">Government agency</option>
+                  <option value="NON_PROFIT">Nonprofit</option>
+                  <option value="SELF_OWNED">Sole proprietorship</option>
+                  <option value="PRIVATELY_HELD">Privately held</option>
+                  <option value="PARTNERSHIP">Partnership</option>
+                  <option value="others">Others</option>
+                </select>
+                <small class="form-text text-muted"
+                  ><i
+                    class="fa fa-info-circle fa-lg"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Chooose the Company Type"
+                  ></i
+                ></small>
+              </div>
+
+              <div class="form-group ">
+                <label for="inputIndustry">Company Industry:</label>
+                <select
+                  class="form-control"
+                  (change)="updatecompanyIndustry($event.target.value)"
+                  formControlName="companyIndustry"
+                >
+                  <option>Choose...</option>
+                  <option value="Agriculture/Agribusiness/ Value-addition "
+                    >Agriculture/Agribusiness/ Value-addition
+                  </option>
+                  <option
+                    value="Clean Energy/Recycling/Upcycling and Environmental Conservation "
+                    >Clean Energy/Recycling/Upcycling and Environmental
+                    Conservation
+                  </option>
+                  <option value="Technology/ ICT and IT-Enabled Services"
+                    >Technology/ ICT and IT-Enabled Services</option
+                  >
+                  <option value="Tourism and Hospitality"
+                    >Tourism and Hospitality</option
+                  >
+                  <option value="Healthcare and Pharmaceuticals"
+                    >Healthcare and Pharmaceuticals</option
+                  >
+                  <option value="Education">Education</option>
+                  <option value="Manufacturing">Manufacturing</option>
+                  <option value="Trade(Retail and Wholesale)"
+                    >Trade(Retail and Wholesale)</option
+                  >
+                  <option value="Transport and Logistics"
+                    >Transport and Logistics</option
+                  >
+
+                  <option value="others">Others</option>
+                  <!-- error -->
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="submitted && f.companyIndustry.errors?.required"
+                  >
+                    Choose the company type.
+                  </div>
+                </select>
+
+                <small class="form-text text-muted"
+                  ><i
+                    class="fa fa-info-circle fa-lg"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Choose the Company Industry"
+                  ></i
+                ></small>
+              </div>
+              <div class="form-group ">
                 <label for="phoneNumber">Amount to Raise: </label>
                 <input
                   formControlName="raisedAmount"
@@ -225,34 +270,27 @@
                 ></small>
               </div>
               <div class="form-group ">
-                <label for="phoneNumber">Phone Number:</label>
-                <input
-                  formControlName="companyTel"
+                <label for="rateDeal">Rate Deal (1- 5):</label>
+                <select
                   class="form-control"
-                  [ngClass]="{
-                    'is-invalid': submitted && f.companyTel.errors
-                  }"
-                  type="tel"
-                />
-                <div
-                  *ngIf="registerDeal.controls['companyTel'].errors"
-                  class="invalid-feedback"
+                  class="custom-select d-block w-100"
+                  formControlName="rateDeal"
                 >
-                  <div
-                    *ngIf="
-                      registerDeal.controls['companyTel'].errors.required
-                    "
+                  <option selected>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+
                   >
-                    Telephone is required
-                  </div>
-                 
-                </div>
+                </select>
+
                 <small class="form-text text-muted"
                   ><i
                     class="fa fa-info-circle fa-lg"
                     data-toggle="tooltip"
                     data-placement="top"
-                    title="+256 78543213"
+                    title="Rate the deal an the scale of 1 to 5"
                   ></i
                 ></small>
               </div>
@@ -273,7 +311,7 @@
           <div class="row">
             <div class="col-sm-6">
               <legend class="lagend">Deal Details</legend>
-             
+
               <div class="mb-3">
                 <label for="validationTextarea" for="companyDesc"
                   >Deal Detailed Description</label
@@ -306,17 +344,13 @@
                   ></i
                 ></small>
               </div>
-            
-              
-             
- <!-- Image Preview -->
- <!-- <div class="form-group">
+
+              <!-- Image Preview -->
+              <!-- <div class="form-group">
   <div class="preview" *ngIf="preview && preview !== null">
     <img [src]="preview" [alt]="registerDeal.value.companyName" style="height: 100px; width: 100px;">
   </div>
 </div> -->
-
-
             </div>
             <!-- Second colum of the second row -->
             <div class="col-sm-6">
@@ -333,8 +367,8 @@
                 <input
                   type="checkbox"
                   class="custom-control-input"
-                  id="customCheck1" formControlName="cbBp"
-                  
+                  id="customCheck1"
+                  formControlName="cbBp"
                 />
                 <label class="custom-control-label" for="customCheck1"
                   >Business Plan</label
@@ -345,8 +379,8 @@
                 <input
                   type="checkbox"
                   class="custom-control-input"
-                  id="customCheck2" formControlName="cbMou"
-                 
+                  id="customCheck2"
+                  formControlName="cbMou"
                 />
                 <label class="custom-control-label" for="customCheck2"
                   >Memorandum of Understanding</label
@@ -357,8 +391,8 @@
                 <input
                   type="checkbox"
                   class="custom-control-input"
-                  id="customCheck3" formControlName="cbCor"
-              
+                  id="customCheck3"
+                  formControlName="cbCor"
                 />
                 <label class="custom-control-label" for="customCheck3"
                   >Certificate of Registration</label
@@ -369,8 +403,8 @@
                 <input
                   type="checkbox"
                   class="custom-control-input"
-                  id="customCheck4" formControlName="cbFs"
-                  
+                  id="customCheck4"
+                  formControlName="cbFs"
                 />
                 <label class="custom-control-label" for="customCheck4"
                   >Financial Statement</label
@@ -381,8 +415,8 @@
                 <input
                   type="checkbox"
                   class="custom-control-input"
-                  id="customCheck5" formControlName="cbCashflow"
-                
+                  id="customCheck5"
+                  formControlName="cbCashflow"
                 />
                 <label class="custom-control-label" for="customCheck5"
                   >Cash flow Statement or Projects</label
@@ -395,7 +429,6 @@
                   class="custom-control-input"
                   id="customCheck6"
                   formControlName="cbCd"
-                  
                 />
                 <label class="custom-control-label" for="customCheck6"
                   >Contract Document</label
@@ -405,8 +438,8 @@
                 <input
                   type="checkbox"
                   class="custom-control-input"
-                  id="customCheck7" formControlName="cbAuditedAccounts"
-                
+                  id="customCheck7"
+                  formControlName="cbAuditedAccounts"
                 />
                 <label class="custom-control-label" for="customCheck7"
                   >Certified or Audited Accounts</label
@@ -434,7 +467,7 @@
                 Reset
               </button>
 
-              <button  class="btn btn-success" >
+              <button class="btn btn-success">
                 Update
               </button>
             </div>

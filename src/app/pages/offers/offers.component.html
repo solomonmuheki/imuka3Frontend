@@ -1,0 +1,72 @@
+<div class="card">
+  <div class="card-header" style="background-color: #007edb;">
+    Deal List
+  </div>
+  <div class="card-body">
+    <div class="container custom-container-2">
+      <!-- Show it when there is no offer -->
+      <div class="no-data text-center" *ngIf="Deal.length == 0">
+        <p>There is no Deal added yet!</p>
+        <button class="btn btn-outline-primary" routerLink="/create-employee">
+          Add Deal
+        </button>
+      </div>
+
+      <!-- Offers list table, it hides when there is no offer -->
+      <div *ngIf="Deal.length !== 0">
+        <div class="table-responsive-lg">
+          <table class="table table-bordered table-striped ">
+            <thead>
+              <tr>
+                <th scope="col">Deal Id</th>
+
+                <th scope="col">Created Date</th>
+                <th scope="col">Offered Amount</th>
+
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let offer of Offer
+                    | paginate: { itemsPerPage: count, currentPage: p }
+                "
+              >
+                <td>{{ offer.deal_id }}</td>
+                <td>{{ offer.updated_at | date }}</td>
+                <td>{{ offer.offer_amount }}</td>
+
+                <td class="text-center edit-block">
+                  <span
+                    *ngIf="offer.status == 0"
+                    class="btn btn-primary mr-1"
+                    (click)="ConfirmOffer(offer.id)"
+                  >
+                    Confirm Offer
+                  </span>
+                  <span
+                    *ngIf="offer.status == 1"
+                    class="btn btn-success mr-1"
+                    style="margin: 2px;"
+                    routerLink="/editdeal/{{ offer.id }}"
+                    >Approved
+                  </span>
+                  <span
+                    *ngIf="offer.status == 2"
+                    class="btn btn-danger mr-1"
+                    (click)="rejectOffer(offer.id)"
+                    >Rejected
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="text-right">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

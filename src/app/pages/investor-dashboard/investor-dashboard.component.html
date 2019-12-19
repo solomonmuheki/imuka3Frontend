@@ -1,0 +1,231 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <!-- Content Row -->
+  <div class="row">
+    <!-- Total Offers Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div
+                class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+              >
+                Total Offer(s)
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ totalOffers }}
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--  Confirmed Offers Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div
+                class="text-xs font-weight-bold text-success text-uppercase mb-1"
+              >
+                Confirmed Offer(s)
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--  Rejected Offer Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-info shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div
+                class="text-xs font-weight-bold text-info text-uppercase mb-1"
+              >
+                Rejected Offer(s)
+              </div>
+              <div class="row no-gutters align-items-center">
+                <div class="col-auto">
+                  <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                    50%
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending Offer Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-warning shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div
+                class="text-xs font-weight-bold text-warning text-uppercase mb-1"
+              >
+                Pending Offer(s)
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-comments fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Row -->
+
+  <div class="row">
+    <!-- Area Chart -->
+    <div class="col-xl-7 col-lg-6">
+      <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div
+          class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+        >
+          <h6 class="m-0 font-weight-bold text-primary">New Deals</h6>
+          <div class="dropdown no-arrow">
+            <a class="btn btn-info " routerLink="/investor-alldeals"
+              >More Deals
+            </a>
+          </div>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+          <div class="container custom-container-2">
+            <!-- Show it when there is no Deal -->
+            <div class="no-data text-center" *ngIf="Deal.length == 0">
+              <p>There is no current deals!</p>
+            </div>
+
+            <!-- Deals list table, it hides when there is no Deal -->
+            <div *ngIf="Deal.length !== 0">
+              <table class="table table-striped ">
+                <thead>
+                  <tr>
+                    <th scope="col">Company Name</th>
+
+                    <th scope="col">Created Date</th>
+                    <th scope="col">Tel</th>
+
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let deal of Deal">
+                    <td>{{ deal.companyName }}</td>
+                    <td>{{ deal.created_at | date }}</td>
+                    <td>{{ deal.telephone }}</td>
+
+                    <td class="text-center edit-block">
+                      <span
+                        class="btn btn-primary mr-1"
+                        routerLink="/investor-alldeals"
+                        ><i class="fa fa-share"></i>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="col-xl-5 col-lg-6">
+      <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div
+          class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+        >
+          <h6 class="m-0 font-weight-bold text-primary">Your Offers</h6>
+          <div class="dropdown no-arrow">
+            <a class="btn btn-info " routerLink="/investor-alldeals"
+              >More Offers
+            </a>
+          </div>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+          <div class="container custom-container-2">
+            <!-- Show it when there is no Deal -->
+            <div class="no-data text-center" *ngIf="Deal.length == 0">
+              <p>There is no Deal added yet!</p>
+              <button
+                class="btn btn-outline-primary"
+                routerLink="/create-employee"
+              >
+                Add Deal
+              </button>
+            </div>
+
+            <!-- Deals list table, it hides when there is no Deal -->
+            <div *ngIf="Deal.length !== 0">
+              <div class="table-responsive-lg">
+                <table class="table table-bordered table-striped ">
+                  <thead>
+                    <tr>
+                      <th scope="col">User Id</th>
+                      <th scope="col">Created Date</th>
+                      <th scope="col">Amount</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let deal of Offer
+                          | filter: filter
+                          | paginate: { itemsPerPage: count, currentPage: p }
+                      "
+                    >
+                      <td>{{ deal.id }}</td>
+                      <td>{{ deal.created_at | date }}</td>
+
+                      <td>{{ deal.offer_amount }}</td>
+
+                      <td class="text-center edit-block">
+                        <span
+                          class="btn btn-primary mr-1"
+                          data-toggle="modal"
+                          data-target="#myModal"
+                          routerLink="/dealdetails/{{ deal.id }}"
+                          ><i class="fa fa-share"></i>
+                        </span>
+                        <span
+                          class="btn btn-success mr-1"
+                          style="margin: 2px;"
+                          routerLink="/editdeal/{{ deal.id }}"
+                          ><i class="fa fa-edit"></i>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->

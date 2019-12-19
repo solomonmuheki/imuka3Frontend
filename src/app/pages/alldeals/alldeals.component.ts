@@ -18,14 +18,14 @@ export class AlldealsComponent implements OnInit {
     this.loadDeals();
   }
 
-  // Get employees list
+  // Get deal list
   loadDeals() {
     return this.restApi.getDeals().subscribe((data: {}) => {
       this.Deal = data;
     });
   }
 
-  // Delete employee
+  // Delete deal
   deleteDeal(id) {
     if (window.confirm("Are you sure, you want to delete?")) {
       this.restApi.deleteDeal(id).subscribe(data => {

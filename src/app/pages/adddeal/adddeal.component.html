@@ -49,126 +49,6 @@
                   ></small>
                 </div>
               </div>
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="inputCompanyType" style="display: block;"
-                    >Company Type:</label
-                  >
-                  <select
-                    class="form-control"
-                    class="custom-select d-block w-100"
-                    (change)="changeCompanyType($event)"
-                    formControlName="companyType"
-                  >
-                    <option selected>Choose...</option>
-                    <option
-                      *ngFor="let company_Type of CompanyType"
-                      [ngValue]="company_Type"
-                      >{{ company_Type }}</option
-                    >
-                  </select>
-                  <small class="form-text text-muted"
-                    ><i
-                      class="fa fa-info-circle fa-lg"
-                      data-toggle="tooltip"
-                      data-placement="top"
-                      title="Chooose the Company Type"
-                    ></i
-                  ></small>
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="inputIndustry">Company Industry:</label>
-                  <select
-                    class="form-control"
-                    formControlName="companyIndustry"
-                    name="companyIndustry"
-                  >
-                    <option selected>Choose...</option>
-                    <option
-                      *ngFor="let company_Industry of CompanyIndustry"
-                      [ngValue]="company_Industry"
-                      >{{ company_Industry }}
-                    </option>
-                  </select>
-
-                  <small class="form-text text-muted"
-                    ><i
-                      class="fa fa-info-circle fa-lg"
-                      data-toggle="tooltip"
-                      data-placement="top"
-                      title="Choose the Company Industry"
-                    ></i
-                  ></small>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-8">
-                  <label for="inputAddress">Address Location:</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    formControlName="companyAddress"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.companyAddress.errors
-                    }"
-                  />
-                  <div
-                    *ngIf="registerDeal.controls['companyAddress'].errors"
-                    class="invalid-feedback"
-                  >
-                    <div
-                      *ngIf="
-                        registerDeal.controls['companyAddress'].errors.required
-                      "
-                    >
-                      Address is required
-                    </div>
-                  </div>
-                  <small class="form-text text-muted"
-                    ><i
-                      class="fa fa-info-circle fa-lg"
-                      data-toggle="tooltip"
-                      data-placement="top"
-                      title="This is the Company Address and Location"
-                    ></i
-                  ></small>
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="phoneNumber">Phone Number:</label>
-                  <input
-                    formControlName="companyTel"
-                    class="form-control"
-                    [ngClass]="{
-                      'is-invalid': submitted && f.companyTel.errors
-                    }"
-                    type="tel"
-                  />
-                  <div
-                    *ngIf="registerDeal.controls['companyTel'].errors"
-                    class="invalid-feedback"
-                  >
-                    <div
-                      *ngIf="
-                        registerDeal.controls['companyTel'].errors.required
-                      "
-                    >
-                      Telephone is required
-                    </div>
-                  </div>
-                  <small class="form-text text-muted"
-                    ><i
-                      class="fa fa-info-circle fa-lg"
-                      data-toggle="tooltip"
-                      data-placement="top"
-                      title="+256 78543213"
-                    ></i
-                  ></small>
-                </div>
-              </div>
-              <!-- </form> -->
-            </div>
-            <!-- Raise Money Details Section -->
-            <div class="col-sm-6">
               <div class="form-group ">
                 <label for="Email">Email:</label>
                 <input
@@ -208,6 +88,152 @@
                   ></i
                 ></small>
               </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="inputAddress">Address Location:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="companyAddress"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.companyAddress.errors
+                    }"
+                  />
+                  <div
+                    *ngIf="registerDeal.controls['companyAddress'].errors"
+                    class="invalid-feedback"
+                  >
+                    <div
+                      *ngIf="
+                        registerDeal.controls['companyAddress'].errors.required
+                      "
+                    >
+                      Address is required
+                    </div>
+                  </div>
+                  <small class="form-text text-muted"
+                    ><i
+                      class="fa fa-info-circle fa-lg"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="This is the Company Address and Location"
+                    ></i
+                  ></small>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-8">
+                  <label for="phoneNumber">Phone Number:</label>
+                  <input
+                    formControlName="companyTel"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.companyTel.errors
+                    }"
+                    type="tel"
+                  />
+                  <div
+                    *ngIf="registerDeal.controls['companyTel'].errors"
+                    class="invalid-feedback"
+                  >
+                    <div
+                      *ngIf="
+                        registerDeal.controls['companyTel'].errors.required
+                      "
+                    >
+                      Telephone is required
+                    </div>
+                  </div>
+                  <small class="form-text text-muted"
+                    ><i
+                      class="fa fa-info-circle fa-lg"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="+256 78543213"
+                    ></i
+                  ></small>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="rateDeal">Rate Deal (1- 5):</label>
+                  <select
+                  class="form-control"
+                  class="custom-select d-block w-100"
+                  formControlName="rateDeal"
+                >
+                  <option selected>1</option>
+                  <option>2</option>
+                  <option >3</option>
+                  <option>4</option>
+                  <option>5</option>
+                
+                  >
+                </select>
+                  
+                  <small class="form-text text-muted"
+                    ><i
+                      class="fa fa-info-circle fa-lg"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Rate the deal an the scale of 1 to 5"
+                    ></i
+                  ></small>
+                </div>
+              </div>
+              <!-- </form> -->
+            </div>
+            <!-- Raise Money Details Section -->
+            <div class="col-sm-6">
+              <div class="form-group ">
+                <label for="inputCompanyType" style="display: block;"
+                  >Company Type:</label
+                >
+                <select
+                  class="form-control"
+                  class="custom-select d-block w-100"
+                  (change)="changeCompanyType($event)"
+                  formControlName="companyType"
+                >
+                  <option selected>Choose...</option>
+                  <option
+                    *ngFor="let company_Type of CompanyType"
+                    [ngValue]="company_Type"
+                    >{{ company_Type }}</option
+                  >
+                </select>
+                <small class="form-text text-muted"
+                  ><i
+                    class="fa fa-info-circle fa-lg"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Chooose the Company Type"
+                  ></i
+                ></small>
+              </div>
+              <div class="form-group ">
+                <label for="inputIndustry">Company Industry:</label>
+                <select
+                  class="form-control"
+                  formControlName="companyIndustry"
+                  name="companyIndustry"
+                >
+                  <option selected>Choose...</option>
+                  <option
+                    *ngFor="let company_Industry of CompanyIndustry"
+                    [ngValue]="company_Industry"
+                    >{{ company_Industry }}
+                  </option>
+                </select>
+
+                <small class="form-text text-muted"
+                  ><i
+                    class="fa fa-info-circle fa-lg"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Choose the Company Industry"
+                  ></i
+                ></small>
+              </div>
               <div class="form-group ">
                 <label for="phoneNumber">Amount to Raise: </label>
                 <input
@@ -240,16 +266,16 @@
                 ></small>
               </div>
               <small class="form-text text-muted"
-              >300 x 300px recommended. JPGs, JPEGs, and PNGs
-              supported.</small
-            >
+                >300 x 300px recommended. JPGs, JPEGs, and PNGs
+                supported.</small
+              >
               <div>
                 <input
-                  type="file"  (change)="uploadFile($event)"
-                  class="form-control" 
+                  type="file"
+                  (change)="uploadFile($event)"
+                  class="form-control"
                 />
               </div>
-            
             </div>
           </div>
           <hr />
@@ -257,7 +283,7 @@
           <div class="row">
             <div class="col-sm-6">
               <legend class="lagend">Deal Details</legend>
-             
+
               <div class="mb-3">
                 <label for="validationTextarea" for="companyDesc"
                   >Deal Detailed Description</label
@@ -290,7 +316,7 @@
                   ></i
                 ></small>
               </div>
-             
+
               <div
                 *ngIf="registerDeal.controls['image'].errors"
                 class="invalid-feedback"
@@ -299,14 +325,16 @@
                   Image is required
                 </div>
               </div>
- <!-- Image Preview -->
- <div class="form-group">
-  <div class="preview" *ngIf="preview && preview !== null">
-    <img [src]="preview" [alt]="registerDeal.value.companyName" style="height: 100px; width: 100px;">
-  </div>
-</div>
-
-
+              <!-- Image Preview -->
+              <div class="form-group">
+                <div class="preview" *ngIf="preview && preview !== null">
+                  <img
+                    [src]="preview"
+                    [alt]="registerDeal.value.companyName"
+                    style="height: 100px; width: 100px;"
+                  />
+                </div>
+              </div>
             </div>
             <!-- Second colum of the second row -->
             <div class="col-sm-6">
@@ -324,7 +352,7 @@
                   type="checkbox"
                   class="custom-control-input"
                   id="customCheck1"
-                  (change)="changed($event)" 
+                  (change)="changed($event)"
                 />
                 <label class="custom-control-label" for="customCheck1"
                   >Business Plan</label
@@ -423,7 +451,7 @@
                 Reset
               </button>
 
-              <button  class="btn btn-success">
+              <button class="btn btn-success">
                 Save
               </button>
             </div>

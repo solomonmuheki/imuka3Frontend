@@ -11,6 +11,7 @@ import { RequestResetComponent } from "../signup/password/request-reset/request-
 import { ResponseResetComponent } from "../signup/password/response-reset/response-reset.component";
 import { NgxPaginationModule } from "ngx-pagination";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     CommonModule,
     HomeRoutingModule,
     NgxPaginationModule,
+    NgbModule,
     FormsModule,
     ReactiveFormsModule
   ]
