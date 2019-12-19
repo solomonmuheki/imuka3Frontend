@@ -1,12 +1,20 @@
-<!-- Masthead -->
-<header class="masthead text-white text-center" style="">
-  <div class="overlay"></div>
-  <div class="container" style="margin-bottom: 0em;">
+<div>
+  <!-- Masthead -->
+  <header class="masthead text-white text-center" style="padding-top: 700;">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-9 mx-auto">
+          <h1 class="mb-5"></h1>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="search text-white text-center">
+    <div class="overlay"></div>
     <div class="row">
       <div class="col-xl-9 mx-auto">
-        <h1 class="mb-5">
-          Connect to Business Opportunities.
-        </h1>
+        <h3 class="">Connect to Business Opportunities.</h3>
       </div>
       <div class="col-md-12 col-lg-12 col-xl-10 mx-auto">
         <form>
@@ -21,7 +29,10 @@
                 <option>Catering</option>
               </select>
             </div>
-            <div class="col-12 col-md-3 mb-2 mb-md-0">
+            <div
+              class="col-12 col-md-3 mb-2 mb-md-0"
+              style="padding-bottom: 0px; margin-bottom: 0px;"
+            >
               <select class=" form-control-lg" id="sel1" style="width: 100%;">
                 <option value=""> All Location</option>
                 <option value="Bundibugyo">Bundibugyo</option>
@@ -54,8 +65,7 @@
       </div>
     </div>
   </div>
-</header>
-
+</div>
 <section class="featured-blog mtb-40">
   <h2 class="deals-head">Latest deals</h2>
   <div class="container">
@@ -82,6 +92,11 @@
           <div style="text-align: center;">
             <label class="label">{{ deal.companyName }}</label>
           </div>
+          <ngb-rating rate="{{ deal.rating }}">
+            <ng-template let-fill="fill" let-index="index">
+              <span class="star" [class.filled]="fill === 100">&#9733;</span>
+            </ng-template>
+          </ngb-rating>
           <div style="text-align: center;">
             <p>
               Needs
@@ -94,17 +109,14 @@
               >
               Day(s) time
             </p>
-            <p>{{ deal.detailedDescription }}</p>
+            <div style="margin:10px">
+              <p class="b">{{ deal.detailedDescription }}</p>
+            </div>
           </div>
 
           <div style="text-align: center;">
             <a routerLink="/login" class="btn btn-info ">Read more</a>
           </div>
-          <ngb-rating rate="{{ deal.rating }}">
-            <ng-template let-fill="fill" let-index="index">
-              <span class="star" [class.filled]="fill === 100">&#9733;</span>
-            </ng-template>
-          </ngb-rating>
         </div>
       </div>
     </div>
