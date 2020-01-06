@@ -14,65 +14,15 @@ export class InvestorDashboardComponent implements OnInit {
   Deal: any = [];
   Offer: any = [];
   totalOffers: number;
+  confirmedOffers: any = 0;
+  rejectedOffers: any = 0;
+  pendingOffers: any = 0;
 
   // Pagination parameters.
   p: Number = 1;
   count: Number = 5;
   bsModalRef: BsModalRef;
-  settings = {
-    columns: {
-      companyName: {
-        title: "Company Name"
-      },
-      companyType: {
-        title: "Company Type"
-      },
-      companyIndustry: {
-        title: "Company Industry"
-      },
-      Address: {
-        title: "Address"
-      },
-      telephone: {
-        title: "telephone"
-      },
-      AmountToRaise: {
-        title: "Amount To Raise"
-      }
-    },
-    actions: {
-      columnTitle: "Action",
-      add: false,
-      edit: false,
-      delete: false,
-      position: "left",
-      custom: [
-        {
-          name: "yourAction",
-          title: '<i class="ion-document" title="YourAction"></i>'
-        },
-        {
-          name: "editAction",
-          title: '<i class="fa fa-edit" title="Edit"></i>'
-        },
-        {
-          name: "deleteAction",
-          title: '<i class="far fa-trash-alt" title="delete"></i>'
-        }
-      ]
-    },
-    attr: {
-      class: "table table-striped table-bordered "
-    },
-    defaultStyle: false
-  };
-  //sorting
-  key: string = "name"; //set default
-  reverse: boolean = false;
-  sort(key) {
-    this.key = key;
-    this.reverse = !this.reverse;
-  }
+
   constructor(
     public restApi: DealrestApiService,
     public offerRestApi: OfferDealService,
@@ -90,12 +40,30 @@ export class InvestorDashboardComponent implements OnInit {
       this.Deal = data;
     });
   }
-  // Get deal list
+  // Get offer list
   loadOffers() {
     return this.offerRestApi.getOffers().subscribe((data: {}) => {
       this.Offer = data;
       this.totalOffers = this.Offer.length;
-      console.log("data" + this.Offer);
+
+      //getting number of confirmed offers
+      let confirmedOffers1 = this.Offer.filter(status1 => {
+        return status1.status == 1;
+      });
+
+      this.confirmedOffers = confirmedOffers1.length;
+      //getting number of rejected offers
+      let rejectedOffers1 = this.Offer.filter(status1 => {
+        return status1.status == 2;
+      });
+
+      this.rejectedOffers = rejectedOffers1.length;
+      //getting number of pending offers
+      let pendingOffers1 = this.Offer.filter(status1 => {
+        return status1.status == 0;
+      });
+
+      this.pendingOffers = pendingOffers1.length;
     });
   }
 
@@ -119,31 +87,5 @@ export class InvestorDashboardComponent implements OnInit {
     });
   }
 
-  // deletePost(postId: number, title: string) {
-  //   this.bsModalRef = this.bsModalService.show(DeletePostComponent);
-  //   this.bsModalRef.content.postId = postId;
-  //   this.bsModalRef.content.title = title;
-  //   this.bsModalRef.content.event.subscribe(result => {
-  //     console.log("deleted", result);
-  //     if (result == "OK") {
-  //       setTimeout(() => {
-  //         this.postList = [];
-  //         this.getPosts();
-  //       }, 5000);
-  //     }
-  //   });
-  // }
-
-  // editPost(postId: number) {
-  //   this.blogService.changePostId(postId);
-
-  //   this.bsModalRef = this.bsModalService.show(EditPostComponent);
-  //   this.bsModalRef.content.event.subscribe(result => {
-  //     if (result == "OK") {
-  //       setTimeout(() => {
-  //         this.getPosts();
-  //       }, 5000);
-  //     }
-  //   });
-  // }
+ 
 }

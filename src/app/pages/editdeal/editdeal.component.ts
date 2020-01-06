@@ -1,11 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { DealrestApiService } from "../../sharedservice/dealrest-api.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
 import { DealRegistrationApiService } from "../../sharedservice/deal-registration-api.service";
 
-import { Deal } from "src/app/sharedservice/deal";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { ToastrService } from "ngx-toastr"; // Alert message using NGX toastr
 
 @Component({
@@ -23,7 +20,7 @@ export class EditdealComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public editDealService: DealRegistrationApiService,
-    public restApi: DealrestApiService,
+
     public actRoute: ActivatedRoute,
     public router: Router,
     public toastr: ToastrService
@@ -59,7 +56,7 @@ export class EditdealComponent implements OnInit {
 
   ngOnInit() {
     const id = this.actRoute.snapshot.paramMap.get("id"); // Getting current component's id or information using ActivatedRoute service
-    this.restApi.getDeal(id).subscribe(data => {
+    this.editDealService.getDeal(id).subscribe(data => {
       this.updateThisDealData(data);
     });
   }

@@ -17,9 +17,6 @@
                 {{ totalOffers }}
               </div>
             </div>
-            <div class="col-auto">
-              <i class="fas fa-calendar fa-2x text-gray-300"></i>
-            </div>
           </div>
         </div>
       </div>
@@ -36,7 +33,9 @@
               >
                 Confirmed Offer(s)
               </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ confirmedOffers }}
+              </div>
             </div>
           </div>
         </div>
@@ -57,7 +56,7 @@
               <div class="row no-gutters align-items-center">
                 <div class="col-auto">
                   <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                    50%
+                    {{ rejectedOffers }}
                   </div>
                 </div>
               </div>
@@ -78,10 +77,9 @@
               >
                 Pending Offer(s)
               </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-comments fa-2x text-gray-300"></i>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ pendingOffers }}
+              </div>
             </div>
           </div>
         </div>
@@ -123,8 +121,6 @@
 
                     <th scope="col">Created Date</th>
                     <th scope="col">Tel</th>
-
-                    <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -132,14 +128,6 @@
                     <td>{{ deal.companyName }}</td>
                     <td>{{ deal.created_at | date }}</td>
                     <td>{{ deal.telephone }}</td>
-
-                    <td class="text-center edit-block">
-                      <span
-                        class="btn btn-primary mr-1"
-                        routerLink="/investor-alldeals"
-                        ><i class="fa fa-share"></i>
-                      </span>
-                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -149,7 +137,6 @@
       </div>
     </div>
 
-    <!-- Pie Chart -->
     <div class="col-xl-5 col-lg-6">
       <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
@@ -180,13 +167,11 @@
             <!-- Deals list table, it hides when there is no Deal -->
             <div *ngIf="Deal.length !== 0">
               <div class="table-responsive-lg">
-                <table class="table table-bordered table-striped ">
+                <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th scope="col">User Id</th>
                       <th scope="col">Created Date</th>
                       <th scope="col">Amount</th>
-                      <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -197,26 +182,9 @@
                           | paginate: { itemsPerPage: count, currentPage: p }
                       "
                     >
-                      <td>{{ deal.id }}</td>
                       <td>{{ deal.created_at | date }}</td>
 
                       <td>{{ deal.offer_amount }}</td>
-
-                      <td class="text-center edit-block">
-                        <span
-                          class="btn btn-primary mr-1"
-                          data-toggle="modal"
-                          data-target="#myModal"
-                          routerLink="/dealdetails/{{ deal.id }}"
-                          ><i class="fa fa-share"></i>
-                        </span>
-                        <span
-                          class="btn btn-success mr-1"
-                          style="margin: 2px;"
-                          routerLink="/editdeal/{{ deal.id }}"
-                          ><i class="fa fa-edit"></i>
-                        </span>
-                      </td>
                     </tr>
                   </tbody>
                 </table>

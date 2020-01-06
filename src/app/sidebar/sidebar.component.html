@@ -3,13 +3,29 @@
     <a href="#" class="simple-text logo-mini">
       <div class="logo-image-small"></div>
     </a>
-    <a href="#" class="simple-text logo-normal">
+    <a href="#" (click)="logout($event)" class="simple-text logo-normal">
       <img src="assets/ImukaAccess.png" style="height: 100px; width: 100px;" />
     </a>
   </div>
   <ul class="nav">
     <li
       *ngFor="let menuItem of menuItems"
+      routerLinkActive="active"
+      class="{{ menuItem.class }}"
+    >
+      <a
+        [routerLink]="[menuItem.path]"
+        style="font-size: 14px;"
+        *ngIf="loggedIn"
+      >
+        <i class=" {{ menuItem.icon }}"></i>
+        <p>{{ menuItem.title }}</p>
+      </a>
+    </li>
+  </ul>
+  <ul class="nav">
+    <li
+      *ngFor="let menuItem of menuInvestorItems"
       routerLinkActive="active"
       class="{{ menuItem.class }}"
     >

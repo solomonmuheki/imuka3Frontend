@@ -13,58 +13,12 @@ import { MakeOfferComponent } from "../make-offer/make-offer.component";
 export class InvestorAlldealsComponent implements OnInit {
   Deal: any = [];
   Offer: any = [];
-
+  display = true;
   // Pagination parameters.
   p: Number = 1;
   count: Number = 5;
   bsModalRef: BsModalRef;
-  settings = {
-    columns: {
-      companyName: {
-        title: "Company Name"
-      },
-      companyType: {
-        title: "Company Type"
-      },
-      companyIndustry: {
-        title: "Company Industry"
-      },
-      Address: {
-        title: "Address"
-      },
-      telephone: {
-        title: "telephone"
-      },
-      AmountToRaise: {
-        title: "Amount To Raise"
-      }
-    },
-    actions: {
-      columnTitle: "Action",
-      add: false,
-      edit: false,
-      delete: false,
-      position: "left",
-      custom: [
-        {
-          name: "yourAction",
-          title: '<i class="ion-document" title="YourAction"></i>'
-        },
-        {
-          name: "editAction",
-          title: '<i class="fa fa-edit" title="Edit"></i>'
-        },
-        {
-          name: "deleteAction",
-          title: '<i class="far fa-trash-alt" title="delete"></i>'
-        }
-      ]
-    },
-    attr: {
-      class: "table table-striped table-bordered "
-    },
-    defaultStyle: false
-  };
+
   //sorting
   key: string = "name"; //set default
   reverse: boolean = false;
@@ -87,13 +41,13 @@ export class InvestorAlldealsComponent implements OnInit {
   loadDeals() {
     return this.restApi.getDeals().subscribe((data: {}) => {
       this.Deal = data;
+      this.display = false;
     });
   }
   // Get deal list
   loadOffers() {
     return this.offerRestApi.getOffers().subscribe((data: {}) => {
       this.Offer = data;
-      console.log("data" + this.Offer);
     });
   }
 
@@ -116,32 +70,4 @@ export class InvestorAlldealsComponent implements OnInit {
       }
     });
   }
-
-  // deletePost(postId: number, title: string) {
-  //   this.bsModalRef = this.bsModalService.show(DeletePostComponent);
-  //   this.bsModalRef.content.postId = postId;
-  //   this.bsModalRef.content.title = title;
-  //   this.bsModalRef.content.event.subscribe(result => {
-  //     console.log("deleted", result);
-  //     if (result == "OK") {
-  //       setTimeout(() => {
-  //         this.postList = [];
-  //         this.getPosts();
-  //       }, 5000);
-  //     }
-  //   });
-  // }
-
-  // editPost(postId: number) {
-  //   this.blogService.changePostId(postId);
-
-  //   this.bsModalRef = this.bsModalService.show(EditPostComponent);
-  //   this.bsModalRef.content.event.subscribe(result => {
-  //     if (result == "OK") {
-  //       setTimeout(() => {
-  //         this.getPosts();
-  //       }, 5000);
-  //     }
-  //   });
-  // }
 }

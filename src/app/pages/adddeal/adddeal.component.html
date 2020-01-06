@@ -20,6 +20,7 @@
                     type="text"
                     formControlName="companyName"
                     class="form-control"
+                    oninput="this.value = this.value.toUpperCase()"
                     [ngClass]="{
                       'is-invalid': submitted && f.companyName.errors
                     }"
@@ -96,6 +97,7 @@
                     type="text"
                     class="form-control"
                     formControlName="companyAddress"
+                    oninput="this.value = this.value.toUpperCase()"
                     [ngClass]="{
                       'is-invalid': submitted && f.companyAddress.errors
                     }"
@@ -157,19 +159,19 @@
                 <div class="form-group col-md-4">
                   <label for="rateDeal">Rate Deal (1- 5):</label>
                   <select
-                  class="form-control"
-                  class="custom-select d-block w-100"
-                  formControlName="rateDeal"
-                >
-                  <option selected>1</option>
-                  <option>2</option>
-                  <option >3</option>
-                  <option>4</option>
-                  <option>5</option>
-                
+                    class="form-control"
+                    class="custom-select d-block w-100"
+                    formControlName="rateDeal"
                   >
-                </select>
-                  
+                    <option selected>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+
+                    >
+                  </select>
+
                   <small class="form-text text-muted"
                     ><i
                       class="fa fa-info-circle fa-lg"
@@ -334,7 +336,15 @@
                     style="height: 100px; width: 100px;"
                   />
                 </div>
+                <div *ngIf="display" style="margin:auto;padding-left: 45%;">
+
+                <app-half-circle-spinner
+                  [animationDuration]="1000"
+                  [size]="60"
+                  [color]="'#ff1d5e'"
+                ></app-half-circle-spinner>
               </div>
+            </div>
             </div>
             <!-- Second colum of the second row -->
             <div class="col-sm-6">

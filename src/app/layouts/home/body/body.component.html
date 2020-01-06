@@ -19,7 +19,7 @@
       <div class="col-md-12 col-lg-12 col-xl-10 mx-auto">
         <form>
           <div class="form-row">
-            <div class="col-12 col-md-3 mb-2 mb-md-0">
+            <div class="col-12 col-md-4 mb-2 mb-md-0">
               <select class="form-control-lg" id="sel1" style="width: 100%;">
                 <option>All Industry</option>
                 <option>Agriculture</option>
@@ -30,7 +30,7 @@
               </select>
             </div>
             <div
-              class="col-12 col-md-3 mb-2 mb-md-0"
+              class="col-12 col-md-4 mb-2 mb-md-0"
               style="padding-bottom: 0px; margin-bottom: 0px;"
             >
               <select class=" form-control-lg" id="sel1" style="width: 100%;">
@@ -43,19 +43,8 @@
                 <option value="Kasese">Kasese</option>
               </select>
             </div>
-            <div class="col-12 col-md-3 mb-2 mb-md-0">
-              <select class=" form-control-lg" id="sel1" style="width: 100%;">
-                <option selected disabled>All Deal Value / Range</option>
-                <option>100,000-500,000</option>
-                <option>600,000-1,000,000</option>
-                <option>1M - 5M</option>
-                <option>6M - 10M</option>
-                <option>11M - 50M</option>
-                <option>60M - 100M</option>
-                <option>Over 100M</option>
-              </select>
-            </div>
-            <div class="col-12 col-md-3 mb-2 mb-md-0">
+
+            <div class="col-12 col-md-4 mb-2 mb-md-0">
               <button type="submit" class="btn  btn-primary btn-lg btn-block">
                 Search
               </button>
@@ -69,7 +58,7 @@
 <section class="featured-blog mtb-40">
   <h2 class="deals-head">Latest deals</h2>
   <div class="container">
-    <div class="" *ngIf="Deal.length == 0" style="text-align: center;">
+    <div class="" *ngIf="Deal3.length == 0" style="text-align: center;">
       <div class="alert alert-info">
         <p>There is no recent Deal added yet!</p>
       </div>
@@ -77,8 +66,8 @@
         Add Deal
       </button>
     </div>
-    <div class="row">
-      <div class="col-md-4" *ngFor="let deal of Deal; let i = index">
+    <div class="row" *ngIf="Deal3.length !== 0">
+      <div class="col-md-4" *ngFor="let deal of Deal3; let i = index">
         <div
           class="blog-box"
           style=" margin-bottom: 40px; padding-bottom: 10px;"
@@ -120,5 +109,15 @@
         </div>
       </div>
     </div>
+    <div *ngIf="display" style="margin:auto;padding-left: 45%;">
+      <app-half-circle-spinner
+        [animationDuration]="1000"
+        [size]="60"
+        [color]="'#4169E1'"
+      ></app-half-circle-spinner>
+    </div>
   </div>
+  <!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
+    <p style="color: white">Please Wait. </p>  
+    </ngx-spinner>  -->
 </section>

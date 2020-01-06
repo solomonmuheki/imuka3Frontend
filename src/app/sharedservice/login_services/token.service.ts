@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import * as jwt_decode from "jwt-decode";
 
 @Injectable()
 export class TokenService {
@@ -9,14 +10,18 @@ export class TokenService {
 
   constructor() {}
 
-  handle(token, user_role, user_id) {
+  handle(token, expires_in, user_role, user_id) {
     this.set(token);
+    this.setExpires_in(expires_in);
     this.setUserRole(user_role);
     this.setUser_id(user_id);
   }
 
   set(token) {
     localStorage.setItem("token", token);
+  }
+  setExpires_in(expires_in) {
+    localStorage.setItem("Expires in", expires_in);
   }
   setUserRole(user_role) {
     localStorage.setItem("user_role", user_role);
@@ -54,5 +59,23 @@ export class TokenService {
 
   loggedIn() {
     return this.isValid();
+  }
+  getTokenExpirationDate(token: string): Date {
+    const decoded = jwt_decode(token);
+
+    if (decoded.exp === undefined) return null;
+
+    const date = new Date(0);
+    date.setUTCSeconds(decoded.exp);
+    return date;
+  }
+
+  isTokenExpired(token?: string): boolean {
+    if (!token) token = this.get();
+    if (!token) return true;
+
+    const date = this.getTokenExpirationDate(token);
+    if (date === undefined) return false;
+    return !(date.valueOf() > new Date().valueOf());
   }
 }

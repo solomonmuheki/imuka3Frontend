@@ -17,7 +17,8 @@ export class OffersComponent implements OnInit {
   // Pagination parameters.
   p: Number = 1;
   count: Number = 5;
-
+  user_id = this.getUserId();
+  display = true;
   constructor(
     public restApi: DealrestApiService,
     public router: Router,
@@ -26,31 +27,25 @@ export class OffersComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadDeals();
+    //this.loadDeals();
     this.loadOffers();
   }
+  //getting user id
+  getUserId() {
+    return localStorage.getItem("user_id");
+  }
 
   // Get offer list
-  loadDeals() {
-    return this.restApi.getDeals().subscribe((data: {}) => {
-      this.Deal = data;
-    });
-  }
-  // Get offer list
+
   loadOffers() {
-    return this.offerRestApi.getOffers().subscribe((data: {}) => {
-      this.Offer = data;
-    });
+    return this.offerRestApi
+      .getUserOffers(this.user_id)
+      .subscribe((data: {}) => {
+        this.Offer = data;
+        this.display = false;
+      });
   }
 
-  // Delete employee
-  deleteDeal(id) {
-    if (window.confirm("Are you sure, you want to delete?")) {
-      this.restApi.deleteDeal(id).subscribe(data => {
-        this.loadDeals();
-      });
-    }
-  }
   //function called when the button is clicked to corfirm offer
   ConfirmOffer(offerId) {
     let confirmOffer: string = "1";
@@ -85,7 +80,7 @@ export class OffersComponent implements OnInit {
   }
   //function called when the button is clicked to corfirm offer
   rejectOffer(offerId) {
-    let rejectOffer: string = "2";
+    let rejectOffer: string = "3";
 
     const formData = new FormData();
 

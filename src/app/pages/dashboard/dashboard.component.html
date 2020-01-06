@@ -1,7 +1,8 @@
 <!-- Dashbaord Counts -->
+
 <div class="row">
   <!-- Item one -->
-  <div class="col-lg-4 col-md-6 col-sm-6">
+  <div class="col-lg-6 col-md-6 col-sm-6">
     <div class="card card-stats">
       <div class="card-body ">
         <div class="row">
@@ -19,7 +20,7 @@
           </div>
           <div class="col-6 col-md-6">
             <div class="numbers">
-              <p class="card-category">Total Deals in a year</p>
+              <p class="card-category">Deals in {{ year }}</p>
               <p class="card-title">{{ totalDealsThisYear }}</p>
               <p></p>
             </div>
@@ -29,7 +30,11 @@
       <!-- card footer -->
       <div class="card-footer ">
         <hr />
-        <a href="#" class="stretched-link" style="text-decoration: none;">
+        <a
+          routerLink="/alldeals"
+          class="stretched-link"
+          style="text-decoration: none;"
+        >
           <div class="stats">
             <i class="fa fa-share-square fa-2x"></i> View Details ...
           </div>
@@ -38,19 +43,26 @@
     </div>
   </div>
   <!-- Item Two -->
-  <div class="col-lg-4 col-md-6 col-sm-6">
+  <div class="col-lg-6 col-md-6 col-sm-6">
     <div class="card card-stats">
       <div class="card-body ">
         <div class="row">
-          <div class="col-5 col-md-4">
+          <div class="col-2 col-md-2">
             <div class="icon-big text-center icon-warning">
               <i class="fa fa-file-o text-warning"></i>
             </div>
           </div>
-          <div class="col-7 col-md-8">
+          <div class="col-4 col-md-4">
             <div class="numbers">
-              <p class="card-category">Bids and Offers</p>
-              <p class="card-title">5034</p>
+              <p class="card-category">All Offers</p>
+              <p class="card-title">{{ totalOffers }}</p>
+              <p></p>
+            </div>
+          </div>
+          <div class="col-6 col-md-6">
+            <div class="numbers">
+              <p class="card-category">Offers in {{ year }}</p>
+              <p class="card-title">{{ totalOffersThisYear }}</p>
               <p></p>
             </div>
           </div>
@@ -59,37 +71,11 @@
       <!-- card footer details-->
       <div class="card-footer ">
         <hr />
-        <a href="#" class="stretched-link" style="text-decoration: none;">
-          <div class="stats">
-            <i class="fa fa-share-square fa-2x"></i> View Details ...
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <!-- Item Three -->
-  <div class="col-lg-4 col-md-6 col-sm-6">
-    <div class="card card-stats">
-      <div class="card-body ">
-        <div class="row">
-          <div class="col-5 col-md-4">
-            <div class="icon-big text-center icon-warning">
-              <i class="fa fa-file-o text-success"></i>
-            </div>
-          </div>
-          <div class="col-7 col-md-8">
-            <div class="numbers">
-              <p class="card-category">New Deals</p>
-              <p class="card-title">2325</p>
-              <p></p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Card Footer Details -->
-      <div class="card-footer ">
-        <hr />
-        <a href="#" class="stretched-link" style="text-decoration: none;">
+        <a
+          routerLink="/offers"
+          class="stretched-link"
+          style="text-decoration: none;"
+        >
           <div class="stats">
             <i class="fa fa-share-square fa-2x"></i> View Details ...
           </div>
@@ -107,27 +93,51 @@
           <h5 class="card-title">Overview {{ year }}</h5>
         </div>
         <div class="panel-title pull-right">
-          Year :
-          <input
-            type="text"
-            [(ngModel)]="year"
-            placeholder="2019"
-            style="
-              outline: 0;
-              border-width: 0 0 2px;
-              border-color: blue;"
-          />
+          <form [formGroup]="angularForm" novalidate>
+            <mat-form-field>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                placeholder="Choose a date"
+                formControlName="date"
+                #date
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <button
+              class="btn btn-primary btn-sm"
+              [disabled]="!angularForm.valid"
+              mat-button
+              (click)="loadYearlyOffersAndDeals()"
+              style="margin-left: 4px;"
+            >
+              Submit
+            </button>
+          </form>
         </div>
       </div>
       <!-- chart-body -->
       <div class="card-body">
+        <div *ngIf="display" style="margin:auto;padding-left: 45%;">
+          <app-intersecting-circles-spinner
+            [animationDuration]="1200"
+            [size]="70"
+            [color]="'#4169E1'"
+          ></app-intersecting-circles-spinner>
+        </div>
+        <div *ngIf="Deal.length == 0" class="alert alert-info">
+          <strong>!!!</strong> There is no Deals and Offers for this year
+        </div>
         <canvas id="speedChart" width="400" height="150"></canvas>
       </div>
       <div class="card-footer">
         <div class="chart-legend" style="text-align: center;">
-          <i class="fa fa-circle text-info"></i> Total Number of Deals
-          <i class="fa fa-circle text-warning"></i> New Bids and Offer
-          <i class="fa fa-circle text-success"></i> New Deals Added
+          <i class="fa fa-circle text-info"></i> Deals
+          <i class="fa fa-circle text-warning"></i> Offers
         </div>
         <hr />
       </div>

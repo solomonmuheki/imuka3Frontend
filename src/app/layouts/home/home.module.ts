@@ -12,6 +12,10 @@ import { ResponseResetComponent } from "../signup/password/response-reset/respon
 import { NgxPaginationModule } from "ngx-pagination";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgxSpinnerModule } from "ngx-spinner";
+import { LoopingRhumbusesSpinnerModule } from "angular-epic-spinners";
+import { IntersectingCirclesSpinnerModule } from "angular-epic-spinners";
+import { HalfCircleSpinnerModule } from "angular-epic-spinners";
 
 @NgModule({
   declarations: [
@@ -29,6 +33,10 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
     HomeRoutingModule,
     NgxPaginationModule,
     NgbModule,
+    NgxSpinnerModule,
+    LoopingRhumbusesSpinnerModule,
+    HalfCircleSpinnerModule,
+    HalfCircleSpinnerModule,
     FormsModule,
     ReactiveFormsModule
   ]

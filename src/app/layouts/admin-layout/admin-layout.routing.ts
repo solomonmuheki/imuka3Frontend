@@ -13,22 +13,19 @@ import { InvestorAlldealsComponent } from "../../pages/investor-alldeals/investo
 import { InvestorDealdetailComponent } from "../../pages/investor-dealdetail/investor-dealdetail.component";
 import { InvestorAlloffersComponent } from "../../pages/investor-alloffers/investor-alloffers.component";
 import { InvestorMakeofferComponent } from "../../pages/investor-makeoffer/investor-makeoffer.component";
+import { DealOffersComponent } from "../../pages/deal-offers/deal-offers.component";
 
 export const AdminLayoutRoutes: Routes = [
-  {
-    path: "",
-    redirectTo: "dashboard",
-    pathMatch: "full"
-  },
   { path: "dashboard", component: DashboardComponent },
   { path: "adddeal", component: AdddealComponent },
   { path: "alldeals", component: AlldealsComponent },
   { path: "offers", component: OffersComponent },
-  { path: "investor-dashboard ", component: InvestorDashboardComponent },
+  { path: "investor-dashboard", component: InvestorDashboardComponent },
   { path: "investor-alldeals", component: InvestorAlldealsComponent },
   { path: "investor-alloffers", component: InvestorAlloffersComponent },
   { path: "investor-dealdetail/:id", component: InvestorDealdetailComponent },
   { path: "investor-makeoffer/:id", component: InvestorMakeofferComponent },
   { path: "dealdetails/:id", component: DealdetailsComponent },
-  { path: "editdeal/:id", component: EditdealComponent }
+  { path: "editdeal/:id", component: EditdealComponent },
+  { path: "deal-offers/:id", component: DealOffersComponent }
 ];
