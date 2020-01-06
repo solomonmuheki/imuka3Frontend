@@ -16,7 +16,7 @@ import { Offer } from "../sharedservice/offer";
 })
 export class OfferDealService {
   baseURL = "http://localhost:8000/api";
-  baseURL2 = "http://localhost:8000/api/deals";
+
   headers = new HttpHeaders().set("Content-Type", "application/json");
   // Http Options
   httpOptions = {
@@ -27,18 +27,27 @@ export class OfferDealService {
   offerIdSource = new BehaviorSubject<number>(0);
   offerIdData: any;
   constructor(private http: HttpClient) {
-    //this.baseURL ="https://localhost:44314/api/post/";
     this.offerIdData = this.offerIdSource.asObservable();
   }
 
   // Get Users
   getUsers() {
-    return this.http.get(this.baseURL2);
+    return this.http.get(this.baseURL + "/deals");
   }
   getDeals(): Observable<Deal> {
     return this.http
       .get<Deal>(this.baseURL + "/deals")
       .pipe(retry(1), catchError(this.handleError));
+  }
+  //get User offers
+  getUserOffers(user_id): Observable<Offer> {
+    return this.http
+      .get<Offer>(this.baseURL + "/user-offers/" + user_id)
+      .pipe(retry(1), catchError(this.handleError));
+  }
+  //get deal offers
+  getDealOffers(deal_id): Observable<Offer> {
+    return this.http.get<Offer>(this.baseURL + "/deal-offers/" + deal_id);
   }
   // Create User
   addUser(
@@ -89,21 +98,7 @@ export class OfferDealService {
     var formData: any = new FormData();
 
     formData.append("companyName", companyName);
-    // formData.append("companyType", companyType);
-    // formData.append("companyIndustry", companyIndustry);
-    // formData.append("Address", companyAddress);
-    // formData.append("telephone", companyTel);
-    // formData.append("email", companyEmail);
-    // formData.append("AmountToRaise", raisedAmount);
-    // formData.append("detailedDescription", DealDetailedDesc);
-    // formData.append("image", profileImage);
-    // formData.append("businessPlan", cbBussinessPlan);
-    // formData.append("MOU", cbMou);
-    // formData.append("certificateOfRegistration", cbCertificateOfRegistration);
-    // formData.append("financialStatement", cbFinancialStatement);
-    // formData.append("cashFlowStatement", cbCashFlowStatement);
-    // formData.append("contractDocument", cbContractDocument);
-    // formData.append("auditedAccounts", cbAuditedAccounts);
+
     return this.http
       .put<Deal>(this.baseURL + "/deals/" + id, {
         reportProgress: true,
@@ -111,14 +106,7 @@ export class OfferDealService {
       })
       .pipe(retry(1), catchError(this.handleError));
   }
-  updateProduct(data) {
-    return this.http.post(this.baseURL + "update.php", data);
-  }
-  updateDeal2(id, deal): Observable<Deal> {
-    return this.http
-      .put<Deal>(this.baseURL + "/deals/" + id, deal, this.httpOptions)
-      .pipe(retry(1), catchError(this.handleError));
-  }
+
   //investor update offer method
   updateOffer2(id, offer): Observable<Offer> {
     return this.http
@@ -196,19 +184,13 @@ export class OfferDealService {
       .delete<number>(this.baseURL + "/offer/delete/" + id, httpOptions)
       .pipe(retry(1), catchError(this.handleError));
   }
-  // getOffer(offerId: number) {
-  //   let header = new HttpHeaders();
-  //   header.append("Content-Type", "applications/json");
-  //   let url = `${this.baseURL}/offer/${offerId}`;
-  //   return this.http.get(url, {
-  //     headers: header
-  //   });
-  // }
+
   getOffer(id): Observable<Offer> {
     return this.http
       .get<Offer>(this.baseURL + "/offer/" + id)
       .pipe(retry(1), catchError(this.handleError));
   }
+
   getCategoryList() {
     let header = new HttpHeaders();
     header.append("Content-Type", "applications/json");

@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { DealrestApiService } from "../../sharedservice/dealrest-api.service";
+import { NgxSpinnerService } from "ngx-spinner";
+import { DealRegistrationApiService } from "../../sharedservice/deal-registration-api.service";
 
 @Component({
   selector: "app-alldeals",
@@ -8,20 +9,35 @@ import { DealrestApiService } from "../../sharedservice/dealrest-api.service";
 })
 export class AlldealsComponent implements OnInit {
   Deal: any = [];
+  display = true;
+  user_id: any;
   // Pagination parameters.
   p: Number = 1;
   count: Number = 5;
 
-  constructor(public restApi: DealrestApiService) {}
-
-  ngOnInit() {
-    this.loadDeals();
+  constructor(
+    public restApi: DealRegistrationApiService,
+    private SpinnerService: NgxSpinnerService
+  ) {
+    this.loadDeals = this.loadDeals.bind(this);
   }
 
+  ngOnInit() {
+    this.user_id = this.getUserId();
+
+    setTimeout(this.loadDeals, 2000);
+    this.loadDeals();
+  }
+  //getting user id
+  getUserId() {
+    return localStorage.getItem("user_id");
+  }
   // Get deal list
   loadDeals() {
-    return this.restApi.getDeals().subscribe((data: {}) => {
+    return this.restApi.getUserDeals(this.user_id).subscribe((data: {}) => {
       this.Deal = data;
+
+      this.display = false;
     });
   }
 

@@ -15,6 +15,7 @@ export class AdddealComponent implements OnInit {
   user_id: any;
   registerDeal: FormGroup;
   submitted = false;
+  display = false;
 
   preview: string;
   //form: FormGroup;
@@ -71,7 +72,6 @@ export class AdddealComponent implements OnInit {
 
   ngOnInit() {
     this.user_id = this.getUserId();
-    console.log("my id:" + this.user_id);
   }
   //get the user id from local Storage
   getUserId() {
@@ -189,24 +189,33 @@ export class AdddealComponent implements OnInit {
       this.cbCashflow,
       this.cbCd,
       this.cbAuditedAccounts
-    ).subscribe((event: HttpEvent<any>) => {
-      switch (event.type) {
-        case HttpEventType.Sent:
-          console.log("Request has been made!");
-          break;
-        case HttpEventType.ResponseHeader:
-          console.log("Response header has been received!");
-          break;
-        case HttpEventType.UploadProgress:
-          this.percentDone = Math.round((event.loaded / event.total) * 100);
-          console.log(`Uploaded! ${this.percentDone}%`);
-          break;
-        case HttpEventType.Response:
-          console.log("Deal successfully created!", event.body);
-          this.percentDone = false;
-          this.router.navigate(["/alldeals"]);
+    ).subscribe(
+      (event: HttpEvent<any>) => {
+        switch (event.type) {
+          case HttpEventType.Sent:
+            console.log("Request has been made!");
+            break;
+          case HttpEventType.ResponseHeader:
+            console.log("Response header has been received!");
+            break;
+          case HttpEventType.UploadProgress:
+            this.percentDone = Math.round((event.loaded / event.total) * 100);
+            console.log(`Uploaded! ${this.percentDone}%`);
+            break;
+          case HttpEventType.Response:
+            console.log("Deal successfully created!", event.body);
+            this.percentDone = false;
+            this.router.navigate(["/alldeals"]);
+            this.toastr.success("Deal successfully created!");
+            this.display = false;
+        }
+      },
+      error => {
+        console.log(error);
+        this.toastr.error(error.message);
+        this.display = false;
       }
-    });
+    );
   }
   // Choose city using select dropdown
   // changeCompanyType(e) {
@@ -259,15 +268,13 @@ export class AdddealComponent implements OnInit {
   //function called on button click tosave deal in the database
   onSubmit() {
     this.submitted = true;
-
+    this.display = true;
     // stop here if form is invalid
     if (this.registerDeal.invalid) {
       alert("failure!! :-");
       return;
     }
-    this.toastr.success(
-      this.registerDeal.controls["companyName"].value + " successfully added!"
-    );
+
     //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerDeal.value))
     this.submitDealData();
   }

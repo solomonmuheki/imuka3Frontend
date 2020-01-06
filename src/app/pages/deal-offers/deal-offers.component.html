@@ -1,22 +1,25 @@
 <div class="card">
   <div class="card-header" style="background-color: #007edb;">
-    Offers List
+    Deal Offers List
   </div>
   <div class="card-body">
     <div class="container custom-container-2">
       <!-- Show it when there is no offer -->
       <div class="no-data text-center" *ngIf="Offer.length == 0">
-        <p>There is no Offer added yet!</p>
+        <div class="alert alert-danger">
+          <strong>There is no Offer(s) for this Deal!</strong>
+        </div>
       </div>
 
       <!-- Offers list table, it hides when there is no offer -->
       <div *ngIf="Offer.length !== 0">
+        <div class="alert alert-success">
+          <strong>{{ Offer.length }} </strong>Offer(s) for this Deal
+        </div>
         <div class="table-responsive-lg">
           <table class="table table-bordered table-striped ">
             <thead>
               <tr>
-                <th scope="col">Deal Id</th>
-
                 <th scope="col">Created Date</th>
                 <th scope="col">Offered Amount</th>
                 <th scope="col">Status</th>
@@ -30,7 +33,6 @@
                     | paginate: { itemsPerPage: count, currentPage: p }
                 "
               >
-                <td>{{ offer.deal_id }}</td>
                 <td>{{ offer.updated_at | date }}</td>
                 <td>{{ offer.offer_amount }}</td>
                 <td>

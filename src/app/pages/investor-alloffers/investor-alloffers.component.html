@@ -52,21 +52,14 @@
                 </td>
 
                 <td>
-                  <span
-                    *ngIf="offer.status == 0"
-                    class="btn btn-primary mr-1"
-                    (click)="ConfirmOffer(offer.id)"
-                  >
+                  <span *ngIf="offer.status == 0" class="label-primary">
                     Pending
                   </span>
 
                   <span *ngIf="offer.status == 1" class="label-success"
                     >successfull</span
                   >
-                  <span
-                    *ngIf="offer.status == 2"
-                    class="btn btn-danger mr-1"
-                    (click)="rejectOffer(offer.id)"
+                  <span *ngIf="offer.status == 3" class="label-danger"
                     >Rejected
                   </span>
                 </td>
@@ -78,6 +71,13 @@
           <pagination-controls (pageChange)="p = $event"></pagination-controls>
         </div>
       </div>
+    </div>
+    <div *ngIf="display" style="margin:auto;padding-left: 45%;">
+      <app-intersecting-circles-spinner
+        [animationDuration]="1200"
+        [size]="70"
+        [color]="'#ff1d5e'"
+      ></app-intersecting-circles-spinner>
     </div>
   </div>
 </div>

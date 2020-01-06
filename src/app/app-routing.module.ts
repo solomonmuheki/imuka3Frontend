@@ -15,6 +15,7 @@ export const AppRoutes: Routes = [
     path: "",
     component: HomeComponent,
     canActivate: [BeforeLoginService],
+
     children: [
       {
         path: "",

@@ -35,10 +35,12 @@ export const ROUTES: RouteInfo[] = [
     title: "Bids and Offers",
     icon: "fa fa-money",
     class: ""
-  },
+  }
+];
+export const InvestorRoutes: RouteInfo[] = [
   {
-    path: "/investor-dashboard ",
-    title: "Investor-Dashboard ",
+    path: "/investor-dashboard",
+    title: "Dashboard ",
     icon: "fa fa-home",
     class: ""
   },
@@ -51,26 +53,6 @@ export const ROUTES: RouteInfo[] = [
   {
     path: "/investor-alloffers",
     title: "Offers",
-    icon: "fa fa-list",
-    class: ""
-  }
-];
-export const InvestorRoutes: RouteInfo[] = [
-  {
-    path: "/dashboard",
-    title: "Dashboard",
-    icon: "fa fa-home",
-    class: ""
-  },
-  {
-    path: "/adddeal",
-    title: "Add Deal",
-    icon: "fa fa-plus",
-    class: ""
-  },
-  {
-    path: "/alldeals",
-    title: "All Deals",
     icon: "fa fa-list",
     class: ""
   },
@@ -99,9 +81,6 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.Auth.authStatus.subscribe(value => (this.loggedIn = value));
 
-    console.log(this.getToken());
-
-    console.log(this.getUserId());
     let userRole: string = this.getUserRole();
     if (userRole === "Agent") {
       this.menuItems = ROUTES.filter(menuItem => menuItem);
@@ -117,5 +96,11 @@ export class SidebarComponent implements OnInit {
   }
   getUserId() {
     return localStorage.getItem("user_id");
+  }
+  logout(event: MouseEvent) {
+    event.preventDefault();
+    this.Token.remove();
+    this.Auth.changeAuthStatus(false);
+    this.router.navigateByUrl("/home");
   }
 }

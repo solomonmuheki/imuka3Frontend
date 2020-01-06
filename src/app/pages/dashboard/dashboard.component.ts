@@ -1,20 +1,25 @@
 import { Component, OnInit } from "@angular/core";
 import Chart from "chart.js";
-import { DealrestApiService } from "../../sharedservice/dealrest-api.service";
-
+import { OfferDealService } from "../../sharedservice/offer-deal.service";
+import { DealRegistrationApiService } from "../../sharedservice/deal-registration-api.service";
+import {
+  FormControl,
+  FormGroup,
+  FormBuilder,
+  Validators
+} from "@angular/forms";
 @Component({
   selector: "dashboard-cmp",
   moduleId: module.id,
   templateUrl: "dashboard.component.html"
 })
 export class DashboardComponent implements OnInit {
+  user_id = this.getUserId();
   public canvas: any;
   public ctx;
   public chartColor;
 
-  // public chartEmail;
-  // public chartHours;
-  decDeals: number;
+  decDeals: number = 0;
   novDeals: number = 0;
   octDeals: number = 0;
   sepDeals: number = 0;
@@ -26,240 +31,670 @@ export class DashboardComponent implements OnInit {
   marDeals: number = 0;
   febDeals: number = 0;
   janDeals: number = 0;
-  year: string = "";
-  fullName: string = "Hello JavaTpoint";
+
   Deal: any = [];
   totalDeals: number = 0;
   totalDealsThisYear: number = 0;
-  constructor(public restApi: DealrestApiService) {}
+
+  decOffers: number = 0;
+  novOffers: number = 0;
+  octOffers: number = 0;
+  sepOffers: number = 0;
+  augOffers: number = 0;
+  julOffers: number = 0;
+  junOffers: number = 0;
+  mayOffers: number = 0;
+  aprilOffers: number = 0;
+  marOffers: number = 0;
+  febOffers: number = 0;
+  janOffers: number = 0;
+  Offer: any = [];
+  totalOffers: number = 0;
+  totalOffersThisYear: number = 0;
+
+  yearlyOffers = [];
+  yearlyDeals = [];
+  display = true;
+
+  year: number = new Date().getFullYear();
+
+  angularForm = new FormGroup({
+    date: new FormControl()
+  });
+  constructor(
+    public restApi: DealRegistrationApiService,
+    public offerRestApi: OfferDealService,
+    private fb: FormBuilder
+  ) {
+    this.createForm();
+  }
+
+  createForm() {
+    this.angularForm = this.fb.group({
+      date: ["", Validators.required]
+    });
+  }
+
   ngOnInit() {
     this.loadDeals();
-    console.log("my data2:" + this.Deal);
+    this.loadOffers();
+  }
+  //getting user id
+  getUserId() {
+    return localStorage.getItem("user_id");
+  }
+  graph() {
+    let speedCanvas = document.getElementById("speedChart");
+
+    let offerData = {
+      data: this.yearlyOffers,
+      fill: false,
+      borderColor: "#fbc658",
+      backgroundColor: "transparent",
+      pointBorderColor: "#fbc658",
+      pointRadius: 4,
+      pointHoverRadius: 4,
+      pointBorderWidth: 8
+    };
+    let dealData = {
+      data: this.yearlyDeals,
+      fill: false,
+      borderColor: "#51CACF",
+      backgroundColor: "transparent",
+      pointBorderColor: "#51CACF",
+      pointRadius: 4,
+      pointHoverRadius: 4,
+      pointBorderWidth: 8
+    };
+
+    var speedData = {
+      labels: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ],
+      datasets: [offerData, dealData]
+    };
+
+    let chartOptions = {
+      legend: {
+        display: false,
+        position: "top"
+      }
+    };
+    // Add Line Chart
+    let lineChart = new Chart(speedCanvas, {
+      type: "line",
+      hover: false,
+      data: speedData,
+      options: chartOptions
+    });
 
     this.chartColor = "#FFFFFF";
+    this.display = false;
   }
 
   loadDeals() {
-    return this.restApi.getDeals().subscribe((data: {}) => {
+    return this.restApi.getUserDeals(this.user_id).subscribe((data: {}) => {
       this.Deal = data;
+      //getting the total number of deals
       this.totalDeals = this.Deal.length;
-      console.log("my data:" + this.Deal);
-      var currentYear = new Date().getFullYear();
-      console.log("current Year: " + currentYear);
-      // currentMonth = new Date().getMonth() + 1,
-      var yearFilter = this.Deal.filter(e => {
-        var [year, _] = e.created_at.split("-"); // Or, var month = e.date.split('-')[1];
-        console.log("hello3: " + year);
+      //get current year
+      let currentYear = new Date().getFullYear();
+
+      //filter to get all deals in particular year
+      let yearFilter = this.Deal.filter(e => {
+        let [year, _] = e.created_at.split("-");
+
         return currentYear === +year;
       });
+      //get total deals in a current year
       this.totalDealsThisYear = yearFilter.length;
+      //loop through objects to get offers in a particular month in a year
       yearFilter.forEach((element, index, array) => {
-        console.log(element.created_at); // 100, 200, 300
-        console.log(index); // 0, 1, 2
-        console.log(array); // same myArray object 3 times
-        var created_atMonth = new Date(element.created_at).getMonth() + 1;
-        console.log("created at month:" + created_atMonth);
+        let created_atMonth = new Date(element.created_at).getMonth() + 1;
+        //get total deals in dec
         if (created_atMonth == 12) {
-          var monthFilter = yearFilter.filter(e => {
-            var [_, month] = e.created_at.split("-"); // Or, var month = e.date.split('-')[1];
-            console.log("months: " + month);
+          let monthFilter = yearFilter.filter(e => {
+            let [_, month] = e.created_at.split("-");
+
             return created_atMonth === +month;
           });
-          console.log("filtered deals for DEC :" + monthFilter);
-          console.log("filtered months length:" + monthFilter.length);
+
           this.decDeals = monthFilter.length;
-        } else if (created_atMonth == 11) {
-          var monthFilter = yearFilter.filter(e => {
-            var [_, month] = e.created_at.split("-"); // Or, var month = e.date.split('-')[1];
-            console.log("months: " + month);
+        }
+        //get total deals in nov
+        else if (created_atMonth == 11) {
+          let monthFilter = yearFilter.filter(e => {
+            let [_, month] = e.created_at.split("-");
+
             return created_atMonth === +month;
           });
-          console.log("filtered deals for Nov:" + monthFilter);
-          console.log("filtered deals length:" + monthFilter.length);
+
           this.novDeals = monthFilter.length;
-        } else if (created_atMonth == 10) {
-          var monthFilter = yearFilter.filter(e => {
-            var [_, month] = e.created_at.split("-"); // Or, var month = e.date.split('-')[1];
+        }
+        //get total deals in oct
+        else if (created_atMonth == 10) {
+          let monthFilter = yearFilter.filter(e => {
+            let [_, month] = e.created_at.split("-");
             return created_atMonth === +month;
           });
-          console.log("filtered deals for oct:" + monthFilter);
-          console.log("filtered deals length:" + monthFilter.length);
+
           this.octDeals = monthFilter.length;
-        } else if (created_atMonth == 9) {
-          var monthFilter = yearFilter.filter(e => {
-            var [_, month] = e.created_at.split("-"); // Or, var month = e.date.split('-')[1];
+        }
+        //get total deals in sept
+        else if (created_atMonth == 9) {
+          let monthFilter = yearFilter.filter(e => {
+            let [_, month] = e.created_at.split("-");
             return created_atMonth === +month;
           });
-          console.log("filtered deals for sept:" + monthFilter);
-          console.log("filtered deals length:" + monthFilter.length);
+
           this.sepDeals = monthFilter.length;
-        } else if (created_atMonth == 8) {
-          var monthFilter = yearFilter.filter(e => {
-            var [_, month] = e.created_at.split("-"); // Or, var month = e.date.split('-')[1];
+        }
+        //get total deals in aug
+        else if (created_atMonth == 8) {
+          let monthFilter = yearFilter.filter(e => {
+            let [_, month] = e.created_at.split("-");
             return created_atMonth === +month;
           });
-          console.log("filtered deals for aug:" + monthFilter);
-          console.log("filtered deals length:" + monthFilter.length);
+
           this.augDeals = monthFilter.length;
-        } else if (created_atMonth == 7) {
-          var monthFilter = yearFilter.filter(e => {
-            var [_, month] = e.created_at.split("-"); // Or, var month = e.date.split('-')[1];
+        }
+        //get total deals in jul
+        else if (created_atMonth == 7) {
+          let monthFilter = yearFilter.filter(e => {
+            let [_, month] = e.created_at.split("-");
             return created_atMonth === +month;
           });
-          console.log("filtered deals for july:" + monthFilter);
-          console.log("filtered deals length:" + monthFilter.length);
+
           this.julDeals = monthFilter.length;
-        } else if (created_atMonth == 6) {
-          var monthFilter = yearFilter.filter(e => {
-            var [_, month] = e.created_at.split("-"); // Or, var month = e.date.split('-')[1];
+        }
+        //get total deals in june
+        else if (created_atMonth == 6) {
+          let monthFilter = yearFilter.filter(e => {
+            let [_, month] = e.created_at.split("-");
             return created_atMonth === +month;
           });
-          console.log("filtered deals for june:" + monthFilter);
-          console.log("filtered deals length:" + monthFilter.length);
+
           this.junDeals = monthFilter.length;
-        } else if (created_atMonth == 5) {
-          var monthFilter = yearFilter.filter(e => {
-            var [_, month] = e.created_at.split("-"); // Or, var month = e.date.split('-')[1];
+        }
+        //get total deals in may
+        else if (created_atMonth == 5) {
+          let monthFilter = yearFilter.filter(e => {
+            let [_, month] = e.created_at.split("-");
             return created_atMonth === +month;
           });
-          console.log("filtered deals for may:" + monthFilter);
-          console.log("filtered deals length:" + monthFilter.length);
+
           this.mayDeals = monthFilter.length;
-        } else if (created_atMonth == 4) {
-          var monthFilter = yearFilter.filter(e => {
-            var [_, month] = e.created_at.split("-"); // Or, var month = e.date.split('-')[1];
+        }
+        //get total deals in april
+        else if (created_atMonth == 4) {
+          let monthFilter = yearFilter.filter(e => {
+            let [_, month] = e.created_at.split("-");
             return created_atMonth === +month;
           });
-          console.log("filtered deals for april:" + monthFilter);
-          console.log("filtered deals length:" + monthFilter.length);
+
           this.aprilDeals = monthFilter.length;
-        } else if (created_atMonth == 3) {
-          var monthFilter = yearFilter.filter(e => {
-            var [_, month] = e.created_at.split("-"); // Or, var month = e.date.split('-')[1];
+        }
+        //get total deals in march
+        else if (created_atMonth == 3) {
+          let monthFilter = yearFilter.filter(e => {
+            let [_, month] = e.created_at.split("-");
             return created_atMonth === +month;
           });
-          console.log("filtered deals for mar:" + monthFilter);
-          console.log("filtered deals length:" + monthFilter.length);
+
           this.marDeals = monthFilter.length;
-        } else if (created_atMonth == 2) {
-          var monthFilter = yearFilter.filter(e => {
-            var [_, month] = e.created_at.split("-"); // Or, var month = e.date.split('-')[1];
+        }
+        //get total deals in feb
+        else if (created_atMonth == 2) {
+          let monthFilter = yearFilter.filter(e => {
+            let [_, month] = e.created_at.split("-");
             return created_atMonth === +month;
           });
-          console.log("filtered deals for Feb:" + monthFilter);
-          console.log("filtered deals length:" + monthFilter.length);
+
           this.febDeals = monthFilter.length;
-        } else if (created_atMonth == 1) {
-          var monthFilter = yearFilter.filter(e => {
-            var [_, month] = e.created_at.split("-"); // Or, var month = e.date.split('-')[1];
+        }
+        //get total deals in jan
+        else if (created_atMonth == 1) {
+          let monthFilter = yearFilter.filter(e => {
+            let [_, month] = e.created_at.split("-");
             return created_atMonth === +month;
           });
-          console.log("filtered deals for jan:" + monthFilter);
-          console.log("filtered deals length:" + monthFilter.length);
+
           this.janDeals = monthFilter.length;
         } else {
           console.log("not valid");
         }
       });
-      console.log("filtered deals for dec: " + this.decDeals);
 
-      console.log("filtered year: " + yearFilter);
-
-      var currentMonth = new Date().getMonth() + 1;
-      console.log("current Month: " + currentMonth);
-      var monthFilter = yearFilter.filter(e => {
-        var [_, month] = e.created_at.split("-"); // Or, var month = e.date.split('-')[1];
-        console.log("months: " + month);
-        return currentMonth === +month;
-      });
-      console.log("filtered months:" + monthFilter);
-      console.log("filtered months length:" + monthFilter.length);
-      var speedCanvas = document.getElementById("speedChart");
-      let date: Date = new Date();
-      console.log("Year = " + date.getFullYear());
-      console.log("Month = " + date.getMonth());
-      console.log("dec = " + this.decDeals);
-      var month;
-      if (month == 0) {
-      }
-      // static datasets values
-      //dataFirst.data[2] = 60;
-
-      var dataFirst = {
-        data: [],
-        fill: false,
-        borderColor: "#51CACF",
-        backgroundColor: "transparent",
-        pointBorderColor: "#51CACF",
-        pointRadius: 4,
-        pointHoverRadius: 4,
-        pointBorderWidth: 8
-      };
-      dataFirst.data[11] = this.decDeals;
-      dataFirst.data[10] = this.novDeals;
-      dataFirst.data[9] = this.octDeals;
-      dataFirst.data[8] = this.sepDeals;
-      dataFirst.data[7] = this.augDeals;
-      dataFirst.data[6] = this.julDeals;
-      dataFirst.data[5] = this.junDeals;
-      dataFirst.data[4] = this.mayDeals;
-      dataFirst.data[3] = this.aprilDeals;
-      dataFirst.data[2] = this.marDeals;
-      dataFirst.data[1] = this.febDeals;
-      dataFirst.data[0] = this.janDeals;
-      var dataSecond = {
-        data: [0, 5, 10, 12, 20, 27, 30, 34, 42, 45, 55, 63],
-        fill: false,
-        borderColor: "#fbc658",
-        backgroundColor: "transparent",
-        pointBorderColor: "#fbc658",
-        pointRadius: 4,
-        pointHoverRadius: 4,
-        pointBorderWidth: 8
-      };
-
-      var dataThird = {
-        data: [0, 8, 15, 20, 12, 24, 20, 30, 22, 35, 25, 53],
-        fill: false,
-        borderColor: "#5cb85c",
-        backgroundColor: "transparent",
-        pointBorderColor: "#5cb85c",
-        pointRadius: 4,
-        pointHoverRadius: 4,
-        pointBorderWidth: 8
-      };
-
-      var speedData = {
-        labels: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec"
-        ],
-        datasets: [dataFirst, dataSecond, dataThird]
-      };
-
-      var chartOptions = {
-        legend: {
-          display: false,
-          position: "top"
-        }
-      };
-      // Add Line Chart
-      var lineChart = new Chart(speedCanvas, {
-        type: "line",
-        hover: false,
-        data: speedData,
-        options: chartOptions
-      });
+      this.yearlyDeals = [
+        this.janDeals,
+        this.febDeals,
+        this.marDeals,
+        this.aprilDeals,
+        this.mayDeals,
+        this.junDeals,
+        this.julDeals,
+        this.augDeals,
+        this.sepDeals,
+        this.octDeals,
+        this.novDeals,
+        this.decDeals
+      ];
     });
+  }
+
+  loadOffers() {
+    let offersGraph = this.offerRestApi
+      .getUserOffers(this.user_id)
+      .subscribe((data: {}) => {
+        this.Offer = data;
+
+        //get the number of offers
+        this.totalOffers = this.Offer.length;
+        //get current year
+        let currentYear = this.year;
+
+        //filter to get all offers in particular year
+        let yearFilter = this.Offer.filter(e => {
+          let [year, _] = e.created_at.split("-");
+
+          return currentYear === +year;
+        });
+        //assign offers in a particular year to a variable
+        this.totalOffersThisYear = yearFilter.length;
+        //loop through objects to get offers in a particular month in a year
+        yearFilter.forEach((element, index, array) => {
+          //getting month from date of each element
+          let created_atMonth = new Date(element.created_at).getMonth() + 1;
+          //getting offers in the month of dec
+          if (created_atMonth == 12) {
+            let monthFilter = yearFilter.filter(e => {
+              let [_, month] = e.created_at.split("-");
+              return created_atMonth === +month;
+            });
+            //get total offers in dec
+            this.decOffers = monthFilter.length;
+          } else if (created_atMonth == 11) {
+            let monthFilter = yearFilter.filter(e => {
+              let [_, month] = e.created_at.split("-");
+              return created_atMonth === +month;
+            });
+            //get total offers in nov
+            this.novOffers = monthFilter.length;
+          } else if (created_atMonth == 10) {
+            let monthFilter = yearFilter.filter(e => {
+              let [_, month] = e.created_at.split("-");
+              return created_atMonth === +month;
+            });
+            //get total offers in oct
+            this.octOffers = monthFilter.length;
+          } else if (created_atMonth == 9) {
+            let monthFilter = yearFilter.filter(e => {
+              let [_, month] = e.created_at.split("-");
+              return created_atMonth === +month;
+            });
+            //get total offers in aug
+            this.sepOffers = monthFilter.length;
+          } else if (created_atMonth == 8) {
+            let monthFilter = yearFilter.filter(e => {
+              let [_, month] = e.created_at.split("-");
+              return created_atMonth === +month;
+            });
+            //get total offers in july
+            this.augOffers = monthFilter.length;
+          } else if (created_atMonth == 7) {
+            let monthFilter = yearFilter.filter(e => {
+              let [_, month] = e.created_at.split("-");
+              return created_atMonth === +month;
+            });
+
+            //get total offers in july
+            this.julOffers = monthFilter.length;
+          } else if (created_atMonth == 6) {
+            let monthFilter = yearFilter.filter(e => {
+              let [_, month] = e.created_at.split("-");
+              return created_atMonth === +month;
+            });
+            //get total offers in june
+            this.junDeals = monthFilter.length;
+          } else if (created_atMonth == 5) {
+            let monthFilter = yearFilter.filter(e => {
+              let [_, month] = e.created_at.split("-");
+              return created_atMonth === +month;
+            });
+            //get total offers in may
+            this.mayOffers = monthFilter.length;
+          } else if (created_atMonth == 4) {
+            let monthFilter = yearFilter.filter(e => {
+              let [_, month] = e.created_at.split("-");
+              return created_atMonth === +month;
+            });
+            //get total offers in april
+            this.aprilOffers = monthFilter.length;
+          } else if (created_atMonth == 3) {
+            let monthFilter = yearFilter.filter(e => {
+              let [_, month] = e.created_at.split("-");
+              return created_atMonth === +month;
+            });
+            //get total offers in march
+            this.marOffers = monthFilter.length;
+          } else if (created_atMonth == 2) {
+            let monthFilter = yearFilter.filter(e => {
+              let [_, month] = e.created_at.split("-");
+              return created_atMonth === +month;
+            });
+            //get total offers in feb
+            this.febOffers = monthFilter.length;
+          } else if (created_atMonth == 1) {
+            let monthFilter = yearFilter.filter(e => {
+              let [_, month] = e.created_at.split("-");
+              return created_atMonth === +month;
+            });
+            //get total offers in jan
+            this.janOffers = monthFilter.length;
+          } else {
+            console.log("not valid");
+          }
+        });
+
+        this.yearlyOffers = [
+          this.janOffers,
+          this.febOffers,
+          this.marOffers,
+          this.aprilOffers,
+          this.mayOffers,
+          this.junOffers,
+          this.julOffers,
+          this.augOffers,
+          this.sepOffers,
+          this.octOffers,
+          this.novOffers,
+          this.decOffers
+        ];
+
+        this.graph();
+      });
+  }
+
+  loadYearlyOffersAndDeals() {
+    //get the number of offers
+    this.totalOffers = this.Offer.length;
+    //get searched year year
+
+    const searchedYear = this.angularForm.value.date.getFullYear();
+    this.year = searchedYear;
+
+    let janYearlyOffers = 0;
+    let febYearlyOffers = 0;
+    let marYearlyOffers = 0;
+    let aprilYearlyOffers = 0;
+    let mayYearlyOffers = 0;
+    let junYearlyOffers = 0;
+    let julYearlyOffers = 0;
+    let augYearlyOffers = 0;
+    let sepYearlyOffers = 0;
+    let octYearlyOffers = 0;
+    let novYearlyOffers = 0;
+    let decYearlyOffers = 0;
+    //filter to get all deals in particular year
+    let yearFilter = this.Offer.filter(e => {
+      let [year, _] = e.created_at.split("-"); // Or, var month = e.date.split('-')[1];
+
+      return searchedYear === +year;
+    });
+
+    //assign offers in a particular year to a variable
+    this.totalOffersThisYear = yearFilter.length;
+    //loop through objects to get offers in a particular month in a year
+    yearFilter.forEach((element, index, array) => {
+      //getting month from date of each element
+      let created_atMonth = new Date(element.created_at).getMonth() + 1;
+      //getting offers in the month of dec
+      if (created_atMonth == 12) {
+        let monthFilter = yearFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return created_atMonth === +month;
+        });
+        //get total offers in dec
+        decYearlyOffers = monthFilter.length;
+      } else if (created_atMonth == 11) {
+        let monthFilter = yearFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return created_atMonth === +month;
+        });
+        //get total offers in nov
+        novYearlyOffers = monthFilter.length;
+      } else if (created_atMonth == 10) {
+        let monthFilter = yearFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return created_atMonth === +month;
+        });
+        //get total offers in oct
+        octYearlyOffers = monthFilter.length;
+      } else if (created_atMonth == 9) {
+        let monthFilter = yearFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return created_atMonth === +month;
+        });
+        //get total offers in aug
+        sepYearlyOffers = monthFilter.length;
+      } else if (created_atMonth == 8) {
+        let monthFilter = yearFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return created_atMonth === +month;
+        });
+        //get total offers in july
+        augYearlyOffers = monthFilter.length;
+      } else if (created_atMonth == 7) {
+        let monthFilter = yearFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return created_atMonth === +month;
+        });
+
+        //get total offers in july
+        julYearlyOffers = monthFilter.length;
+      } else if (created_atMonth == 6) {
+        let monthFilter = yearFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return created_atMonth === +month;
+        });
+        //get total offers in june
+        junYearlyDeals = monthFilter.length;
+      } else if (created_atMonth == 5) {
+        let monthFilter = yearFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return created_atMonth === +month;
+        });
+        //get total offers in may
+        mayYearlyOffers = monthFilter.length;
+      } else if (created_atMonth == 4) {
+        let monthFilter = yearFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return created_atMonth === +month;
+        });
+        //get total offers in april
+        aprilYearlyOffers = monthFilter.length;
+      } else if (created_atMonth == 3) {
+        let monthFilter = yearFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return created_atMonth === +month;
+        });
+        //get total offers in march
+        marYearlyOffers = monthFilter.length;
+      } else if (created_atMonth == 2) {
+        let monthFilter = yearFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return created_atMonth === +month;
+        });
+        //get total offers in feb
+        febYearlyOffers = monthFilter.length;
+      } else if (created_atMonth == 1) {
+        let monthFilter = yearFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return created_atMonth === +month;
+        });
+        //get total offers in jan
+        janYearlyOffers = monthFilter.length;
+      } else {
+        console.log("not valid");
+      }
+    });
+    //assign the yearlyOffers Array with new values
+    this.yearlyOffers = [
+      janYearlyOffers,
+      febYearlyOffers,
+      marYearlyOffers,
+      aprilYearlyOffers,
+      mayYearlyOffers,
+      junYearlyOffers,
+      julYearlyOffers,
+      augYearlyOffers,
+      sepYearlyOffers,
+      octYearlyOffers,
+      novYearlyOffers,
+      decYearlyOffers
+    ];
+    // searched year month variables
+    let janYearlyDeals = 0;
+    let febYearlyDeals = 0;
+    let marYearlyDeals = 0;
+    let aprilYearlyDeals = 0;
+    let mayYearlyDeals = 0;
+    let junYearlyDeals = 0;
+    let julYearlyDeals = 0;
+    let augYearlyDeals = 0;
+    let sepYearlyDeals = 0;
+    let octYearlyDeals = 0;
+    let novYearlyDeals = 0;
+    let decYearlyDeals = 0;
+    //filter to get all deals in particular year
+    let yearlyDealFilter = this.Deal.filter(e => {
+      let [year, _] = e.updated_at.split("-");
+      return searchedYear === +year;
+    });
+
+    //assign deals in a particular year to a variable
+    this.totalDealsThisYear = yearlyDealFilter.length;
+    //loop through objects to get deals in a particular month in a year
+    yearlyDealFilter.forEach((element, index, array) => {
+      //getting month from date of each element
+      let updated_atMonth = new Date(element.updated_at).getMonth() + 1;
+      //getting offers in the month of dec
+      if (updated_atMonth == 12) {
+        let monthFilter = yearlyDealFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return updated_atMonth === +month;
+        });
+        //get total deals in dec
+        decYearlyDeals = monthFilter.length;
+      } else if (updated_atMonth == 11) {
+        let monthFilter = yearlyDealFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return updated_atMonth === +month;
+        });
+        //get total deals in nov
+        novYearlyDeals = monthFilter.length;
+      } else if (updated_atMonth == 10) {
+        let monthFilter = yearlyDealFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return updated_atMonth === +month;
+        });
+        //get total deals in oct
+        octYearlyDeals = monthFilter.length;
+      } else if (updated_atMonth == 9) {
+        let monthFilter = yearlyDealFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return updated_atMonth === +month;
+        });
+        //get total deals in aug
+        sepYearlyDeals = monthFilter.length;
+      } else if (updated_atMonth == 8) {
+        let monthFilter = yearlyDealFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return updated_atMonth === +month;
+        });
+        //get total deals in july
+        augYearlyDeals = monthFilter.length;
+      } else if (updated_atMonth == 7) {
+        let monthFilter = yearlyDealFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return updated_atMonth === +month;
+        });
+
+        //get total deals in july
+        julYearlyDeals = monthFilter.length;
+      } else if (updated_atMonth == 6) {
+        let monthFilter = yearlyDealFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return updated_atMonth === +month;
+        });
+        //get total deals in june
+        junYearlyDeals = monthFilter.length;
+      } else if (updated_atMonth == 5) {
+        let monthFilter = yearlyDealFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return updated_atMonth === +month;
+        });
+        //get total deals in may
+        mayYearlyDeals = monthFilter.length;
+      } else if (updated_atMonth == 4) {
+        let monthFilter = yearlyDealFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return updated_atMonth === +month;
+        });
+        //get total deals in april
+        aprilYearlyDeals = monthFilter.length;
+      } else if (updated_atMonth == 3) {
+        let monthFilter = yearlyDealFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return updated_atMonth === +month;
+        });
+        //get total deals in march
+        marYearlyDeals = monthFilter.length;
+      } else if (updated_atMonth == 2) {
+        let monthFilter = yearlyDealFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return updated_atMonth === +month;
+        });
+        //get total deals in feb
+        febYearlyDeals = monthFilter.length;
+      } else if (updated_atMonth == 1) {
+        let monthFilter = yearlyDealFilter.filter(e => {
+          let [_, month] = e.created_at.split("-");
+          return updated_atMonth === +month;
+        });
+        //get total deals in jan
+        janYearlyDeals = monthFilter.length;
+      } else {
+        console.log("not valid");
+      }
+    });
+
+    this.yearlyDeals = [
+      janYearlyDeals,
+      febYearlyDeals,
+      marYearlyDeals,
+      aprilYearlyDeals,
+      mayYearlyDeals,
+      junYearlyDeals,
+      julYearlyDeals,
+      augYearlyDeals,
+      sepYearlyDeals,
+      octYearlyDeals,
+      novYearlyDeals,
+      decYearlyDeals
+    ];
+
+    this.graph();
   }
 }

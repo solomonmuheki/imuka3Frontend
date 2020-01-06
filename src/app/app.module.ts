@@ -31,6 +31,8 @@ import { AfterLoginService } from "./sharedservice/login_services/after-login.se
 import { BeforeLoginService } from "./sharedservice/login_services/before-login.service";
 import { SnotifyModule, SnotifyService, ToastDefaults } from "ng-snotify";
 import { Ng2SmartTableModule } from "ng2-smart-table";
+import { NgxSpinnerModule } from "ngx-spinner";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { Ng2SmartTableModule } from "ng2-smart-table";
     ReactiveFormsModule,
     NgxPaginationModule,
     Ng2SmartTableModule,
+    NgxSpinnerModule,
     RouterModule.forRoot(AppRoutes, {
       useHash: true
     }),
@@ -58,7 +61,8 @@ import { Ng2SmartTableModule } from "ng2-smart-table";
     NavbarModule,
     ToastrModule.forRoot(),
     FooterModule,
-    FixedPluginModule
+    FixedPluginModule,
+    BrowserAnimationsModule
   ],
   providers: [
     JarwisService,

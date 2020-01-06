@@ -1,5 +1,5 @@
-<div class="conatiner" style="padding-top:20px;">
-  <div class="col-sm-5" style="padding-top:20px;padding-bottom:20px;">
+<div>
+  <div class="col-sm-5" style="padding-bottom:20px;">
     <input
       class="form-control"
       type="text"
@@ -44,9 +44,6 @@
           routerLink="/investor-makeoffer/{{ deal.id }}"
           >Offer</span
         >
-        <span class="btn btn-primary btn-xs" (click)="addNewOffer(deal.id)"
-          >Make Offer</span
-        >
       </td>
     </tr>
   </tbody>
@@ -54,3 +51,10 @@
     <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </ul>
 </table>
+<div *ngIf="display" style="margin:auto;padding-left: 45%;">
+  <app-intersecting-circles-spinner
+    [animationDuration]="1200"
+    [size]="70"
+    [color]="'#ff1d5e'"
+  ></app-intersecting-circles-spinner>
+</div>

@@ -40,6 +40,11 @@ export class DealRegistrationApiService {
       .get<Deal>(this.baseURL + "/deals/" + id)
       .pipe(retry(1), catchError(this.handleError));
   }
+  getUserDeals(user_id): Observable<Deal> {
+    return this.http
+      .get<Deal>(this.baseURL + "/user-deals/" + user_id)
+      .pipe(retry(1), catchError(this.handleError));
+  }
   // Create User
   addDeal(
     user_id: number,
@@ -91,21 +96,7 @@ export class DealRegistrationApiService {
     var formData: any = new FormData();
 
     formData.append("companyName", companyName);
-    // formData.append("companyType", companyType);
-    // formData.append("companyIndustry", companyIndustry);
-    // formData.append("Address", companyAddress);
-    // formData.append("telephone", companyTel);
-    // formData.append("email", companyEmail);
-    // formData.append("AmountToRaise", raisedAmount);
-    // formData.append("detailedDescription", DealDetailedDesc);
-    // formData.append("image", profileImage);
-    // formData.append("businessPlan", cbBussinessPlan);
-    // formData.append("MOU", cbMou);
-    // formData.append("certificateOfRegistration", cbCertificateOfRegistration);
-    // formData.append("financialStatement", cbFinancialStatement);
-    // formData.append("cashFlowStatement", cbCashFlowStatement);
-    // formData.append("contractDocument", cbContractDocument);
-    // formData.append("auditedAccounts", cbAuditedAccounts);
+
     return this.http
       .put<Deal>(this.baseURL + "/deals/" + id, {
         reportProgress: true,
@@ -149,7 +140,14 @@ export class DealRegistrationApiService {
       observe: "events"
     });
   }
-
+  deleteDeal(id: string): Observable<number> {
+    const httpOptions = {
+      headers: new HttpHeaders({ "Content-Type": "application/json" })
+    };
+    return this.http
+      .delete<number>(this.baseURL + "/deal/delete/" + id, httpOptions)
+      .pipe(retry(1), catchError(this.handleError));
+  }
   // Error handling
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = "";

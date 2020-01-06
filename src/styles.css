@@ -1,90 +1,90 @@
 /* You can add global styles to this file, and also import other style files */
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 .banner img {
-    width: 100%;
-  }
-  .blog-box {
-    text-align: center;
-    margin-top: 8px;
-  }
-  .blog-box:hover {
-    box-shadow: 0 8px 26px 0 rgba(0, 0, 0, 0.3);
-  }
-  .blog-box h3 {
-    margin: 20px 0;
-    font-size: 22px;
-    color: #000;
-  }
-  .blog-box p {
-    color: #666;
-  }
-  .blog-box span,
-  .posted-on span {
-    font-style: italic;
-    color: #000;
-  }
-  .blog-box img {
-    width: 100%;
-    height: auto;
-  }
-  .mtb-40 {
-    margin: 40px 0;
-    min-height: 450px;
-  }
-  .banner-box {
-    position: relative;
-  }
-  .intro-text {
-    width: 100%;
-    position: absolute;
-    top: 30%;
-    text-align: center;
-    color: #fff;
-  }
-  .intro-text-box {
-    width: 62%;
-    margin: auto;
-    background-color: rgba(96, 96, 96, 0.6);
-    padding: 20px;
-    border: 10px solid #808080;
-  }
-  .intro-text-box h1 {
-    font-size: 3em;
-  }
-  
-  .blog-right h3 {
-    background-color: #000;
-    color: #fff;
-    padding: 5px 15px;
-    font-size: 20px;
-  }
-  .detail-img {
-    margin: 40px 0px;
-  }
-  .rb-box-img {
-    margin-right: 15px;
-  }
-  .rb-box-img img {
-    width: 100px;
-  }
-  .rb-box {
-    display: flex;
-  }
-  .rb-box-desc h4 {
-    font-size: 20px;
-    color: #000;
-    font-weight: 600;
-  }
-  .rb-box-desc p {
-    color: #666;
-  }
-  .rb-box {
-    margin-bottom: 10px;
-  }
-  .recent-post a:hover {
-    text-decoration: none;
-  }
-  .recent-post a:hover h4 {
-    color: #007edb;
-  }
-  
+  width: 100%;
+}
+.blog-box {
+  text-align: center;
+  margin-top: 8px;
+}
+.blog-box:hover {
+  box-shadow: 0 8px 26px 0 rgba(0, 0, 0, 0.3);
+}
+.blog-box h3 {
+  margin: 20px 0;
+  font-size: 22px;
+  color: #000;
+}
+.blog-box p {
+  color: #666;
+}
+.blog-box span,
+.posted-on span {
+  font-style: italic;
+  color: #000;
+}
+.blog-box img {
+  width: 100%;
+  height: auto;
+}
+.mtb-40 {
+  margin: 40px 0;
+  min-height: 450px;
+}
+.banner-box {
+  position: relative;
+}
+.intro-text {
+  width: 100%;
+  position: absolute;
+  top: 30%;
+  text-align: center;
+  color: #fff;
+}
+.intro-text-box {
+  width: 62%;
+  margin: auto;
+  background-color: rgba(96, 96, 96, 0.6);
+  padding: 20px;
+  border: 10px solid #808080;
+}
+.intro-text-box h1 {
+  font-size: 3em;
+}
+
+.blog-right h3 {
+  background-color: #000;
+  color: #fff;
+  padding: 5px 15px;
+  font-size: 20px;
+}
+.detail-img {
+  margin: 40px 0px;
+}
+.rb-box-img {
+  margin-right: 15px;
+}
+.rb-box-img img {
+  width: 100px;
+}
+.rb-box {
+  display: flex;
+}
+.rb-box-desc h4 {
+  font-size: 20px;
+  color: #000;
+  font-weight: 600;
+}
+.rb-box-desc p {
+  color: #666;
+}
+.rb-box {
+  margin-bottom: 10px;
+}
+.recent-post a:hover {
+  text-decoration: none;
+}
+.recent-post a:hover h4 {
+  color: #007edb;
+}

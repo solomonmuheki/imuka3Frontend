@@ -16,7 +16,8 @@ export class InvestorAlloffersComponent implements OnInit {
   // Pagination parameters.
   p: Number = 1;
   count: Number = 5;
-
+  display = true;
+  user_id: any;
   constructor(
     public offerRestApi: OfferDealService,
     private bsModalService: BsModalService
@@ -25,12 +26,18 @@ export class InvestorAlloffersComponent implements OnInit {
   ngOnInit() {
     this.loadOffers();
   }
-
+  //getting user id
+  getUserId() {
+    return localStorage.getItem("user_id");
+  }
   // Get offer list
   loadOffers() {
-    return this.offerRestApi.getOffers().subscribe((data: {}) => {
-      this.Offer = data;
-    });
+    return this.offerRestApi
+      .getUserOffers(this.user_id)
+      .subscribe((data: {}) => {
+        this.Offer = data;
+        this.display = false;
+      });
   }
 
   // Delete offer

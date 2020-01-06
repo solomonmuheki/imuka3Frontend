@@ -28,14 +28,18 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   onSubmit() {
-    console.log(this.form);
     this.Jarwis.signup(this.form).subscribe(
       data => this.handleResponse(data),
       error => this.handleError(error)
     );
   }
   handleResponse(data) {
-    this.Token.handle(data.access_token, data.user_role, data.user_id);
+    this.Token.handle(
+      data.access_token,
+      data.expires_in,
+      data.user_role,
+      data.user_id
+    );
     this.router.navigateByUrl("/dashboard");
   }
 

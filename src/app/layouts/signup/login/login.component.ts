@@ -11,12 +11,14 @@ import { AuthService } from "../../../sharedservice/login_services/auth.service"
   styleUrls: ["./login.component.scss"]
 })
 export class LoginComponent implements OnInit {
+  display = false;
   public form = {
     email: null,
     password: null
   };
 
   public error = null;
+  // public error = [];
 
   constructor(
     private Jarwis: JarwisService,
@@ -26,6 +28,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   onSubmit() {
+    this.display = true;
     this.Jarwis.login(this.form).subscribe(
       data => this.handleResponse(data),
       error => this.handleError(error)
@@ -33,14 +36,29 @@ export class LoginComponent implements OnInit {
   }
 
   handleResponse(data) {
-    console.log("my login data" + data);
-    this.Token.handle(data.access_token, data.user_role, data.user_id);
+    this.display = false;
+
+    this.Token.handle(
+      data.access_token,
+      data.expires_in,
+      data.user_role,
+      data.user_id
+    );
     this.Auth.changeAuthStatus(true);
-    this.router.navigateByUrl("/dashboard");
+    let user = data.user_role;
+
+    if (user === "Agent") {
+      this.router.navigateByUrl("/dashboard");
+    }
+    if (user === "Investor") {
+      this.router.navigateByUrl("/investor-dashboard");
+    }
   }
 
   handleError(error) {
+    //this.display = false;
     this.error = error.error.error;
+    console.log(this.error);
   }
   ngOnInit() {}
 }

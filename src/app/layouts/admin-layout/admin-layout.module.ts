@@ -19,11 +19,17 @@ import { InvestorAlloffersComponent } from "../../pages/investor-alloffers/inves
 import { InvestorMakeofferComponent } from "../../pages/investor-makeoffer/investor-makeoffer.component";
 import { OffersComponent } from "../../pages/offers/offers.component";
 import { InvestorUpdateOfferComponent } from "../../pages/investor-update-offer/investor-update-offer.component";
+import { DealOffersComponent } from "../../pages/deal-offers/deal-offers.component";
 
 import { NgxPaginationModule } from "ngx-pagination";
 import { Ng2SearchPipeModule } from "ng2-search-filter";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgxSpinnerModule } from "ngx-spinner";
+import { IntersectingCirclesSpinnerModule } from "angular-epic-spinners";
+import { HalfCircleSpinnerModule } from "angular-epic-spinners";
+import { AngularMaterialModule } from "../../angular-material/angular-material.module";
+
 import { ModalModule, BsModalService } from "ngx-bootstrap/modal";
 
 @NgModule({
@@ -36,6 +42,11 @@ import { ModalModule, BsModalService } from "ngx-bootstrap/modal";
     Ng2SearchPipeModule,
     Ng2SmartTableModule,
     NgbModule,
+    NgxSpinnerModule,
+    AngularMaterialModule,
+
+    IntersectingCirclesSpinnerModule,
+    HalfCircleSpinnerModule,
     ModalModule.forRoot()
   ],
   declarations: [
@@ -45,6 +56,7 @@ import { ModalModule, BsModalService } from "ngx-bootstrap/modal";
     DealdetailsComponent,
     EditdealComponent,
     OffersComponent,
+    DealOffersComponent,
     InvestorDashboardComponent,
     InvestorAlldealsComponent,
     InvestorDealdetailComponent,
