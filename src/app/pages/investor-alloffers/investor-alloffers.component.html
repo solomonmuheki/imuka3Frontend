@@ -5,17 +5,20 @@
   <div class="card-body">
     <div class="container custom-container-2">
       <!-- Show it when there is no 0ffer -->
-      <div class="no-data text-center" *ngIf="Offer.length == 0">
+      <div
+        class="no-data text-center"
+        *ngIf="Offer2.length == 0"
+        class="alert alert-danger"
+      >
         <p>There is no offer added yet!</p>
       </div>
 
       <!-- Offers list table, it hides when there is no employee -->
-      <div *ngIf="Offer.length !== 0">
+      <div *ngIf="Offer2.length !== 0">
         <div class="table-responsive-lg">
           <table class="table table-bordered table-striped ">
             <thead>
               <tr>
-                <th scope="col">Deal Id</th>
                 <th scope="col">Created Date</th>
                 <th scope="col">Offer Amount</th>
                 <th scope="col">Action</th>
@@ -25,11 +28,10 @@
             <tbody>
               <tr
                 *ngFor="
-                  let offer of Offer
+                  let offer of Offer2
                     | paginate: { itemsPerPage: count, currentPage: p }
                 "
               >
-                <td>{{ offer.deal_id }}</td>
                 <td>{{ offer.created_at | date }}</td>
                 <td>{{ offer.offer_amount }}</td>
                 <td class="text-center edit-block">
@@ -59,7 +61,7 @@
                   <span *ngIf="offer.status == 1" class="label-success"
                     >successfull</span
                   >
-                  <span *ngIf="offer.status == 3" class="label-danger"
+                  <span *ngIf="offer.status == 2" class="label-danger"
                     >Rejected
                   </span>
                 </td>
@@ -73,11 +75,11 @@
       </div>
     </div>
     <div *ngIf="display" style="margin:auto;padding-left: 45%;">
-      <app-intersecting-circles-spinner
-        [animationDuration]="1200"
-        [size]="70"
-        [color]="'#ff1d5e'"
-      ></app-intersecting-circles-spinner>
+      <app-half-circle-spinner
+        [animationDuration]="1000"
+        [size]="60"
+        [color]="'#4169E1'"
+      ></app-half-circle-spinner>
     </div>
   </div>
 </div>

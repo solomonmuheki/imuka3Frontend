@@ -88,3 +88,6 @@
 .recent-post a:hover h4 {
   color: #007edb;
 }
+p {
+  font-family: "Roboto", sans-serif;
+}

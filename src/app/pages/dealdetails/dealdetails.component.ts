@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DealRegistrationApiService } from "../../sharedservice/deal-registration-api.service";
+import { NgbRatingConfig } from "@ng-bootstrap/ng-bootstrap";
+import { OfferDealService } from "../../sharedservice/offer-deal.service";
 
 @Component({
   selector: "app-dealdetails",
@@ -8,7 +10,9 @@ import { DealRegistrationApiService } from "../../sharedservice/deal-registratio
   styleUrls: ["./dealdetails.component.css"]
 })
 export class DealdetailsComponent implements OnInit {
-  id = this.actRoute.snapshot.params["id"];
+  deal_id = this.actRoute.snapshot.params["id"];
+  Offer: any = [];
+
   dealData: any = {};
   companyName: string;
   companyType: string;
@@ -19,6 +23,7 @@ export class DealdetailsComponent implements OnInit {
   AmountToRaise: string;
   Address: string;
   created_at: string;
+  rating: number;
   detailedDescription: string;
   updated_at: string;
   businessPlan: number;
@@ -32,8 +37,13 @@ export class DealdetailsComponent implements OnInit {
   constructor(
     public restApi: DealRegistrationApiService,
     public actRoute: ActivatedRoute,
-    public router: Router
-  ) {}
+    public router: Router,
+    public offerRestApi: OfferDealService,
+    config: NgbRatingConfig
+  ) {
+    config.max = 5;
+    config.readonly = true;
+  }
 
   ngOnInit() {
     const id = this.actRoute.snapshot.paramMap.get("id"); // Getting current component's id or information using ActivatedRoute service
@@ -48,6 +58,7 @@ export class DealdetailsComponent implements OnInit {
       this.Address = data[0]["Address"];
       this.companyName = data[0]["companyName"];
       this.created_at = data[0]["created_at"];
+      this.rating = data[0]["rating"];
       this.detailedDescription = data[0]["detailedDescription"];
       this.updated_at = data[0]["updated_at"];
       this.businessPlan = data[0]["businessPlan"];
@@ -80,5 +91,17 @@ export class DealdetailsComponent implements OnInit {
         this.documents.push("Financial Statement");
       }
     });
+    this.loadOffers();
+  }
+  // Get offer list
+  loadOffers() {
+    return this.offerRestApi.getDealOffers(this.deal_id).subscribe(
+      (data: {}) => {
+        this.Offer = data;
+      },
+      error => {
+        console.log(error.message);
+      }
+    );
   }
 }

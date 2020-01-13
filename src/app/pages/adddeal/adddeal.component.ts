@@ -13,6 +13,7 @@ import { ToastrService } from "ngx-toastr"; // Alert message using NGX toastr
 })
 export class AdddealComponent implements OnInit {
   user_id: any;
+  status: any;
   registerDeal: FormGroup;
   submitted = false;
   display = false;
@@ -24,22 +25,20 @@ export class AdddealComponent implements OnInit {
 
   CompanyType: any = [
     "Public company",
-    "Self-employed",
     "Government agency",
-    "Nonprofit",
-    "Sole proprietorship",
     "Privately held",
     "Partnership"
   ];
   CompanyIndustry: any = [
-    "Clean Energy/Recycling/Upcycling and Environmental Conservation",
-    "Technology/ ICT and IT-Enabled Service",
-    "Tourism and Hospitality",
-    "Healthcare and Pharmaceuticals",
+    "Agriculture",
+    "Technology",
+    "Tourism",
+    "Health",
     "Education",
     "Manufacturing",
-    "Trade(Retail and Wholesale)",
-    "Transport and Logistics"
+    "Trade",
+    "Transport",
+    "Others"
   ];
   constructor(
     private formBuilder: FormBuilder,
@@ -53,7 +52,15 @@ export class AdddealComponent implements OnInit {
       companyIndustry: ["", Validators.required],
       companyType: ["", Validators.required],
       companyAddress: ["", Validators.required],
-      companyTel: ["", [Validators.required, Validators.pattern("^[0-9]+$")]],
+      companyTel: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[0-9]+$"),
+          Validators.maxLength(12),
+          Validators.minLength(10)
+        ]
+      ],
 
       companyEmail: [
         "",
@@ -64,7 +71,15 @@ export class AdddealComponent implements OnInit {
         ]
       ],
       rateDeal: ["", Validators.required],
-      raisedAmount: ["", Validators.required],
+      raisedAmount: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[0-9]+$"),
+          Validators.maxLength(12),
+          Validators.minLength(4)
+        ]
+      ],
       DealDetailedDesc: ["", Validators.required],
       image: [null, Validators.required]
     });
@@ -72,10 +87,14 @@ export class AdddealComponent implements OnInit {
 
   ngOnInit() {
     this.user_id = this.getUserId();
+    this.status = this.getUserStatus();
   }
   //get the user id from local Storage
   getUserId() {
     return localStorage.getItem("user_id");
+  }
+  getUserStatus() {
+    return localStorage.getItem("status");
   }
 
   // Image Preview
@@ -203,10 +222,9 @@ export class AdddealComponent implements OnInit {
             console.log(`Uploaded! ${this.percentDone}%`);
             break;
           case HttpEventType.Response:
-            console.log("Deal successfully created!", event.body);
             this.percentDone = false;
             this.router.navigate(["/alldeals"]);
-            this.toastr.success("Deal successfully created!");
+            this.toastr.success("Deal successfully created!" + event.body);
             this.display = false;
         }
       },
@@ -217,12 +235,24 @@ export class AdddealComponent implements OnInit {
       }
     );
   }
-  // Choose city using select dropdown
-  // changeCompanyType(e) {
-  //   this.registerDeal.get("CompanyType_name").setValue(e.target.value, {
-  //     onlySelf: true
-  //   });
-  // }
+  // Choose company type using select dropdown
+  changeCompanyType(e) {
+    this.registerDeal.get("companyType").setValue(e.target.value, {
+      onlySelf: true
+    });
+  }
+  // Choose company Industry using select dropdown
+  changeCompanyIndustry(e) {
+    this.registerDeal.get("companyIndustry").setValue(e.target.value, {
+      onlySelf: true
+    });
+  }
+  // Choose RATE using select dropdown
+  changerateDeal(e) {
+    this.registerDeal.get("rateDeal").setValue(e.target.value, {
+      onlySelf: true
+    });
+  }
   //convenience getter for easy access to form fields
   get f() {
     return this.registerDeal.controls;
@@ -271,7 +301,8 @@ export class AdddealComponent implements OnInit {
     this.display = true;
     // stop here if form is invalid
     if (this.registerDeal.invalid) {
-      alert("failure!! :-");
+      alert("Please Velify that Data Entered is Valid!! :-");
+      this.display = false;
       return;
     }
 

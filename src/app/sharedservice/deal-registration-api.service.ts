@@ -15,7 +15,7 @@ import { Offer } from "./offer";
 })
 export class DealRegistrationApiService {
   baseURL = "http://localhost:8000/api";
-  baseURL2 = "http://localhost:8000/api/deals";
+  // baseURL2 = "http://localhost:8000/api/deals";
   headers = new HttpHeaders().set("Content-Type", "application/json");
   // Http Options
   httpOptions = {
@@ -27,7 +27,7 @@ export class DealRegistrationApiService {
 
   // Get Users
   getUsers() {
-    return this.http.get(this.baseURL2);
+    return this.http.get(this.baseURL + "/deals");
   }
   getDeals(): Observable<Deal> {
     return this.http
@@ -171,7 +171,8 @@ export class DealRegistrationApiService {
       // Get server-side error
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    window.alert(errorMessage);
+    console.log(errorMessage);
+    //window.alert(errorMessage);
     return throwError(errorMessage);
   }
 }

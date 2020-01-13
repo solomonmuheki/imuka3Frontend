@@ -29,7 +29,12 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { IntersectingCirclesSpinnerModule } from "angular-epic-spinners";
 import { HalfCircleSpinnerModule } from "angular-epic-spinners";
 import { AngularMaterialModule } from "../../angular-material/angular-material.module";
-
+import { AdminDashboardComponent } from "../../pages/admin-dashboard/admin-dashboard.component";
+import { AdminAllAgentsComponent } from "../../pages/admin-all-agents/admin-all-agents.component";
+import { AdminAllInvestorsComponent } from "../../pages/admin-all-investors/admin-all-investors.component";
+import { AdminAlldealsComponent } from "../../pages/admin-alldeals/admin-alldeals.component";
+import { AdminAlloffersComponent } from "../../pages/admin-alloffers/admin-alloffers.component";
+import { OrderModule } from "ngx-order-pipe";
 import { ModalModule, BsModalService } from "ngx-bootstrap/modal";
 
 @NgModule({
@@ -44,9 +49,10 @@ import { ModalModule, BsModalService } from "ngx-bootstrap/modal";
     NgbModule,
     NgxSpinnerModule,
     AngularMaterialModule,
-
+    OrderModule,
     IntersectingCirclesSpinnerModule,
     HalfCircleSpinnerModule,
+
     ModalModule.forRoot()
   ],
   declarations: [
@@ -63,7 +69,12 @@ import { ModalModule, BsModalService } from "ngx-bootstrap/modal";
     InvestorAlloffersComponent,
     InvestorMakeofferComponent,
     InvestorUpdateOfferComponent,
-    MakeOfferComponent
+    MakeOfferComponent,
+    AdminDashboardComponent,
+    AdminAllAgentsComponent,
+    AdminAllInvestorsComponent,
+    AdminAlldealsComponent,
+    AdminAlloffersComponent
   ],
   providers: [BsModalService],
   entryComponents: [

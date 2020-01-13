@@ -15,8 +15,6 @@
           <table class="table table-bordered table-striped ">
             <thead>
               <tr>
-                <th scope="col">Deal Id</th>
-
                 <th scope="col">Created Date</th>
                 <th scope="col">Offered Amount</th>
                 <th scope="col">Status</th>
@@ -30,7 +28,6 @@
                     | paginate: { itemsPerPage: count, currentPage: p }
                 "
               >
-                <td>{{ offer.deal_id }}</td>
                 <td>{{ offer.updated_at | date }}</td>
                 <td>{{ offer.offer_amount }}</td>
                 <td>
@@ -41,7 +38,7 @@
                     >Approved
                   </span>
 
-                  <span *ngIf="offer.status == 3" class="label-danger"
+                  <span *ngIf="offer.status == 2" class="label-danger"
                     >Rejected
                   </span>
                 </td>
@@ -56,11 +53,11 @@
                     class="btn btn-primary mr-1"
                     (click)="ConfirmOffer(offer.id)"
                   >
-                    Confirm Offer
+                    Accept
                   </span>
 
                   <span
-                    *ngIf="offer.status == 2"
+                    *ngIf="offer.status == 0"
                     class="btn btn-danger mr-1"
                     (click)="rejectOffer(offer.id)"
                     >Reject

@@ -27,10 +27,19 @@ export class EditdealComponent implements OnInit {
   ) {
     this.registerDeal = this.formBuilder.group({
       companyName: ["", Validators.required],
-      companyIndustry: ["", [Validators.required]],
+      companyIndustry: ["", Validators.required],
       companyType: ["", Validators.required],
       companyAddress: ["", Validators.required],
-      companyTel: ["", [Validators.required, Validators.pattern("^[0-9]+$")]],
+      companyTel: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[0-9]+$"),
+          Validators.maxLength(12),
+          Validators.minLength(10)
+        ]
+      ],
+
       companyEmail: [
         "",
         [
@@ -39,8 +48,16 @@ export class EditdealComponent implements OnInit {
           Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")
         ]
       ],
-      raisedAmount: ["", Validators.required],
       rateDeal: ["", Validators.required],
+      raisedAmount: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[0-9]+$"),
+          Validators.maxLength(12),
+          Validators.minLength(4)
+        ]
+      ],
       DealDetailedDesc: ["", Validators.required],
 
       cbBp: [],
@@ -128,9 +145,21 @@ export class EditdealComponent implements OnInit {
     });
   }
 
-  // Choose company Industry with select dropdown
-  updatecompanyIndustry(e) {
-    this.registerDeal.get("companyIndustry").setValue(e, {
+  // Choose company type using select dropdown
+  changeCompanyType(e) {
+    this.registerDeal.get("companyType").setValue(e.target.value, {
+      onlySelf: true
+    });
+  }
+  // Choose company Industry using select dropdown
+  changeCompanyIndustry(e) {
+    this.registerDeal.get("companyIndustry").setValue(e.target.value, {
+      onlySelf: true
+    });
+  }
+  // Choose RATE using select dropdown
+  changerateDeal(e) {
+    this.registerDeal.get("rateDeal").setValue(e.target.value, {
       onlySelf: true
     });
   }
@@ -251,7 +280,7 @@ export class EditdealComponent implements OnInit {
     // Display the key/value pairs
     let object = {};
     formData.forEach(function(value, key) {
-      console.log((object[key] = value));
+      object[key] = value;
     });
     let json = JSON.stringify(object);
     //console.log(json)

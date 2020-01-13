@@ -49,7 +49,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <div
-                class="text-xs font-weight-bold text-info text-uppercase mb-1"
+                class="text-xs font-weight-bold text-danger text-uppercase mb-1"
               >
                 Rejected Offer(s)
               </div>
@@ -108,12 +108,12 @@
         <div class="card-body">
           <div class="container custom-container-2">
             <!-- Show it when there is no Deal -->
-            <div class="no-data text-center" *ngIf="Deal.length == 0">
+            <div class="no-data text-center" *ngIf="Deal3.length == 0">
               <p>There is no current deals!</p>
             </div>
 
             <!-- Deals list table, it hides when there is no Deal -->
-            <div *ngIf="Deal.length !== 0">
+            <div *ngIf="Deal3.length !== 0">
               <table class="table table-striped ">
                 <thead>
                   <tr>
@@ -124,7 +124,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let deal of Deal">
+                  <tr *ngFor="let deal of Deal3">
                     <td>{{ deal.companyName }}</td>
                     <td>{{ deal.created_at | date }}</td>
                     <td>{{ deal.telephone }}</td>
@@ -143,9 +143,9 @@
         <div
           class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
         >
-          <h6 class="m-0 font-weight-bold text-primary">Your Offers</h6>
+          <h6 class="m-0 font-weight-bold text-primary">My Offers</h6>
           <div class="dropdown no-arrow">
-            <a class="btn btn-info " routerLink="/investor-alldeals"
+            <a class="btn btn-info " routerLink="/investor-alloffers"
               >More Offers
             </a>
           </div>
@@ -153,38 +153,49 @@
         <!-- Card Body -->
         <div class="card-body">
           <div class="container custom-container-2">
-            <!-- Show it when there is no Deal -->
-            <div class="no-data text-center" *ngIf="Deal.length == 0">
-              <p>There is no Deal added yet!</p>
-              <button
-                class="btn btn-outline-primary"
-                routerLink="/create-employee"
-              >
-                Add Deal
-              </button>
+            <!-- Show it when there is no offer -->
+            <div
+              class="no-data text-center"
+              *ngIf="Offer3.length == 0"
+              class="alert alert-danger"
+            >
+              <p>You have no offer yet!</p>
             </div>
 
-            <!-- Deals list table, it hides when there is no Deal -->
-            <div *ngIf="Deal.length !== 0">
+            <!-- Offers list table, it hides when there is no offer -->
+            <div *ngIf="Offer3.length !== 0">
               <div class="table-responsive-lg">
                 <table class="table table-hover">
                   <thead>
                     <tr>
                       <th scope="col">Created Date</th>
                       <th scope="col">Amount</th>
+                      <th scope="col">Status</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr
                       *ngFor="
-                        let deal of Offer
+                        let offer of Offer3
                           | filter: filter
                           | paginate: { itemsPerPage: count, currentPage: p }
                       "
                     >
-                      <td>{{ deal.created_at | date }}</td>
+                      <td>{{ offer.created_at | date }}</td>
 
-                      <td>{{ deal.offer_amount }}</td>
+                      <td>{{ offer.offer_amount }}</td>
+                      <td>
+                        <span *ngIf="offer.status == 0" class="label-primary">
+                          Pending
+                        </span>
+
+                        <span *ngIf="offer.status == 1" class="label-success"
+                          >successfull</span
+                        >
+                        <span *ngIf="offer.status == 2" class="label-danger"
+                          >Rejected
+                        </span>
+                      </td>
                     </tr>
                   </tbody>
                 </table>

@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
     name: null,
     email: null,
     user_role: "Agent",
+    status: 0,
     password: null,
     password_confirmation: null
   };
@@ -38,9 +39,10 @@ export class RegisterComponent implements OnInit {
       data.access_token,
       data.expires_in,
       data.user_role,
-      data.user_id
+      data.user_id,
+      data.status
     );
-    this.router.navigateByUrl("/dashboard");
+    this.router.navigateByUrl("/login");
   }
 
   handleError(error) {

@@ -32,7 +32,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: "/offers",
-    title: "Bids and Offers",
+    title: "Offers",
     icon: "fa fa-money",
     class: ""
   }
@@ -55,11 +55,37 @@ export const InvestorRoutes: RouteInfo[] = [
     title: "Offers",
     icon: "fa fa-list",
     class: ""
+  }
+];
+export const AdminRoutes: RouteInfo[] = [
+  {
+    path: "/admin-dashboard",
+    title: "Admin-Dashboard ",
+    icon: "fa fa-home",
+    class: ""
   },
   {
-    path: "/dealdetails",
-    title: "Bids and Offers",
-    icon: "fa fa-money",
+    path: "/all-deals",
+    title: "All Deals",
+    icon: "fa fa-list",
+    class: ""
+  },
+  {
+    path: "/all-offers",
+    title: "All Offers",
+    icon: "fa fa-file-o",
+    class: ""
+  },
+  {
+    path: "/agents",
+    title: "Agents",
+    icon: "fa fa-user-circle-o",
+    class: ""
+  },
+  {
+    path: "/investors",
+    title: "investors",
+    icon: "fa fa-user-circle-o",
     class: ""
   }
 ];
@@ -73,20 +99,21 @@ export class SidebarComponent implements OnInit {
   public loggedIn: boolean;
   public menuItems: any[];
   public menuInvestorItems: any[];
+  userRole: string = this.getUserRole();
   constructor(
     private Auth: AuthService,
     private router: Router,
     private Token: TokenService
   ) {}
   ngOnInit() {
-    this.Auth.authStatus.subscribe(value => (this.loggedIn = value));
-
-    let userRole: string = this.getUserRole();
-    if (userRole === "Agent") {
+    if (this.userRole === "Agent") {
       this.menuItems = ROUTES.filter(menuItem => menuItem);
-    } else if (userRole === "Investor") {
+    } else if (this.userRole === "Investor") {
       this.menuInvestorItems = InvestorRoutes.filter(menuItem => menuItem);
+    } else if (this.userRole === "Admin") {
+      this.menuInvestorItems = AdminRoutes.filter(menuItem => menuItem);
     }
+    this.Auth.authStatus.subscribe(value => (this.loggedIn = value));
   }
   getToken() {
     return localStorage.getItem("token");

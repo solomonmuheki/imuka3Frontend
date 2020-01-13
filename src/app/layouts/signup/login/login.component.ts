@@ -42,7 +42,8 @@ export class LoginComponent implements OnInit {
       data.access_token,
       data.expires_in,
       data.user_role,
-      data.user_id
+      data.user_id,
+      data.status
     );
     this.Auth.changeAuthStatus(true);
     let user = data.user_role;
@@ -52,6 +53,9 @@ export class LoginComponent implements OnInit {
     }
     if (user === "Investor") {
       this.router.navigateByUrl("/investor-dashboard");
+    }
+    if (user === "Admin") {
+      this.router.navigateByUrl("/admin-dashboard");
     }
   }
 

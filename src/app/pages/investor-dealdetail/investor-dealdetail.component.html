@@ -4,81 +4,66 @@
   </div>
   <div class="container-fluid">
     <div class="row">
-      <div>
-        <table class="table table-borderless">
-          <tbody>
-            <tr>
-              <td colspan="2">
-                <img
-                  src="http://localhost:8000/uploads/{{ image }}"
-                  alt="Company Logo"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td><label> Name</label></td>
-              <td>
-                <span class="label2">{{ companyName }}</span>
-              </td>
-            </tr>
-            <tr>
-              <td><label>Company Industry</label></td>
-              <td>
-                <span class="label2">{{ companyIndustry }}</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label>Company Address</label>
-              </td>
-              <td>
-                <span class="label2"> {{ Address }}</span>
-              </td>
-            </tr>
-            <tr>
-              <td><label>Company Tel:</label></td>
-              <td>
-                <span class="label2">{{ telephone }}</span>
-              </td>
-            </tr>
-            <tr>
-              <td><label>Amount Needed</label></td>
-              <td>
-                <span class="label2"> {{ AmountToRaise }}</span>
-              </td>
-            </tr>
-            <tr>
-              <td><label>Start Date</label></td>
-              <td>
-                <span class="label2"> {{ created_at }}</span>
-              </td>
-            </tr>
-            <tr>
-              <td><label>Updated Date</label></td>
-              <td>
-                <span class="label2"> {{ updated_at }}</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="container" style="margin-top:30px;">
-          <span class="label">Verified existing documents</span>
-          <div
-            class="no-data text-center"
-            *ngIf="documents.length == 0"
-            class="alert alert-info"
-          >
-            <p>There is no Verified documents yet!</p>
-          </div>
-          <ul>
-            <li *ngFor="let doc of documents">
-              {{ doc }}
-            </li>
-          </ul>
-          <span class="label">Detailed Deal Description</span>
-          <p>{{ detailedDescription }}</p>
-        </div>
-      </div>
+      <table class="table table-borderless">
+        <tbody>
+          <tr>
+            <td>
+              <img
+                src="http://localhost:8000/uploads/{{ image }}"
+                alt="Company Logo"
+                width="100px"
+              />
+            </td>
+            <td>
+              <span class="label2"
+                ><label> Name</label><br />{{ companyName }}</span
+              >
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="label2"
+                ><label>Company Industry</label><br />{{
+                  companyIndustry
+                }}</span
+              >
+            </td>
+            <td>
+              <span class="label2"
+                ><label>Company Industry</label><br />{{ companyType }}</span
+              >
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <span class="label2"
+                ><label>Company Address</label><br />
+                {{ Address }}</span
+              >
+            </td>
+            <td>
+              <span class="label2"
+                ><label>Company Tel:</label><br />{{ telephone }}</span
+              >
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <span class="label2"
+                ><label>Amount Needed</label><br />
+                {{ AmountToRaise }}</span
+              >
+            </td>
+            <td>
+              <span class="label2">
+                <label>Date</label><br />{{ updated_at | date }}</span
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

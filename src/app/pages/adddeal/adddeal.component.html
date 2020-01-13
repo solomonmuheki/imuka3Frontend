@@ -6,7 +6,12 @@
   <div class="card-body">
     <div id="main_warpper">
       <!-- Bootstrap Container -->
-      <div class="container-fluid">
+      <div class="container-fluid" *ngIf="status == 0">
+        <div class="alert alert-danger">
+          <strong>!!!</strong> You are not Verified to Add Deal
+        </div>
+      </div>
+      <div class="container-fluid" *ngIf="status == 1">
         <!-- First form row -->
         <form [formGroup]="registerDeal" (ngSubmit)="onSubmit()">
           <div class="row">
@@ -146,6 +151,25 @@
                     >
                       Telephone is required
                     </div>
+                    <div
+                      *ngIf="registerDeal.controls['companyTel'].errors.pattern"
+                    >
+                      Enter a Number
+                    </div>
+                    <div
+                      *ngIf="
+                        registerDeal.controls['companyTel'].errors.maxLength
+                      "
+                    >
+                      Tel Must be less than 13 Characters
+                    </div>
+                    <div
+                      *ngIf="
+                        registerDeal.controls['companyTel'].errors.minLength
+                      "
+                    >
+                      Tel Must be greater than 10 Characters
+                    </div>
                   </div>
                   <small class="form-text text-muted"
                     ><i
@@ -161,7 +185,11 @@
                   <select
                     class="form-control"
                     class="custom-select d-block w-100"
+                    (change)="changerateDeal($event)"
                     formControlName="rateDeal"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.rateDeal.errors
+                    }"
                   >
                     <option selected>1</option>
                     <option>2</option>
@@ -171,13 +199,22 @@
 
                     >
                   </select>
-
+                  <div
+                    *ngIf="registerDeal.controls['rateDeal'].errors"
+                    class="invalid-feedback"
+                  >
+                    <div
+                      *ngIf="registerDeal.controls['rateDeal'].errors.required"
+                    >
+                      Rating is required
+                    </div>
+                  </div>
                   <small class="form-text text-muted"
                     ><i
                       class="fa fa-info-circle fa-lg"
                       data-toggle="tooltip"
                       data-placement="top"
-                      title="Rate the deal an the scale of 1 to 5"
+                      title="Rate the deal on the scale of 1 to 5"
                     ></i
                   ></small>
                 </div>
@@ -190,19 +227,32 @@
                 <label for="inputCompanyType" style="display: block;"
                   >Company Type:</label
                 >
+
                 <select
                   class="form-control"
                   class="custom-select d-block w-100"
                   (change)="changeCompanyType($event)"
                   formControlName="companyType"
+                  [ngClass]="{
+                    'is-invalid': submitted && f.companyType.errors
+                  }"
                 >
-                  <option selected>Choose...</option>
                   <option
                     *ngFor="let company_Type of CompanyType"
                     [ngValue]="company_Type"
                     >{{ company_Type }}</option
                   >
                 </select>
+                <div
+                  *ngIf="registerDeal.controls['companyType'].errors"
+                  class="invalid-feedback"
+                >
+                  <div
+                    *ngIf="registerDeal.controls['companyType'].errors.required"
+                  >
+                    Company Type is required
+                  </div>
+                </div>
                 <small class="form-text text-muted"
                   ><i
                     class="fa fa-info-circle fa-lg"
@@ -216,17 +266,32 @@
                 <label for="inputIndustry">Company Industry:</label>
                 <select
                   class="form-control"
+                  class="custom-select d-block w-100"
                   formControlName="companyIndustry"
+                  (change)="changeCompanyIndustry($event)"
                   name="companyIndustry"
+                  [ngClass]="{
+                    'is-invalid': submitted && f.companyIndustry.errors
+                  }"
                 >
-                  <option selected>Choose...</option>
                   <option
                     *ngFor="let company_Industry of CompanyIndustry"
                     [ngValue]="company_Industry"
                     >{{ company_Industry }}
                   </option>
                 </select>
-
+                <div
+                  *ngIf="registerDeal.controls['companyIndustry'].errors"
+                  class="invalid-feedback"
+                >
+                  <div
+                    *ngIf="
+                      registerDeal.controls['companyIndustry'].errors.required
+                    "
+                  >
+                    Company Industry is required
+                  </div>
+                </div>
                 <small class="form-text text-muted"
                   ><i
                     class="fa fa-info-circle fa-lg"
@@ -237,7 +302,7 @@
                 ></small>
               </div>
               <div class="form-group ">
-                <label for="phoneNumber">Amount to Raise: </label>
+                <label for="raisedAmount">Amount to Raise: </label>
                 <input
                   formControlName="raisedAmount"
                   class="form-control"
@@ -255,6 +320,26 @@
                     "
                   >
                     Amount to be Raised is required
+                  </div>
+
+                  <div
+                    *ngIf="registerDeal.controls['raisedAmount'].errors.pattern"
+                  >
+                    Enter a Number
+                  </div>
+                  <div
+                    *ngIf="
+                      registerDeal.controls['raisedAmount'].errors.maxLength
+                    "
+                  >
+                    Tel Must be less than 12 Characters
+                  </div>
+                  <div
+                    *ngIf="
+                      registerDeal.controls['raisedAmount'].errors.minLength
+                    "
+                  >
+                    Must be greater than 4 Characters
                   </div>
                 </div>
                 <small class="form-text text-muted"
@@ -276,7 +361,19 @@
                   type="file"
                   (change)="uploadFile($event)"
                   class="form-control"
+                  accept=".png, .jpg, .jpeg"
+                  [ngClass]="{
+                    'is-invalid': submitted && f.image.errors
+                  }"
                 />
+                <div
+                  *ngIf="registerDeal.controls['image'].errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="registerDeal.controls['image'].errors.required">
+                    company logo/image is required
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -337,14 +434,13 @@
                   />
                 </div>
                 <div *ngIf="display" style="margin:auto;padding-left: 45%;">
-
-                <app-half-circle-spinner
-                  [animationDuration]="1000"
-                  [size]="60"
-                  [color]="'#ff1d5e'"
-                ></app-half-circle-spinner>
+                  <app-half-circle-spinner
+                    [animationDuration]="1000"
+                    [size]="60"
+                    [color]="'#4169E1'"
+                  ></app-half-circle-spinner>
+                </div>
               </div>
-            </div>
             </div>
             <!-- Second colum of the second row -->
             <div class="col-sm-6">

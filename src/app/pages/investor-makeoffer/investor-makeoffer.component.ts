@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { DealrestApiService } from "../../sharedservice/dealrest-api.service";
+import { DealRegistrationApiService } from "../../sharedservice/deal-registration-api.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
 import { OfferDealService } from "../../sharedservice/offer-deal.service";
@@ -16,7 +16,10 @@ export class InvestorMakeofferComponent implements OnInit {
   percentDone: any = 0;
   UserId: any;
   status: any;
-  // const id = this.actRoute.snapshot.paramMap.get('id');
+  display = false;
+  companyName: string;
+  AmountToRaise: string;
+  Address: string;
   dealData: any = {};
   submitted = false;
   registerOffer: FormGroup;
@@ -24,19 +27,31 @@ export class InvestorMakeofferComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public OfferDealrestApi: OfferDealService,
-    public restApi: DealrestApiService,
+    public restApi: DealRegistrationApiService,
     public actRoute: ActivatedRoute,
     public router: Router,
     public toastr: ToastrService
   ) {
     this.registerOffer = this.formBuilder.group({
-      offer_amount: ["", Validators.required]
+      offer_amount: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[0-9]+$"),
+          Validators.maxLength(10),
+          Validators.minLength(3)
+        ]
+      ]
     });
   }
 
   ngOnInit() {
     const id = this.actRoute.snapshot.paramMap.get("id"); // Getting current component's id or information using ActivatedRoute service
-    this.restApi.getDeal(id).subscribe(data => {});
+    this.restApi.getDeal(id).subscribe(data => {
+      this.companyName = data[0]["companyName"];
+      this.Address = data[0]["Address"];
+      this.AmountToRaise = data[0]["AmountToRaise"];
+    });
   }
 
   get f() {
@@ -50,6 +65,7 @@ export class InvestorMakeofferComponent implements OnInit {
 
   //function called when the button is clicked to update
   addNewOffer() {
+    this.display = true;
     this.submitted = true;
     let a = this.getUserId();
     this.status = 0;
@@ -57,6 +73,7 @@ export class InvestorMakeofferComponent implements OnInit {
     this.UserId = parseInt(a);
     // stop here if form is invalid
     if (this.registerOffer.invalid) {
+      this.display = false;
       alert("failure!! :-");
       return;
     }
@@ -66,24 +83,24 @@ export class InvestorMakeofferComponent implements OnInit {
       this.deal_id,
       this.registerOffer.value.offer_amount,
       this.status
-    ).subscribe((event: HttpEvent<any>) => {
-      switch (event.type) {
-        case HttpEventType.Sent:
-          console.log("Request has been made!");
-          break;
-        case HttpEventType.ResponseHeader:
-          console.log("Response header has been received!");
-          break;
-        case HttpEventType.UploadProgress:
-          this.percentDone = Math.round((event.loaded / event.total) * 100);
-          console.log(`Uploaded! ${this.percentDone}%`);
-          break;
-        case HttpEventType.Response:
-          console.log("Offer successfully created!", event.body);
-          this.percentDone = false;
+    ).subscribe(
+      (event: HttpEvent<any>) => {
+        switch (event.type) {
+          case HttpEventType.Response:
+            this.percentDone = false;
+            this.router.navigate(["/investor-alloffers"]);
+            this.toastr.success("Offer successfully created!");
+            this.display = false;
+        }
+      },
+      error => {
+        this.toastr.error(error.message);
+        console.log(error);
+        this.display = false;
       }
-    });
+    );
   }
+
   getUserId() {
     return localStorage.getItem("user_id");
   }

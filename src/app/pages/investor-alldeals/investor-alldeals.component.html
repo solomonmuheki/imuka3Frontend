@@ -1,60 +1,69 @@
-<div>
-  <div class="col-sm-5" style="padding-bottom:20px;">
-    <input
-      class="form-control"
-      type="text"
-      placeholder="Search......."
-      [(ngModel)]="filter"
-    />
+<!-- Show it when there is no deal-->
+<div class="no-data text-center" *ngIf="Deal2.length == 0">
+  <div *ngIf="Deal.length == 0" class="alert alert-info">
+    <strong>There is no Deal added yet!</strong>
   </div>
 </div>
-<table class="table table-striped">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Company Name</th>
-      <th scope="col">Crated Date</th>
-      <th scope="col">Phone No</th>
-      <th scope="col">Email</th>
-      <th scope="col">Amount</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr
-      *ngFor="
-        let deal of Deal
-          | filter: filter
-          | paginate: { itemsPerPage: 6, currentPage: p }
-      "
-    >
-      <td>{{ deal.companyName }}</td>
-      <td>{{ deal.created_at | date }}</td>
-      <td>{{ deal.telephone }}</td>
-      <td>{{ deal.email }}</td>
-      <td>{{ deal.AmountToRaise }}</td>
-      <td>
-        <span
-          class="btn btn-info mr-1"
-          style="margin: 2px;"
-          routerLink="/investor-dealdetail/{{ deal.id }}"
-          >Details
-        </span>
-        <span
-          class="btn btn-primary btn-xs"
-          routerLink="/investor-makeoffer/{{ deal.id }}"
-          >Offer</span
-        >
-      </td>
-    </tr>
-  </tbody>
-  <ul class="pagination">
-    <pagination-controls (pageChange)="p = $event"></pagination-controls>
-  </ul>
-</table>
+<!-- deal list table, it hides when there is no deal -->
+<div *ngIf="Deal2.length !== 0">
+  <div>
+    <div class="col-sm-5" style="padding-bottom:20px;">
+      <input
+        class="form-control"
+        type="text"
+        placeholder="Search......."
+        [(ngModel)]="filter"
+      />
+    </div>
+  </div>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Company Name</th>
+        <th scope="col">Crated Date</th>
+        <th scope="col">Phone No</th>
+        <th scope="col">Email</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let deal of Deal2
+            | filter: filter
+            | paginate: { itemsPerPage: 6, currentPage: p }
+        "
+      >
+        <td>{{ deal.companyName }}</td>
+        <td>{{ deal.created_at | date }}</td>
+        <td>{{ deal.telephone }}</td>
+        <td>{{ deal.email }}</td>
+        <td>{{ deal.AmountToRaise }}</td>
+        <td>
+          <span
+            class="btn btn-info mr-1"
+            style="margin: 2px;"
+            routerLink="/dealdetails/{{ deal.id }}"
+            >Details
+          </span>
+          <span
+            class="btn btn-primary btn-xs"
+            routerLink="/investor-makeoffer/{{ deal.id }}"
+            >Offer</span
+          >
+        </td>
+      </tr>
+    </tbody>
+    <ul class="pagination">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </ul>
+  </table>
+</div>
 <div *ngIf="display" style="margin:auto;padding-left: 45%;">
   <app-intersecting-circles-spinner
     [animationDuration]="1200"
     [size]="70"
-    [color]="'#ff1d5e'"
+    [color]="'#4169E1'"
   ></app-intersecting-circles-spinner>
 </div>

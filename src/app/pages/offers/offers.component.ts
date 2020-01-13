@@ -14,6 +14,7 @@ import { OfferDealService } from "../../sharedservice/offer-deal.service";
 export class OffersComponent implements OnInit {
   Deal: any = [];
   Offer: any = [];
+  allOffers: any = [];
   // Pagination parameters.
   p: Number = 1;
   count: Number = 5;
@@ -39,9 +40,14 @@ export class OffersComponent implements OnInit {
 
   loadOffers() {
     return this.offerRestApi
-      .getUserOffers(this.user_id)
+      .getDealOffers(this.user_id)
       .subscribe((data: {}) => {
-        this.Offer = data;
+        this.allOffers = data;
+        //Sorting an array of offers with the newest first
+        this.Offer = this.allOffers.sort(
+          (a, b) =>
+            new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+        );
         this.display = false;
       });
   }
@@ -53,26 +59,24 @@ export class OffersComponent implements OnInit {
     const formData = new FormData();
 
     formData.append("status", confirmOffer);
-
     // Display the key/value pairs
     let object = {};
     formData.forEach(function(value, key) {
-      console.log((object[key] = value));
+      object[key] = value;
     });
     let json = JSON.stringify(object);
-    //console.log(json)
+    //  console.log(json);
 
     if (window.confirm("Are you sure you want to confirm this offer ?")) {
       let id = offerId;
 
       this.offerRestApi.confirmOffer(id, json).subscribe(
         res => {
-          this.router.navigateByUrl("/offers");
-          console.log("Content updated successfully!");
-          this.toastr.success(" Confirm successfully!");
+          this.loadOffers();
+
+          this.toastr.success(" Offer Confirmed successfully!");
         },
         error => {
-          console.log(error);
           this.toastr.error(error);
         }
       );
@@ -80,7 +84,7 @@ export class OffersComponent implements OnInit {
   }
   //function called when the button is clicked to corfirm offer
   rejectOffer(offerId) {
-    let rejectOffer: string = "3";
+    let rejectOffer: string = "2";
 
     const formData = new FormData();
 
@@ -89,7 +93,7 @@ export class OffersComponent implements OnInit {
     // Display the key/value pairs
     let object = {};
     formData.forEach(function(value, key) {
-      console.log((object[key] = value));
+      object[key] = value;
     });
     let json = JSON.stringify(object);
     //console.log(json)
@@ -99,12 +103,11 @@ export class OffersComponent implements OnInit {
 
       this.offerRestApi.rejectOffer(id, json).subscribe(
         res => {
-          this.router.navigateByUrl("/offers");
-          console.log("Content updated successfully!");
-          this.toastr.success(" Reject Offer successfully!");
+          this.loadOffers();
+
+          this.toastr.success("  Offer successfully Reject!");
         },
         error => {
-          console.log(error);
           this.toastr.error(error);
         }
       );

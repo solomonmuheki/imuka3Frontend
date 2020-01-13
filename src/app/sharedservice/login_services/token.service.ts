@@ -10,11 +10,12 @@ export class TokenService {
 
   constructor() {}
 
-  handle(token, expires_in, user_role, user_id) {
+  handle(token, expires_in, user_role, user_id, status) {
     this.set(token);
     this.setExpires_in(expires_in);
     this.setUserRole(user_role);
     this.setUser_id(user_id);
+    this.setStatus(status);
   }
 
   set(token) {
@@ -28,6 +29,9 @@ export class TokenService {
   }
   setUser_id(user_id) {
     localStorage.setItem("user_id", user_id);
+  }
+  setStatus(status) {
+    localStorage.setItem("status", status);
   }
   get() {
     return localStorage.getItem("token");

@@ -6,6 +6,8 @@ import {
   ElementRef
 } from "@angular/core";
 import { ROUTES } from "../../sidebar/sidebar.component";
+import { InvestorRoutes } from "../../sidebar/sidebar.component";
+import { AdminRoutes } from "../../sidebar/sidebar.component";
 import { Router } from "@angular/router";
 import { Location } from "@angular/common";
 import { AuthService } from "../../sharedservice/login_services/auth.service";
@@ -23,7 +25,7 @@ export class NavbarComponent implements OnInit {
   private nativeElement: Node;
   private toggleButton;
   private sidebarVisible: boolean;
-
+  userRole: string = this.getUserRole();
   public isCollapsed = true;
   @ViewChild("navbar-cmp", { static: false }) button;
 
@@ -41,7 +43,14 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.listTitles = ROUTES.filter(listTitle => listTitle);
+    if (this.userRole === "Agent") {
+      this.listTitles = ROUTES.filter(listTitle => listTitle);
+    } else if (this.userRole === "Investor") {
+      this.listTitles = InvestorRoutes.filter(listTitle => listTitle);
+    } else if (this.userRole === "Admin") {
+      this.listTitles = AdminRoutes.filter(listTitle => listTitle);
+    }
+    //this.listTitles = ROUTES.filter(listTitle => listTitle);
     var navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = navbar.getElementsByClassName("navbar-toggle")[0];
     this.router.events.subscribe(event => {
@@ -116,5 +125,8 @@ export class NavbarComponent implements OnInit {
     this.Token.remove();
     this.Auth.changeAuthStatus(false);
     this.router.navigateByUrl("/home");
+  }
+  getUserRole() {
+    return localStorage.getItem("user_role");
   }
 }

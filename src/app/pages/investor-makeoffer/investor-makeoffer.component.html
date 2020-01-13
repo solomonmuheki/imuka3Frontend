@@ -1,19 +1,41 @@
-<!--  Entreprenuer Validation Form-->
 <div class="card">
   <div class="card-header" style="background-color: #007edb;">
-    Create a new Deal
+    Make an Offer
   </div>
   <div class="card-body">
     <div id="main_warpper">
       <!-- Bootstrap Container -->
       <div class="container-fluid">
+        <table class="table table-borderless">
+          <tbody>
+            <tr>
+              <td>
+                <span class="label2"
+                  ><label> Name</label><br />{{ companyName }}</span
+                >
+              </td>
+              <td>
+                <span class="label2"
+                  ><label>Company Address</label><br />
+                  {{ Address }}</span
+                >
+              </td>
+              <td>
+                <span class="label2"
+                  ><label>Amount Needed</label><br />
+                  {{ AmountToRaise }}</span
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <form
           class="form-horizontal"
           id="add-form"
           [formGroup]="registerOffer"
           (ngSubmit)="addNewOffer()"
         >
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="offer_amount">Offer Amount:</label>
             <input
               type="text"
@@ -42,9 +64,66 @@
                              "
               ></i
             ></small>
+          </div> -->
+          <!-- Phone number -->
+          <div class="mb-3">
+            <label>Offer Amount</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="offer_amount"
+              [ngClass]="{
+                'is-invalid': submitted && f.offer_amount.errors
+              }"
+            />
+
+            <!-- error block -->
+            <div
+              class="invalid-feedback"
+              *ngIf="
+                submitted &&
+                registerOffer.controls['offer_amount'].errors?.maxLength
+              "
+            >
+              <sup>*</sup> Must be 10 digit long
+            </div>
+            <div
+              class="invalid-feedback"
+              *ngIf="
+                submitted &&
+                registerOffer.controls['offer_amount'].errors?.minLength
+              "
+            >
+              <sup>*</sup>Must be 3 or more digit long
+            </div>
+            <div
+              class="invalid-feedback"
+              *ngIf="
+                submitted &&
+                registerOffer.controls['offer_amount'].errors?.required
+              "
+            >
+              <sup>*</sup>Please enter offer amount
+            </div>
+            <div
+              class="invalid-feedback"
+              *ngIf="
+                submitted &&
+                registerOffer.controls['offer_amount'].errors?.pattern
+              "
+            >
+              <sup>*</sup>Please enter valid number
+            </div>
+          </div>
+          <div *ngIf="display" style="margin:auto;padding-left: 45%;">
+            <app-half-circle-spinner
+              [animationDuration]="1000"
+              [size]="60"
+              [color]="'#4169E1'"
+            ></app-half-circle-spinner>
           </div>
 
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">Submit Offer</button>
         </form>
       </div>
     </div>

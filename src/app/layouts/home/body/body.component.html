@@ -17,40 +17,55 @@
         <h3 class="">Connect to Business Opportunities.</h3>
       </div>
       <div class="col-md-12 col-lg-12 col-xl-10 mx-auto">
-        <form>
-          <div class="form-row">
-            <div class="col-12 col-md-4 mb-2 mb-md-0">
-              <select class="form-control-lg" id="sel1" style="width: 100%;">
-                <option>All Industry</option>
-                <option>Agriculture</option>
-                <option>Education</option>
-                <option>Poultry</option>
-                <option>Medicine</option>
-                <option>Catering</option>
-              </select>
-            </div>
-            <div
-              class="col-12 col-md-4 mb-2 mb-md-0"
-              style="padding-bottom: 0px; margin-bottom: 0px;"
+        <!-- <form> -->
+        <div class="form-row">
+          <div class="col-12 col-md-4 mb-2 mb-md-0">
+            <select
+              class="form-control-lg"
+              style="width: 100%;"
+              [(ngModel)]="selectedIndustry"
             >
-              <select class=" form-control-lg" id="sel1" style="width: 100%;">
-                <option value=""> All Location</option>
-                <option value="Bundibugyo">Bundibugyo</option>
-                <option value="Mubende">Mubende</option>
-                <option value="Hoima">Hoima</option>
-                <option value="Gulu">Gulu</option>
-                <option value="Fort Portal">Fort Portal</option>
-                <option value="Kasese">Kasese</option>
-              </select>
-            </div>
-
-            <div class="col-12 col-md-4 mb-2 mb-md-0">
-              <button type="submit" class="btn  btn-primary btn-lg btn-block">
-                Search
-              </button>
-            </div>
+              <option value="">All Industry</option>
+              <option value="Technology">Technology</option>
+              <option value="Tourism">Tourism</option>
+              <option value="Health">Health</option>
+              <option value="Education">Education</option>
+              <option value="Manufacturing">Manufacturing</option>
+              <option value="Trade">Trade</option>
+              <option value="Transport">Transport</option>
+            </select>
           </div>
-        </form>
+          <div
+            class="col-12 col-md-4 mb-2 mb-md-0"
+            style="padding-bottom: 0px; margin-bottom: 0px;"
+          >
+            <select
+              class=" form-control-lg"
+              style="width: 100%;"
+              [(ngModel)]="selectedLocation"
+            >
+              <option value=""> All Location</option>
+              <option value="KAMPALA">Kampala</option>
+              <option value="BUNDIBUGYO">Bundibugyo</option>
+              <option value="MUBENDE">Mubende</option>
+              <option value="HOIMA">Hoima</option>
+              <option value="GULU">Gulu</option>
+              <option value="FORT PORTAL">Fort Portal</option>
+              <option value="KASESE">Kasese</option>
+            </select>
+          </div>
+
+          <div class="col-12 col-md-4 mb-2 mb-md-0">
+            <button
+              type="submit"
+              class="btn  btn-primary btn-lg btn-block"
+              (click)="search()"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+        <!-- </form> -->
       </div>
     </div>
   </div>
@@ -60,11 +75,11 @@
   <div class="container">
     <div class="" *ngIf="Deal3.length == 0" style="text-align: center;">
       <div class="alert alert-info">
-        <p>There is no recent Deal added yet!</p>
+        <p>{{ empty }}</p>
       </div>
-      <button class="btn btn-outline-primary" routerLink="/login">
+      <!-- <button class="btn btn-outline-primary" routerLink="/login">
         Add Deal
-      </button>
+      </button> -->
     </div>
     <div class="row" *ngIf="Deal3.length !== 0">
       <div class="col-md-4" *ngFor="let deal of Deal3; let i = index">
@@ -75,7 +90,7 @@
           <img
             src="http://localhost:8000/uploads/{{ deal.image }}"
             class="img-fluid"
-            alt="blog1"
+            alt="deal"
             style="object-fit: cover;"
           />
           <div style="text-align: center;">
@@ -117,7 +132,4 @@
       ></app-half-circle-spinner>
     </div>
   </div>
-  <!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
-    <p style="color: white">Please Wait. </p>  
-    </ngx-spinner>  -->
 </section>

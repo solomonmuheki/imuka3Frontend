@@ -13,12 +13,25 @@
         </button>
       </div>
       <div class="modal-body">
-        <span>{{ companyName }}</span>
-        <ul *ngFor="let deal of dealData">
-          <li>
-            <span class="badge">{{ deal.id }}</span> {{ deal.companyName }}
-          </li>
-        </ul>
+        <table class="table table-borderless">
+          <tbody>
+            <tr>
+              <td>
+                <span class="label2"
+                  ><label> Name:</label><br /><b>{{ companyName }}</b></span
+                >
+              </td>
+
+              <td>
+                <span class="label2"
+                  ><label>Amount Needed:</label><br />
+                  <b>{{ AmountToRaise }}</b></span
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <hr />
         <div class="form-group">
           <label class="control-label">Amount You're Oferring</label>
           <div class="">

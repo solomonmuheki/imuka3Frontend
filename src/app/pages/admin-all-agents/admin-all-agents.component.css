@@ -1,0 +1,17 @@
+.card-header {
+  background-color: #007edb;
+  font-size: 20px;
+  font-weight: bold;
+  padding: auto;
+  color: white;
+}
+
+.label-success {
+  color: green;
+}
+.label-danger {
+  color: red;
+}
+.label-primary {
+  color: blue;
+}

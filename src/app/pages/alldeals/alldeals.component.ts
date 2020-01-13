@@ -9,6 +9,7 @@ import { DealRegistrationApiService } from "../../sharedservice/deal-registratio
 })
 export class AlldealsComponent implements OnInit {
   Deal: any = [];
+  allDeal: any = [];
   display = true;
   user_id: any;
   // Pagination parameters.
@@ -35,8 +36,12 @@ export class AlldealsComponent implements OnInit {
   // Get deal list
   loadDeals() {
     return this.restApi.getUserDeals(this.user_id).subscribe((data: {}) => {
-      this.Deal = data;
-
+      this.allDeal = data;
+      //Sorting an array of deals with the newest first
+      this.Deal = this.allDeal.sort(
+        (a, b) =>
+          new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+      );
       this.display = false;
     });
   }

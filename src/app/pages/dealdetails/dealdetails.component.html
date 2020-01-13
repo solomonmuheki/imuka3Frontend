@@ -5,6 +5,13 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-6">
+        <div *ngIf="display" style="margin:auto;padding-left: 45%;">
+          <app-intersecting-circles-spinner
+            [animationDuration]="1200"
+            [size]="70"
+            [color]="'#4169E1'"
+          ></app-intersecting-circles-spinner>
+        </div>
         <table class="table table-borderless">
           <tbody>
             <tr>
@@ -77,6 +84,27 @@
               {{ doc }}
             </li>
           </ul>
+          <span class="label"> Rating:</span><br />
+          <ngb-rating rate="{{ rating }}">
+            <ng-template let-fill="fill" let-index="index">
+              <span class="star" [class.filled]="fill === 100">&#9733;</span>
+            </ng-template>
+          </ngb-rating>
+          <hr />
+          <br />
+          <!-- Show it when there is no offer -->
+          <div class="no-data text-center" *ngIf="Offer.length == 0">
+            <div class="alert alert-danger">
+              <strong>There is no Offer(s) for this Deal!</strong>
+            </div>
+          </div>
+
+          <!-- Offers list table, it hides when there is no offer -->
+          <div *ngIf="Offer.length !== 0">
+            <div class="alert alert-success">
+              <strong>{{ Offer.length }} </strong>Offer(s) for this Deal
+            </div>
+          </div>
           <span class="label">Detailed Deal Description</span>
           <p>{{ detailedDescription }}</p>
         </div>

@@ -1,5 +1,4 @@
 import { Component, OnInit, EventEmitter } from "@angular/core";
-import { DealrestApiService } from "../../sharedservice/dealrest-api.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DealRegistrationApiService } from "../../sharedservice/deal-registration-api.service";
 import { OfferDealService } from "../../sharedservice/offer-deal.service";
@@ -38,7 +37,7 @@ export class InvestorDealdetailComponent implements OnInit {
   financialStatement: number;
   documents = [];
   constructor(
-    public restApi: DealrestApiService,
+   
     public actRoute: ActivatedRoute,
     public router: Router,
     private offerService: OfferDealService,

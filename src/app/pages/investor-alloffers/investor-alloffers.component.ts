@@ -10,6 +10,7 @@ import { InvestorDealdetailComponent } from "../../pages/investor-dealdetail/inv
 })
 export class InvestorAlloffersComponent implements OnInit {
   Offer: any = [];
+  Offer2: any = [];
   title = "offer crude";
   postList: any[] = [];
   bsModalRef: BsModalRef;
@@ -24,6 +25,7 @@ export class InvestorAlloffersComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.user_id = this.getUserId();
     this.loadOffers();
   }
   //getting user id
@@ -36,18 +38,15 @@ export class InvestorAlloffersComponent implements OnInit {
       .getUserOffers(this.user_id)
       .subscribe((data: {}) => {
         this.Offer = data;
+        //Sorting an array of offers with the newest first
+        this.Offer2 = this.Offer.sort(
+          (a, b) =>
+            new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+        );
         this.display = false;
       });
   }
 
-  // Delete offer
-  // deleteDeal(id) {
-  //   if (window.confirm("Are you sure, you want to delete?")) {
-  //     this.restApi.deleteDeal(id).subscribe(data => {
-  //       this.loadDeals();
-  //     });
-  //   }
-  // }
   editOffer(offerId: number) {
     this.offerRestApi.changeOfferId(offerId);
 

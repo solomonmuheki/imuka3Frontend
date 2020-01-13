@@ -17,6 +17,8 @@ export class InvestorUpdateOfferComponent implements OnInit {
   offerId: number;
   offerData: any;
   dealData: any;
+  companyName: string;
+  AmountToRaise: string;
   event: EventEmitter<any> = new EventEmitter();
 
   constructor(
@@ -32,7 +34,7 @@ export class InvestorUpdateOfferComponent implements OnInit {
     this.offerService.offerIdData.subscribe(data => {
       this.offerId = data;
       console.log("data:" + this.offerId);
-     
+
       if (this.offerId !== undefined) {
         this.offerService.getOffer(this.offerId).subscribe(
           data => {
@@ -46,7 +48,9 @@ export class InvestorUpdateOfferComponent implements OnInit {
 
               //get deal data
               this.dealRestApiService.getDeal(dealId).subscribe(data => {
-                this.dealData = data;
+                this.companyName = data[0]["companyName"];
+
+                this.AmountToRaise = data[0]["AmountToRaise"];
               });
             }
           },

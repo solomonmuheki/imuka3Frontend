@@ -1,0 +1,80 @@
+<div class="card">
+  <div class="card-header" style="background-color: #007edb;">
+    Investor List
+  </div>
+  <div class="card-body">
+    <div class="container custom-container-2">
+      <!-- Show it when there is no Investor -->
+      <div class="no-data text-center" *ngIf="User.length == 0">
+        <p>There is no Investor added yet!</p>
+      </div>
+
+      <!-- Investor list table, it hides when there is no Investor-->
+      <div *ngIf="User.length !== 0">
+        <div class="table-responsive-lg">
+          <table class="table table-bordered table-striped ">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Created Date</th>
+                <th scope="col">status</th>
+
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let user of User
+                    | paginate: { itemsPerPage: count, currentPage: p }
+                "
+              >
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.created_at | date }}</td>
+                <td>{{ user.telephone }}</td>
+
+                <td class="text-center edit-block">
+                  <span
+                    class="btn btn-outline-primary mr-1"
+                    routerLink="/deal-offers/{{ user.id }}"
+                  >
+                    <i class="fa fa-file-o text-info"></i>
+                  </span>
+                  <span
+                    class="btn btn-primary mr-1"
+                    routerLink="/dealdetails/{{ user.id }}"
+                    ><i class="fa fa-share"></i>
+                  </span>
+
+                  <span
+                    class="btn btn-success mr-1"
+                    style="margin: 2px;"
+                    routerLink="/editdeal/{{ user.id }}"
+                    ><i class="fa fa-edit"></i>
+                  </span>
+                  <span
+                    class="btn btn-danger mr-1"
+                    (click)="deleteDeal(user.id)"
+                    ><i class="fa fa-trash"></i>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="text-right">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="display" style="margin:auto;padding-left: 45%;">
+      <app-intersecting-circles-spinner
+        [animationDuration]="1200"
+        [size]="70"
+        [color]="'#4169E1'"
+      ></app-intersecting-circles-spinner>
+    </div>
+  </div>
+</div>

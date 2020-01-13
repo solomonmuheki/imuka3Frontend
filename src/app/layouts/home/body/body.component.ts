@@ -17,6 +17,9 @@ export class BodyComponent implements OnInit {
   noDays: any;
   currentDate = new Date().getTime(); // current date
   display = true;
+  selectedLocation: string = "";
+  selectedIndustry: string = "";
+  empty: string = "There is no recent Deal added yet!";
   constructor(
     public restApi: DealRegistrationApiService,
     config: NgbRatingConfig,
@@ -70,5 +73,30 @@ export class BodyComponent implements OnInit {
     this.noDays = Math.round(Math.abs((dateAfter_Days - firstDate) / oneDay));
 
     return this.noDays;
+  }
+  search() {
+    let searchedDeals;
+    if (this.selectedIndustry == "" && this.selectedLocation == "") {
+      searchedDeals = this.Deal3;
+    } else if (this.selectedLocation == "") {
+      searchedDeals = this.Deal2.filter(deals => {
+        return deals.companyIndustry === this.selectedIndustry;
+      });
+    } else if (this.selectedIndustry === "") {
+      searchedDeals = this.Deal2.filter(deals => {
+        return deals.Address === this.selectedLocation;
+      });
+    } else {
+      searchedDeals = this.Deal2.filter(deals => {
+        return (
+          deals.companyIndustry === this.selectedIndustry &&
+          deals.Address === this.selectedLocation
+        );
+      });
+    }
+    this.Deal3 = searchedDeals;
+    if (this.Deal3.length == 0) {
+      this.empty = "no matching results";
+    }
   }
 }
