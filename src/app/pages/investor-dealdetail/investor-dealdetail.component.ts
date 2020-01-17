@@ -37,7 +37,6 @@ export class InvestorDealdetailComponent implements OnInit {
   financialStatement: number;
   documents = [];
   constructor(
-   
     public actRoute: ActivatedRoute,
     public router: Router,
     private offerService: OfferDealService,
@@ -48,7 +47,7 @@ export class InvestorDealdetailComponent implements OnInit {
   ngOnInit() {
     this.offerService.offerIdData.subscribe(data => {
       this.offerId = data;
-      console.log("data:" + this.offerId);
+
       if (this.offerId !== undefined) {
         this.offerService.getOffer(this.offerId).subscribe(data => {
           this.offerData = data;

@@ -4,6 +4,9 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { ReactiveFormsModule } from "@angular/forms";
 import { AdminLayoutRoutes } from "./admin-layout.routing";
+import { RoleGuardService } from "../../sharedservice/guards/role-guard.service";
+import { RoleGuardAdminService } from "../../sharedservice/guards/role-guard-admin.service";
+import { RoleGuardInvestorService } from "../../sharedservice/guards/role-guard-investor.service";
 
 import { DashboardComponent } from "../../pages/dashboard/dashboard.component";
 
@@ -20,7 +23,8 @@ import { InvestorMakeofferComponent } from "../../pages/investor-makeoffer/inves
 import { OffersComponent } from "../../pages/offers/offers.component";
 import { InvestorUpdateOfferComponent } from "../../pages/investor-update-offer/investor-update-offer.component";
 import { DealOffersComponent } from "../../pages/deal-offers/deal-offers.component";
-
+import { AdminDealOffersComponent } from "../../pages/admin-deal-offers/admin-deal-offers.component";
+import { PageNotFoundComponent } from "../../page-not-found/page-not-found.component";
 import { NgxPaginationModule } from "ngx-pagination";
 import { Ng2SearchPipeModule } from "ng2-search-filter";
 import { Ng2SmartTableModule } from "ng2-smart-table";
@@ -74,9 +78,16 @@ import { ModalModule, BsModalService } from "ngx-bootstrap/modal";
     AdminAllAgentsComponent,
     AdminAllInvestorsComponent,
     AdminAlldealsComponent,
-    AdminAlloffersComponent
+    AdminAlloffersComponent,
+    AdminDealOffersComponent,
+    PageNotFoundComponent
   ],
-  providers: [BsModalService],
+  providers: [
+    BsModalService,
+    RoleGuardService,
+    RoleGuardAdminService,
+    RoleGuardInvestorService
+  ],
   entryComponents: [
     MakeOfferComponent,
     InvestorUpdateOfferComponent,

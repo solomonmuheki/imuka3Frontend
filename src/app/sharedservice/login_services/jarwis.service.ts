@@ -14,9 +14,8 @@ export class JarwisService {
   }
 
   login(data) {
-    return this.http
-      .post(`${this.baseUrl}/login`, data)
-      .pipe(retry(1), catchError(this.handleError));
+    return this.http.post(`${this.baseUrl}/login`, data);
+    //.pipe(retry(1), catchError(this.handleError));
   }
 
   sendPasswordResetLink(data) {

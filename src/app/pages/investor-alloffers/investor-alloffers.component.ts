@@ -15,8 +15,8 @@ export class InvestorAlloffersComponent implements OnInit {
   postList: any[] = [];
   bsModalRef: BsModalRef;
   // Pagination parameters.
-  p: Number = 1;
-  count: Number = 5;
+  p: number = 1;
+  count: number = 5;
   display = true;
   user_id: any;
   constructor(

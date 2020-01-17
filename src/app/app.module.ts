@@ -7,23 +7,16 @@ import { FormsModule } from "@angular/forms";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { AppComponent } from "./app.component";
-
 import { SidebarModule } from "./sidebar/sidebar.module";
 import { FooterModule } from "./shared/footer/footer.module";
 import { NavbarModule } from "./shared/navbar/navbar.module";
 import { FixedPluginModule } from "./shared/fixedplugin/fixedplugin.module";
-
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
-
 import { HeaderComponent } from "./layouts/home/header/header.component";
 import { FooterComponent } from "./layouts/home/footer/footer.component";
-
 import { HomeComponent } from "./layouts/home/home.component";
-
-import { DevTblService } from "./sharedservice/table.service";
 import { NgxPaginationModule } from "ngx-pagination";
 import { AppRoutes } from "./app-routing.module";
-
 import { JarwisService } from "./sharedservice/login_services/jarwis.service";
 import { TokenService } from "./sharedservice/login_services/token.service";
 import { AuthService } from "./sharedservice/login_services/auth.service";
@@ -38,9 +31,6 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-
-    // RegisterComponent,
-    //BodyComponent,
     HeaderComponent,
     FooterComponent,
     HomeComponent
@@ -59,7 +49,10 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
     }),
     SidebarModule,
     NavbarModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: "toast-top-center",
+      closeButton: true
+    }),
     FooterModule,
     FixedPluginModule,
     BrowserAnimationsModule

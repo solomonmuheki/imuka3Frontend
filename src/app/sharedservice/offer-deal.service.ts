@@ -113,12 +113,7 @@ export class OfferDealService {
       .put<Offer>(this.baseURL + "/offers/" + id, offer, this.httpOptions)
       .pipe(retry(1), catchError(this.handleError));
   }
-  updateEmployee(id, data): Observable<any> {
-    let url = `${this.baseURL}/deal/update/${id}`;
-    return this.http
-      .put(url, data, { headers: this.headers })
-      .pipe(catchError(this.errorMgmt));
-  }
+
   //confirm offer method
   confirmOffer(id, data): Observable<any> {
     let url = `${this.baseURL}/offer/reject-offer/${id}`;
@@ -160,13 +155,7 @@ export class OfferDealService {
   changeOfferId(offerId: number) {
     this.offerIdSource.next(offerId);
   }
-  // updateOffer(post: any) {
-  //   let header = new HttpHeaders();
-  //   header.append("Content-Type", "applications/json");
-  //   return this.http.post(this.baseURL + "updatepost", post, {
-  //     headers: header
-  //   });
-  // }
+
   updateOffer(id, offer): Observable<Offer> {
     return this.http
       .put<Offer>(

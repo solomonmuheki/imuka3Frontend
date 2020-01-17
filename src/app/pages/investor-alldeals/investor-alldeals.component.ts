@@ -17,10 +17,10 @@ export class InvestorAlldealsComponent implements OnInit {
   Offer: any = [];
   display = true;
   // Pagination parameters.
-  p: Number = 1;
-  count: Number = 5;
+  p: number = 1;
+  count: number = 5;
   bsModalRef: BsModalRef;
-
+  status = this.getUserStatus();
   //sorting
   key: string = "name"; //set default
   reverse: boolean = false;
@@ -39,6 +39,11 @@ export class InvestorAlldealsComponent implements OnInit {
     this.loadOffers();
   }
 
+  //get the Investor status from local Storage
+
+  getUserStatus() {
+    return localStorage.getItem("status");
+  }
   // Get deal list
   loadDeals() {
     return this.restApi.getDeals().subscribe((data: {}) => {
@@ -50,9 +55,11 @@ export class InvestorAlldealsComponent implements OnInit {
       //deals created within 30 days from now
       let result = this.Deal.filter(function(item) {
         let itemTime = new Date(item.updated_at).getTime();
-        return itemTime >= dt2;
+        let dealStatus = item.status;
+        return itemTime >= dt2 && dealStatus == 0;
       });
       this.Deal2 = result;
+
       //Sorting an array of deals with the newest first
       this.Deal2 = result.sort(
         (a, b) =>

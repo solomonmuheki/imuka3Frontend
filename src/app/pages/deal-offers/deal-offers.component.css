@@ -18,3 +18,12 @@
 .filled.bad {
   color: #ff1e1e;
 }
+.label-success {
+  color: green;
+}
+.label-danger {
+  color: red;
+}
+.label-primary {
+  color: blue;
+}

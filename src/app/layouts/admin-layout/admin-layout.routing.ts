@@ -19,23 +19,97 @@ import { AdminAllAgentsComponent } from "../../pages/admin-all-agents/admin-all-
 import { AdminAllInvestorsComponent } from "../../pages/admin-all-investors/admin-all-investors.component";
 import { AdminAlldealsComponent } from "../../pages/admin-alldeals/admin-alldeals.component";
 import { AdminAlloffersComponent } from "../../pages/admin-alloffers/admin-alloffers.component";
+import { AdminDealOffersComponent } from "../../pages/admin-deal-offers/admin-deal-offers.component";
+import { PageNotFoundComponent } from "../../page-not-found/page-not-found.component";
+import { RoleGuardService } from "../../sharedservice/guards/role-guard.service";
+import { RoleGuardAdminService } from "../../sharedservice/guards/role-guard-admin.service";
+import { RoleGuardInvestorService } from "../../sharedservice/guards/role-guard-investor.service";
 
 export const AdminLayoutRoutes: Routes = [
-  { path: "dashboard", component: DashboardComponent },
-  { path: "adddeal", component: AdddealComponent },
-  { path: "alldeals", component: AlldealsComponent },
+  {
+    path: "dashboard",
+    component: DashboardComponent,
+    canActivate: [RoleGuardService]
+  },
+  {
+    path: "adddeal",
+    component: AdddealComponent,
+    canActivate: [RoleGuardService]
+  },
+  {
+    path: "alldeals",
+    component: AlldealsComponent,
+    canActivate: [RoleGuardService]
+  },
   { path: "offers", component: OffersComponent },
-  { path: "investor-dashboard", component: InvestorDashboardComponent },
-  { path: "investor-alldeals", component: InvestorAlldealsComponent },
-  { path: "investor-alloffers", component: InvestorAlloffersComponent },
-  { path: "investor-dealdetail/:id", component: InvestorDealdetailComponent },
-  { path: "investor-makeoffer/:id", component: InvestorMakeofferComponent },
+  {
+    path: "investor-dashboard",
+    component: InvestorDashboardComponent,
+    canActivate: [RoleGuardInvestorService]
+  },
+  {
+    path: "investor-alldeals",
+    component: InvestorAlldealsComponent,
+    canActivate: [RoleGuardInvestorService]
+  },
+  {
+    path: "investor-alloffers",
+    component: InvestorAlloffersComponent,
+    canActivate: [RoleGuardInvestorService]
+  },
+  {
+    path: "investor-dealdetail/:id",
+    component: InvestorDealdetailComponent,
+    canActivate: [RoleGuardInvestorService]
+  },
+  {
+    path: "investor-makeoffer/:id",
+    component: InvestorMakeofferComponent,
+    canActivate: [RoleGuardInvestorService]
+  },
   { path: "dealdetails/:id", component: DealdetailsComponent },
-  { path: "editdeal/:id", component: EditdealComponent },
-  { path: "deal-offers/:id", component: DealOffersComponent },
-  { path: "admin-dashboard", component: AdminDashboardComponent },
-  { path: "agents", component: AdminAllAgentsComponent },
-  { path: "investors", component: AdminAllInvestorsComponent },
-  { path: "all-deals", component: AdminAlldealsComponent },
-  { path: "all-offers", component: AdminAlloffersComponent }
+  {
+    path: "editdeal/:id",
+    component: EditdealComponent,
+    canActivate: [RoleGuardService]
+  },
+  {
+    path: "deal-offers/:id",
+    component: DealOffersComponent,
+    canActivate: [RoleGuardService]
+  },
+  {
+    path: "admin-dashboard",
+    component: AdminDashboardComponent,
+    canActivate: [RoleGuardAdminService]
+  },
+  {
+    path: "agents",
+    component: AdminAllAgentsComponent,
+    canActivate: [RoleGuardAdminService]
+  },
+  {
+    path: "investors",
+    component: AdminAllInvestorsComponent,
+    canActivate: [RoleGuardAdminService]
+  },
+  {
+    path: "all-deals",
+    component: AdminAlldealsComponent,
+    canActivate: [RoleGuardAdminService]
+  },
+  {
+    path: "all-offers",
+    component: AdminAlloffersComponent,
+    canActivate: [RoleGuardAdminService]
+  },
+  {
+    path: "admin-deal-offers/:id",
+    component: AdminDealOffersComponent,
+    canActivate: [RoleGuardAdminService]
+  },
+  {
+    path: "page-not-found",
+    component: PageNotFoundComponent
+  }
 ];

@@ -15,6 +15,7 @@ import {
 })
 export class DashboardComponent implements OnInit {
   user_id = this.getUserId();
+  status = this.getUserStatus();
   error: null;
   public canvas: any;
   public ctx;
@@ -37,23 +38,6 @@ export class DashboardComponent implements OnInit {
   totalDeals: number = 0;
   totalDealsThisYear: number = 0;
 
-  decOffers: number = 0;
-  novOffers: number = 0;
-  octOffers: number = 0;
-  sepOffers: number = 0;
-  augOffers: number = 0;
-  julOffers: number = 0;
-  junOffers: number = 0;
-  mayOffers: number = 0;
-  aprilOffers: number = 0;
-  marOffers: number = 0;
-  febOffers: number = 0;
-  janOffers: number = 0;
-  Offer: any = [];
-  totalOffers: number = 0;
-  totalOffersThisYear: number = 0;
-
-  yearlyOffers = [];
   yearlyDeals = [];
   display = true;
 
@@ -78,25 +62,18 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.loadDeals();
-    this.loadOffers();
   }
   //getting user id
   getUserId() {
     return localStorage.getItem("user_id");
   }
+  //getting user Status
+  getUserStatus() {
+    return localStorage.getItem("status");
+  }
   graph() {
     let speedCanvas = document.getElementById("speedChart");
 
-    let offerData = {
-      data: this.yearlyOffers,
-      fill: false,
-      borderColor: "#fbc658",
-      backgroundColor: "transparent",
-      pointBorderColor: "#fbc658",
-      pointRadius: 4,
-      pointHoverRadius: 4,
-      pointBorderWidth: 8
-    };
     let dealData = {
       data: this.yearlyDeals,
       fill: false,
@@ -123,7 +100,7 @@ export class DashboardComponent implements OnInit {
         "Nov",
         "Dec"
       ],
-      datasets: [offerData, dealData]
+      datasets: [dealData]
     };
 
     let chartOptions = {
@@ -296,283 +273,15 @@ export class DashboardComponent implements OnInit {
       this.novDeals,
       this.decDeals
     ];
-  }
-
-  loadOffers() {
-    this.offerRestApi.getDealOffers(this.user_id).subscribe(
-      data => this.handleOfferResponse(data),
-      error => this.handleOfferError(error)
-    );
-  }
-  handleOfferResponse(data) {
-    let offersGraph = this.offerRestApi;
-
-    this.Offer = data;
-
-    //get the number of offers
-    this.totalOffers = this.Offer.length;
-    //get current year
-    let currentYear = this.year;
-
-    //filter to get all offers in particular year
-    let yearFilter = this.Offer.filter(e => {
-      let [year, _] = e.created_at.split("-");
-
-      return currentYear === +year;
-    });
-    //assign offers in a particular year to a variable
-    this.totalOffersThisYear = yearFilter.length;
-    //loop through objects to get offers in a particular month in a year
-    yearFilter.forEach((element, index, array) => {
-      //getting month from date of each element
-      let created_atMonth = new Date(element.created_at).getMonth() + 1;
-      //getting offers in the month of dec
-      if (created_atMonth == 12) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in dec
-        this.decOffers = monthFilter.length;
-      } else if (created_atMonth == 11) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in nov
-        this.novOffers = monthFilter.length;
-      } else if (created_atMonth == 10) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in oct
-        this.octOffers = monthFilter.length;
-      } else if (created_atMonth == 9) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in aug
-        this.sepOffers = monthFilter.length;
-      } else if (created_atMonth == 8) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in july
-        this.augOffers = monthFilter.length;
-      } else if (created_atMonth == 7) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-
-        //get total offers in july
-        this.julOffers = monthFilter.length;
-      } else if (created_atMonth == 6) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in june
-        this.junDeals = monthFilter.length;
-      } else if (created_atMonth == 5) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in may
-        this.mayOffers = monthFilter.length;
-      } else if (created_atMonth == 4) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in april
-        this.aprilOffers = monthFilter.length;
-      } else if (created_atMonth == 3) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in march
-        this.marOffers = monthFilter.length;
-      } else if (created_atMonth == 2) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in feb
-        this.febOffers = monthFilter.length;
-      } else if (created_atMonth == 1) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in jan
-        this.janOffers = monthFilter.length;
-      } else {
-        console.log("not valid");
-      }
-    });
-
-    this.yearlyOffers = [
-      this.janOffers,
-      this.febOffers,
-      this.marOffers,
-      this.aprilOffers,
-      this.mayOffers,
-      this.junOffers,
-      this.julOffers,
-      this.augOffers,
-      this.sepOffers,
-      this.octOffers,
-      this.novOffers,
-      this.decOffers
-    ];
-
     this.graph();
   }
 
-  loadYearlyOffersAndDeals() {
-    //get the number of offers
-    this.totalOffers = this.Offer.length;
+  loadYearlyDeals() {
     //get searched year year
 
     const searchedYear = this.angularForm.value.date.getFullYear();
     this.year = searchedYear;
 
-    let janYearlyOffers = 0;
-    let febYearlyOffers = 0;
-    let marYearlyOffers = 0;
-    let aprilYearlyOffers = 0;
-    let mayYearlyOffers = 0;
-    let junYearlyOffers = 0;
-    let julYearlyOffers = 0;
-    let augYearlyOffers = 0;
-    let sepYearlyOffers = 0;
-    let octYearlyOffers = 0;
-    let novYearlyOffers = 0;
-    let decYearlyOffers = 0;
-    //filter to get all deals in particular year
-    let yearFilter = this.Offer.filter(e => {
-      let [year, _] = e.created_at.split("-"); // Or, var month = e.date.split('-')[1];
-
-      return searchedYear === +year;
-    });
-
-    //assign offers in a particular year to a variable
-    this.totalOffersThisYear = yearFilter.length;
-    //loop through objects to get offers in a particular month in a year
-    yearFilter.forEach((element, index, array) => {
-      //getting month from date of each element
-      let created_atMonth = new Date(element.created_at).getMonth() + 1;
-      //getting offers in the month of dec
-      if (created_atMonth == 12) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in dec
-        decYearlyOffers = monthFilter.length;
-      } else if (created_atMonth == 11) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in nov
-        novYearlyOffers = monthFilter.length;
-      } else if (created_atMonth == 10) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in oct
-        octYearlyOffers = monthFilter.length;
-      } else if (created_atMonth == 9) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in aug
-        sepYearlyOffers = monthFilter.length;
-      } else if (created_atMonth == 8) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in july
-        augYearlyOffers = monthFilter.length;
-      } else if (created_atMonth == 7) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-
-        //get total offers in july
-        julYearlyOffers = monthFilter.length;
-      } else if (created_atMonth == 6) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in june
-        junYearlyDeals = monthFilter.length;
-      } else if (created_atMonth == 5) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in may
-        mayYearlyOffers = monthFilter.length;
-      } else if (created_atMonth == 4) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in april
-        aprilYearlyOffers = monthFilter.length;
-      } else if (created_atMonth == 3) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in march
-        marYearlyOffers = monthFilter.length;
-      } else if (created_atMonth == 2) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in feb
-        febYearlyOffers = monthFilter.length;
-      } else if (created_atMonth == 1) {
-        let monthFilter = yearFilter.filter(e => {
-          let [_, month] = e.created_at.split("-");
-          return created_atMonth === +month;
-        });
-        //get total offers in jan
-        janYearlyOffers = monthFilter.length;
-      } else {
-        console.log("not valid");
-      }
-    });
-    //assign the yearlyOffers Array with new values
-    this.yearlyOffers = [
-      janYearlyOffers,
-      febYearlyOffers,
-      marYearlyOffers,
-      aprilYearlyOffers,
-      mayYearlyOffers,
-      junYearlyOffers,
-      julYearlyOffers,
-      augYearlyOffers,
-      sepYearlyOffers,
-      octYearlyOffers,
-      novYearlyOffers,
-      decYearlyOffers
-    ];
     // searched year month variables
     let janYearlyDeals = 0;
     let febYearlyDeals = 0;
@@ -709,9 +418,6 @@ export class DashboardComponent implements OnInit {
   handleDealError(error) {
     //this.display = false;
 
-    console.log(error);
-  }
-  handleOfferError(error) {
     console.log(error);
   }
 }

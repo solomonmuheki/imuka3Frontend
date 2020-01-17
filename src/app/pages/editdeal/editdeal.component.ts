@@ -291,11 +291,10 @@ export class EditdealComponent implements OnInit {
       this.editDealService.updateEmployee(id, json).subscribe(
         res => {
           this.router.navigateByUrl("/alldeals");
-          console.log("Content updated successfully!");
+
           this.toastr.success(" Deal updated successfully!");
         },
         error => {
-          console.log(error);
           this.toastr.error(error);
         }
       );

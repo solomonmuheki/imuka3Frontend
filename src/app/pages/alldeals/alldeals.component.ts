@@ -13,8 +13,8 @@ export class AlldealsComponent implements OnInit {
   display = true;
   user_id: any;
   // Pagination parameters.
-  p: Number = 1;
-  count: Number = 5;
+  p: number = 1;
+  count: number = 5;
 
   constructor(
     public restApi: DealRegistrationApiService,

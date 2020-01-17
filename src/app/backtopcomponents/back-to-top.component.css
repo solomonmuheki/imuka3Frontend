@@ -1,0 +1,11 @@
+.back-to-top-button {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  border: 0;
+  outline: none;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: blue;
+}

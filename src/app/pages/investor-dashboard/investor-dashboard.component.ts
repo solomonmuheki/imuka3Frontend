@@ -23,9 +23,10 @@ export class InvestorDashboardComponent implements OnInit {
   pendingOffers: any = 0;
 
   // Pagination parameters.
-  p: Number = 1;
-  count: Number = 5;
+  p: number = 1;
+  count: number = 5;
   bsModalRef: BsModalRef;
+  status = this.getUserStatus();
 
   constructor(
     public restApi: DealrestApiService,
@@ -37,7 +38,11 @@ export class InvestorDashboardComponent implements OnInit {
     this.loadDeals();
     this.loadOffers();
   }
+  //get the Investor status from local Storage
 
+  getUserStatus() {
+    return localStorage.getItem("status");
+  }
   // Get deal list
   loadDeals() {
     return this.restApi.getDeals().subscribe((data: {}) => {

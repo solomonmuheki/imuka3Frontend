@@ -29,12 +29,6 @@ export const ROUTES: RouteInfo[] = [
     title: "All Deals",
     icon: "fa fa-list",
     class: ""
-  },
-  {
-    path: "/offers",
-    title: "Offers",
-    icon: "fa fa-money",
-    class: ""
   }
 ];
 export const InvestorRoutes: RouteInfo[] = [
@@ -85,7 +79,7 @@ export const AdminRoutes: RouteInfo[] = [
   {
     path: "/investors",
     title: "investors",
-    icon: "fa fa-user-circle-o",
+    icon: "fa fa-user",
     class: ""
   }
 ];
@@ -100,6 +94,8 @@ export class SidebarComponent implements OnInit {
   public menuItems: any[];
   public menuInvestorItems: any[];
   userRole: string = this.getUserRole();
+  status: any;
+  user: any;
   constructor(
     private Auth: AuthService,
     private router: Router,
@@ -114,6 +110,7 @@ export class SidebarComponent implements OnInit {
       this.menuInvestorItems = AdminRoutes.filter(menuItem => menuItem);
     }
     this.Auth.authStatus.subscribe(value => (this.loggedIn = value));
+    this.user = this.getUserRole();
   }
   getToken() {
     return localStorage.getItem("token");
@@ -123,6 +120,12 @@ export class SidebarComponent implements OnInit {
   }
   getUserId() {
     return localStorage.getItem("user_id");
+  }
+
+  //get the Agent status from local Storage
+
+  getUserStatus() {
+    return localStorage.getItem("status");
   }
   logout(event: MouseEvent) {
     event.preventDefault();

@@ -15,8 +15,8 @@ export class AdminAlldealsComponent implements OnInit {
   Offer: any = [];
   display = true;
   // Pagination parameters.
-  p: Number = 1;
-  count: Number = 5;
+  p: number = 1;
+  count: number = 5;
   bsModalRef: BsModalRef;
 
   //sorting

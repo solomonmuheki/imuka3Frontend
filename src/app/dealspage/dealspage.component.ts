@@ -15,6 +15,7 @@ export class DealspageComponent implements OnInit {
   Deal: any = [];
   Deal2: any = [];
   Deal3: any = [];
+  searched_deals: any = [];
   startDate: any;
   noDays: any;
   currentDate = new Date().getTime(); // current date
@@ -23,8 +24,8 @@ export class DealspageComponent implements OnInit {
   selectedIndustry: string = "";
   empty: string = "There is no recent Deal added yet!";
   // Pagination parameters.
-  p: Number = 1;
-  count: Number = 6;
+  p: number = 1;
+  count: number = 6;
   constructor(
     public restApi: DealRegistrationApiService,
     config: NgbRatingConfig,
@@ -52,7 +53,8 @@ export class DealspageComponent implements OnInit {
       //deals created within 30 days from now
       let result = this.Deal.filter(function(item) {
         let itemTime = new Date(item.created_at).getTime();
-        return itemTime >= dt2;
+        let dealStatus = item.status;
+        return itemTime >= dt2 && dealStatus == 0;
       });
       this.Deal2 = result;
       //Sorting an array of deals with the newest first
@@ -60,9 +62,8 @@ export class DealspageComponent implements OnInit {
         (a, b) =>
           new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       );
-      //get the first 6 elements
-      this.Deal3 = this.Deal2.slice(0, 6);
-
+      this.Deal3 = this.Deal2;
+      this.searched_deals = this.Deal2;
       this.display = false;
     });
   }
@@ -81,8 +82,9 @@ export class DealspageComponent implements OnInit {
   }
   search() {
     let searchedDeals;
+
     if (this.selectedIndustry == "" && this.selectedLocation == "") {
-      searchedDeals = this.Deal2;
+      searchedDeals = this.searched_deals;
     } else if (this.selectedLocation == "") {
       searchedDeals = this.Deal2.filter(deals => {
         return deals.companyIndustry === this.selectedIndustry;
@@ -99,8 +101,11 @@ export class DealspageComponent implements OnInit {
         );
       });
     }
-    this.Deal2 = searchedDeals;
-    if (this.Deal2.length == 0) {
+    console.log(this.selectedLocation);
+    console.log(this.selectedIndustry);
+    console.log(searchedDeals);
+    this.Deal3 = searchedDeals;
+    if (this.Deal3.length == 0) {
       this.empty = "no matching results";
     }
   }

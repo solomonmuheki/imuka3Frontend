@@ -92,19 +92,6 @@
           </ngb-rating>
           <hr />
           <br />
-          <!-- Show it when there is no offer -->
-          <div class="no-data text-center" *ngIf="Offer.length == 0">
-            <div class="alert alert-danger">
-              <strong>There is no Offer(s) for this Deal!</strong>
-            </div>
-          </div>
-
-          <!-- Offers list table, it hides when there is no offer -->
-          <div *ngIf="Offer.length !== 0">
-            <div class="alert alert-success">
-              <strong>{{ Offer.length }} </strong>Offer(s) for this Deal
-            </div>
-          </div>
           <span class="label">Detailed Deal Description</span>
           <p>{{ detailedDescription }}</p>
         </div>

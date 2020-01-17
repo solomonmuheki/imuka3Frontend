@@ -14,15 +14,15 @@
 
       <!-- deal list table, it hides when there is no deal -->
       <div *ngIf="Deal.length !== 0">
-        <div class="table-responsive-lg">
+        <div class="table-responsive-xl">
           <table class="table table-bordered table-striped ">
             <thead>
               <tr>
                 <th scope="col">Company Name</th>
                 <th scope="col">Created Date</th>
                 <th scope="col">Phone No</th>
-                <th scope="col">Email</th>
                 <th scope="col">Amount</th>
+                <th scope="col">Status</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -37,14 +37,22 @@
 
                 <td>{{ deal.created_at | date }}</td>
                 <td>{{ deal.telephone }}</td>
-                <td>{{ deal.email }}</td>
                 <td>{{ deal.AmountToRaise }}</td>
+                <td class="text-center edit-block">
+                  <span *ngIf="deal.status == 1" class="label-success">
+                    <i class="fa fa-check"></i>
+                  </span>
+                  <span *ngIf="deal.status == 0" class="label-primary">
+                    <i class="fa fa-ellipsis-h"></i>
+                  </span>
+                </td>
                 <td class="text-center edit-block">
                   <span
                     class="btn btn-outline-primary mr-1"
                     routerLink="/deal-offers/{{ deal.id }}"
                     >Offers
                   </span>
+
                   <span
                     class="btn btn-primary mr-1"
                     routerLink="/dealdetails/{{ deal.id }}"
@@ -52,12 +60,14 @@
                   </span>
 
                   <span
+                    *ngIf="deal.status == 0"
                     class="btn btn-success mr-1"
                     style="margin: 2px;"
                     routerLink="/editdeal/{{ deal.id }}"
                     ><i class="fa fa-edit"></i>
                   </span>
                   <span
+                    *ngIf="deal.status == 0"
                     class="btn btn-danger mr-1"
                     (click)="deleteDeal(deal.id)"
                     ><i class="fa fa-trash"></i>

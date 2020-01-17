@@ -14,6 +14,7 @@ import { ToastrService } from "ngx-toastr"; // Alert message using NGX toastr
 export class AdddealComponent implements OnInit {
   user_id: any;
   status: any;
+  dealStatus: number = 0;
   registerDeal: FormGroup;
   submitted = false;
   display = false;
@@ -23,23 +24,6 @@ export class AdddealComponent implements OnInit {
   percentDone: any = 0;
   users = [];
 
-  CompanyType: any = [
-    "Public company",
-    "Government agency",
-    "Privately held",
-    "Partnership"
-  ];
-  CompanyIndustry: any = [
-    "Agriculture",
-    "Technology",
-    "Tourism",
-    "Health",
-    "Education",
-    "Manufacturing",
-    "Trade",
-    "Transport",
-    "Others"
-  ];
   constructor(
     private formBuilder: FormBuilder,
     public DealRegistrationApi: DealRegistrationApiService,
@@ -103,7 +87,7 @@ export class AdddealComponent implements OnInit {
     this.registerDeal.patchValue({
       image: file
     });
-    console.log(file);
+    //console.log(file);
     this.registerDeal.get("image").updateValueAndValidity();
 
     // File Preview
@@ -198,6 +182,7 @@ export class AdddealComponent implements OnInit {
       this.registerDeal.value.companyTel,
       this.registerDeal.value.companyEmail,
       this.registerDeal.value.rateDeal,
+      this.dealStatus,
       this.registerDeal.value.raisedAmount,
       this.registerDeal.value.DealDetailedDesc,
       this.registerDeal.value.image,
@@ -212,24 +197,24 @@ export class AdddealComponent implements OnInit {
       (event: HttpEvent<any>) => {
         switch (event.type) {
           case HttpEventType.Sent:
-            console.log("Request has been made!");
+            // console.log("Request has been made!");
             break;
           case HttpEventType.ResponseHeader:
-            console.log("Response header has been received!");
+            //console.log("Response header has been received!");
             break;
           case HttpEventType.UploadProgress:
             this.percentDone = Math.round((event.loaded / event.total) * 100);
-            console.log(`Uploaded! ${this.percentDone}%`);
+            // console.log(`Uploaded! ${this.percentDone}%`);
             break;
           case HttpEventType.Response:
             this.percentDone = false;
             this.router.navigate(["/alldeals"]);
-            this.toastr.success("Deal successfully created!" + event.body);
+            this.toastr.success("Deal successfully created!");
             this.display = false;
         }
       },
       error => {
-        console.log(error);
+        // console.log(error);
         this.toastr.error(error.message);
         this.display = false;
       }

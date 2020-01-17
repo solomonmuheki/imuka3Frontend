@@ -15,8 +15,8 @@ export class AdminAlloffersComponent implements OnInit {
   postList: any[] = [];
   bsModalRef: BsModalRef;
   // Pagination parameters.
-  p: Number = 1;
-  count: Number = 5;
+  p: number = 1;
+  count: number = 5;
   display = true;
   user_id: any;
   constructor(
@@ -39,18 +39,6 @@ export class AdminAlloffersComponent implements OnInit {
     });
   }
 
-  editOffer(offerId: number) {
-    this.offerRestApi.changeOfferId(offerId);
-
-    this.bsModalRef = this.bsModalService.show(InvestorUpdateOfferComponent);
-    this.bsModalRef.content.event.subscribe(result => {
-      if (result == "OK") {
-        setTimeout(() => {
-          this.loadOffers();
-        }, 5000);
-      }
-    });
-  }
   offerDetail(offerId: number) {
     this.offerRestApi.changeOfferId(offerId);
 
