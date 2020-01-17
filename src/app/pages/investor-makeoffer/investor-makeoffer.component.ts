@@ -74,7 +74,7 @@ export class InvestorMakeofferComponent implements OnInit {
     // stop here if form is invalid
     if (this.registerOffer.invalid) {
       this.display = false;
-      alert("failure!! :-");
+      alert("Invalid!! :-");
       return;
     }
 
@@ -94,8 +94,10 @@ export class InvestorMakeofferComponent implements OnInit {
         }
       },
       error => {
-        this.toastr.error(error.message);
-        console.log(error);
+        this.toastr.error(
+          "Offer for this deal already exists or " + error.statusText
+        );
+        // console.log(error);
         this.display = false;
       }
     );

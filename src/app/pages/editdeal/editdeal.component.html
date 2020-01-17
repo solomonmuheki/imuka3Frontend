@@ -231,6 +231,7 @@
                   <option value="Manufacturing">Manufacturing</option>
                   <option value="Trade">Trade</option>
                   <option value="Transport">Transport</option>
+                  <option value="Construction">Construction</option>
                   <option value="Others">Others</option>
                 </select>
                 <div
@@ -331,16 +332,6 @@
                   ></i
                 ></small>
               </div>
-              <!-- <small class="form-text text-muted"
-              >300 x 300px recommended. JPGs, JPEGs, and PNGs
-              supported.</small
-            > -->
-              <!-- <div>
-                <input
-                  type="file"  (change)="uploadFile($event)"
-                  class="form-control" 
-                />
-              </div> -->
             </div>
           </div>
           <hr />
@@ -381,13 +372,6 @@
                   ></i
                 ></small>
               </div>
-
-              <!-- Image Preview -->
-              <!-- <div class="form-group">
-  <div class="preview" *ngIf="preview && preview !== null">
-    <img [src]="preview" [alt]="registerDeal.value.companyName" style="height: 100px; width: 100px;">
-  </div>
-</div> -->
             </div>
             <!-- Second colum of the second row -->
             <div class="col-sm-6">
@@ -495,15 +479,6 @@
           <!-- Buttons -->
           <div class="form-row">
             <div class="form-group" style=" margin: auto;">
-              <button
-                type="button"
-                style="margin: 2px;"
-                class="btn btn-secondary gap-right"
-                (click)="ResetForm()"
-              >
-                Reset
-              </button>
-
               <button class="btn btn-success">
                 Update
               </button>

@@ -19,6 +19,7 @@ export class BodyComponent implements OnInit {
   display = true;
   selectedLocation: string = "";
   selectedIndustry: string = "";
+  searched_deals: any = [];
   empty: string = "There is no recent Deal added yet!";
   constructor(
     public restApi: DealRegistrationApiService,
@@ -47,7 +48,9 @@ export class BodyComponent implements OnInit {
       //deals created within 30 days from now
       let result = this.Deal.filter(function(item) {
         let itemTime = new Date(item.created_at).getTime();
-        return itemTime >= dt2;
+        let dealStatus = item.status;
+
+        return itemTime >= dt2 && dealStatus == 0;
       });
       this.Deal2 = result;
       //Sorting an array of deals with the newest first
@@ -57,7 +60,7 @@ export class BodyComponent implements OnInit {
       );
       //get the first 6 elements
       this.Deal3 = this.Deal2.slice(0, 6);
-
+      this.searched_deals = this.Deal3;
       this.display = false;
     });
   }
@@ -77,7 +80,7 @@ export class BodyComponent implements OnInit {
   search() {
     let searchedDeals;
     if (this.selectedIndustry == "" && this.selectedLocation == "") {
-      searchedDeals = this.Deal3;
+      searchedDeals = this.searched_deals;
     } else if (this.selectedLocation == "") {
       searchedDeals = this.Deal2.filter(deals => {
         return deals.companyIndustry === this.selectedIndustry;

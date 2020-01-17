@@ -5,3 +5,13 @@
   padding: auto;
   color: white;
 }
+
+.label-success {
+  color: green;
+}
+.label-danger {
+  color: red;
+}
+.label-primary {
+  color: blue;
+}

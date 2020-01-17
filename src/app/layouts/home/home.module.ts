@@ -7,15 +7,18 @@ import { SearchFilterComponent } from "./search-filter/search-filter.component";
 import { HomeRoutingModule } from "./home-routing.module";
 import { AboutuspageComponent } from "../aboutuspage/aboutuspage.component";
 import { DealspageComponent } from "../../dealspage/dealspage.component";
+import { HowItWorksComponent } from "../../how-it-works/how-it-works.component";
 import { RequestResetComponent } from "../signup/password/request-reset/request-reset.component";
 import { ResponseResetComponent } from "../signup/password/response-reset/response-reset.component";
 import { NgxPaginationModule } from "ngx-pagination";
+import { AngularMaterialModule } from "../../angular-material/angular-material.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { LoopingRhumbusesSpinnerModule } from "angular-epic-spinners";
 import { IntersectingCirclesSpinnerModule } from "angular-epic-spinners";
 import { HalfCircleSpinnerModule } from "angular-epic-spinners";
+import { BackToTopComponent } from "../../backtopcomponents/back-to-top.component";
 
 @NgModule({
   declarations: [
@@ -26,7 +29,9 @@ import { HalfCircleSpinnerModule } from "angular-epic-spinners";
     RequestResetComponent,
     ResponseResetComponent,
     AboutuspageComponent,
-    SearchFilterComponent
+    HowItWorksComponent,
+    SearchFilterComponent,
+    BackToTopComponent
   ],
   imports: [
     CommonModule,
@@ -34,11 +39,13 @@ import { HalfCircleSpinnerModule } from "angular-epic-spinners";
     NgxPaginationModule,
     NgbModule,
     NgxSpinnerModule,
+
     LoopingRhumbusesSpinnerModule,
     HalfCircleSpinnerModule,
     HalfCircleSpinnerModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularMaterialModule
   ]
 })
 export class HomeModule {}

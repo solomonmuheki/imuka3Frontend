@@ -16,8 +16,8 @@ export class AdminAllAgentsComponent implements OnInit {
   user_id: any;
   error: null;
   // Pagination parameters.
-  p: Number = 1;
-  count: Number = 5;
+  p: number = 1;
+  count: number = 5;
 
   constructor(
     public restApi: UsersService,

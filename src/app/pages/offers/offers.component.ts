@@ -16,8 +16,8 @@ export class OffersComponent implements OnInit {
   Offer: any = [];
   allOffers: any = [];
   // Pagination parameters.
-  p: Number = 1;
-  count: Number = 5;
+  p: number = 1;
+  count: number = 5;
   user_id = this.getUserId();
   display = true;
   constructor(

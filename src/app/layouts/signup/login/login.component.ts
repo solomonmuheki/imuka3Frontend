@@ -60,9 +60,11 @@ export class LoginComponent implements OnInit {
   }
 
   handleError(error) {
-    //this.display = false;
+    this.display = false;
+
     this.error = error.error.error;
-    console.log(this.error);
+
+    this.display = false;
   }
   ngOnInit() {}
 }

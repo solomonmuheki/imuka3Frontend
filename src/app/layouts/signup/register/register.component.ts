@@ -21,6 +21,7 @@ export class RegisterComponent implements OnInit {
     password_confirmation: null
   };
   public error = [];
+  //public error = null;
 
   constructor(
     private Jarwis: JarwisService,

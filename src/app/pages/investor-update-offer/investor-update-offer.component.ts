@@ -33,7 +33,6 @@ export class InvestorUpdateOfferComponent implements OnInit {
     //get offer id to be used in a model
     this.offerService.offerIdData.subscribe(data => {
       this.offerId = data;
-      console.log("data:" + this.offerId);
 
       if (this.offerId !== undefined) {
         this.offerService.getOffer(this.offerId).subscribe(
@@ -56,7 +55,7 @@ export class InvestorUpdateOfferComponent implements OnInit {
           },
           error => {
             console.log(error);
-            console.log("Error while gettig post details");
+            console.log("Error while gettig deal details");
           }
         );
       }
@@ -65,9 +64,10 @@ export class InvestorUpdateOfferComponent implements OnInit {
 
   onupdateOfferFormSubmit() {
     let offerId = this.offerId;
-    console.log(offerId);
+
     let offerData = {
-      offer_amount: this.updateOfferForm.get("offerAmount").value
+      offer_amount: this.updateOfferForm.get("offerAmount").value,
+      status: 0
     };
 
     this.offerService.updateOffer(offerId, offerData).subscribe(data => {

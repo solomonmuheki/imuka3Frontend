@@ -8,66 +8,82 @@
     />
   </div>
 </div>
-<table class="table table-striped">
-  <thead class="thead-dark">
-    <tr>
-      <th
-        scope="col"
-        [class.active]="order === 'companyName'"
-        (click)="setOrder('companyName')"
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th
+          scope="col"
+          [class.active]="order === 'companyName'"
+          (click)="setOrder('companyName')"
+        >
+          Company Name<span [hidden]="reverse">▼</span
+          ><span [hidden]="!reverse">▲</span>
+        </th>
+        <th
+          scope="col"
+          [class.active]="order === 'created_at'"
+          (click)="setOrder('created_at')"
+        >
+          Created Date<span [hidden]="reverse">▼</span
+          ><span [hidden]="!reverse">▲</span>
+        </th>
+        <th scope="col">Phone No</th>
+        <th scope="col">Email</th>
+        <th
+          scope="col"
+          [class.active]="order === 'AmountToRaise'"
+          (click)="setOrder('AmountToRaise')"
+        >
+          Amount<span [hidden]="reverse">▼</span
+          ><span [hidden]="!reverse">▲</span>
+        </th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let deal of Deal
+            | filter: filter
+            | paginate: { itemsPerPage: 6, currentPage: p }
+            | orderBy: order:reverse:'case-insensitive'
+        "
       >
-        Company Name<span [hidden]="reverse">▼</span
-        ><span [hidden]="!reverse">▲</span>
-      </th>
-      <th
-        scope="col"
-        [class.active]="order === 'created_at'"
-        (click)="setOrder('created_at')"
-      >
-        Created Date<span [hidden]="reverse">▼</span
-        ><span [hidden]="!reverse">▲</span>
-      </th>
-      <th scope="col">Phone No</th>
-      <th scope="col">Email</th>
-      <th
-        scope="col"
-        [class.active]="order === 'AmountToRaise'"
-        (click)="setOrder('AmountToRaise')"
-      >
-        Amount<span [hidden]="reverse">▼</span
-        ><span [hidden]="!reverse">▲</span>
-      </th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr
-      *ngFor="
-        let deal of Deal
-          | filter: filter
-          | paginate: { itemsPerPage: 6, currentPage: p }
-          | orderBy: order:reverse:'case-insensitive'
-      "
-    >
-      <td>{{ deal.companyName }}</td>
-      <td>{{ deal.created_at | date }}</td>
-      <td>{{ deal.telephone }}</td>
-      <td>{{ deal.email }}</td>
-      <td>{{ deal.AmountToRaise }}</td>
-      <td>
-        <span
-          class="btn btn-info mr-1"
-          style="margin: 2px;"
-          routerLink="/dealdetails/{{ deal.id }}"
-          >Details
-        </span>
-      </td>
-    </tr>
-  </tbody>
-  <ul class="pagination">
-    <pagination-controls (pageChange)="p = $event"></pagination-controls>
-  </ul>
-</table>
+        <td>{{ deal.companyName }}</td>
+        <td>{{ deal.created_at | date }}</td>
+        <td>{{ deal.telephone }}</td>
+        <td>{{ deal.email }}</td>
+        <td>{{ deal.AmountToRaise }}</td>
+        <td class="text-center edit-block">
+          <span *ngIf="deal.status == 1" class="label-success">
+            <i class="fa fa-check"></i>
+          </span>
+          <span *ngIf="deal.status == 0" class="label-primary">
+            <i class="fa fa-ellipsis-h"></i>
+          </span>
+        </td>
+        <td>
+          <span
+            class="btn btn-info mr-1"
+            style="margin: 2px;"
+            routerLink="/dealdetails/{{ deal.id }}"
+            >Details
+          </span>
+          <span
+            class="btn btn-outline-primary mr-1"
+            routerLink="/admin-deal-offers/{{ deal.id }}"
+            >Offers
+          </span>
+        </td>
+      </tr>
+    </tbody>
+    <ul class="pagination">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </ul>
+  </table>
+</div>
 <div *ngIf="display" style="margin:auto;padding-left: 45%;">
   <app-intersecting-circles-spinner
     [animationDuration]="1200"

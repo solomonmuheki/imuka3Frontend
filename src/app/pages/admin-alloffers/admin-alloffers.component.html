@@ -34,6 +34,7 @@
               <tr
                 *ngFor="
                   let offer of Offer
+                    | filter: filter
                     | paginate: { itemsPerPage: count, currentPage: p }
                 "
               >
@@ -46,12 +47,7 @@
                     (click)="offerDetail(offer.id)"
                     ><i class="fa fa-share"></i>
                   </span>
-                  <span
-                    class="btn btn-success btn-xs mr-1"
-                    style="margin: 2px;"
-                    (click)="editOffer(offer.id)"
-                    ><i class="fa fa-edit"></i>
-                  </span>
+
                   <span
                     class="btn btn-danger mr-1"
                     (click)="deleteOffer(offer.id)"

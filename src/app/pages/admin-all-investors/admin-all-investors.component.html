@@ -33,30 +33,35 @@
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.created_at | date }}</td>
-                <td>{{ user.telephone }}</td>
+                <td>
+                  <span *ngIf="user.status == 1" class="label-success"
+                    >Approved
+                  </span>
+                  <span *ngIf="user.status == 0" class="label-danger"
+                    >Pending
+                  </span>
+                </td>
 
                 <td class="text-center edit-block">
                   <span
+                    *ngIf="user.status == 0"
                     class="btn btn-outline-primary mr-1"
-                    routerLink="/deal-offers/{{ user.id }}"
+                    (click)="verifyUser(user.id)"
                   >
-                    <i class="fa fa-file-o text-info"></i>
-                  </span>
-                  <span
-                    class="btn btn-primary mr-1"
-                    routerLink="/dealdetails/{{ user.id }}"
-                    ><i class="fa fa-share"></i>
+                    Verify User
                   </span>
 
                   <span
-                    class="btn btn-success mr-1"
-                    style="margin: 2px;"
-                    routerLink="/editdeal/{{ user.id }}"
-                    ><i class="fa fa-edit"></i>
+                    *ngIf="user.status == 1"
+                    class="btn btn-outline-danger mr-1"
+                    (click)="deverifyUser(user.id)"
+                  >
+                    De-verify
                   </span>
+
                   <span
                     class="btn btn-danger mr-1"
-                    (click)="deleteDeal(user.id)"
+                    (click)="deleteUser(user.id)"
                     ><i class="fa fa-trash"></i>
                   </span>
                 </td>

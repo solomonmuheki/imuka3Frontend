@@ -12,7 +12,7 @@ import { OfferDealService } from "../../sharedservice/offer-deal.service";
 export class DealdetailsComponent implements OnInit {
   deal_id = this.actRoute.snapshot.params["id"];
   Offer: any = [];
-
+  display = true;
   dealData: any = {};
   companyName: string;
   companyType: string;
@@ -90,6 +90,7 @@ export class DealdetailsComponent implements OnInit {
       if (this.financialStatement == 1) {
         this.documents.push("Financial Statement");
       }
+      this.display = false;
     });
     this.loadOffers();
   }

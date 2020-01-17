@@ -15,7 +15,7 @@ import { Offer } from "./offer";
 })
 export class DealRegistrationApiService {
   baseURL = "http://localhost:8000/api";
-  // baseURL2 = "http://localhost:8000/api/deals";
+
   headers = new HttpHeaders().set("Content-Type", "application/json");
   // Http Options
   httpOptions = {
@@ -55,6 +55,7 @@ export class DealRegistrationApiService {
     companyTel: string,
     companyEmail: string,
     rateDeal: number,
+    status: number,
     raisedAmount: string,
     DealDetailedDesc: string,
     profileImage: File,
@@ -75,6 +76,7 @@ export class DealRegistrationApiService {
     formData.append("telephone", companyTel);
     formData.append("email", companyEmail);
     formData.append("rating", rateDeal);
+    formData.append("status", status);
     formData.append("AmountToRaise", raisedAmount);
     formData.append("detailedDescription", DealDetailedDesc);
     formData.append("image", profileImage);
@@ -104,8 +106,12 @@ export class DealRegistrationApiService {
       })
       .pipe(retry(1), catchError(this.handleError));
   }
-  updateProduct(data) {
-    return this.http.post(this.baseURL + "update.php", data);
+  //update deal status method
+  updateDealStatus(id, data): Observable<any> {
+    let url = `${this.baseURL}/deal/deal-status/${id}`;
+    return this.http
+      .put(url, data, { headers: this.headers })
+      .pipe(catchError(this.errorMgmt));
   }
   updateDeal2(id, deal): Observable<Deal> {
     return this.http
