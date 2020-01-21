@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-//import { User } from './user';
 import { Observable, throwError } from "rxjs";
 import { BehaviorSubject } from "rxjs";
 import {
@@ -30,15 +29,6 @@ export class OfferDealService {
     this.offerIdData = this.offerIdSource.asObservable();
   }
 
-  // Get Users
-  getUsers() {
-    return this.http.get(this.baseURL + "/deals");
-  }
-  getDeals(): Observable<Deal> {
-    return this.http
-      .get<Deal>(this.baseURL + "/deals")
-      .pipe(retry(1), catchError(this.handleError));
-  }
   //get User offers
   getUserOffers(user_id): Observable<Offer> {
     return this.http
@@ -48,70 +38,6 @@ export class OfferDealService {
   //get deal offers
   getDealOffers(deal_id): Observable<Offer> {
     return this.http.get<Offer>(this.baseURL + "/deal-offers/" + deal_id);
-  }
-  // Create User
-  addUser(
-    user_id: number,
-    companyName: string,
-    companyType: string,
-    companyIndustry: string,
-    companyAddress: string,
-    companyTel: string,
-    companyEmail: string,
-    raisedAmount: string,
-    DealDetailedDesc: string,
-    profileImage: File,
-    cbBussinessPlan: number,
-    cbMou: number,
-    cbCertificateOfRegistration: number,
-    cbFinancialStatement: number,
-    cbCashFlowStatement: number,
-    cbContractDocument: number,
-    cbAuditedAccounts: number
-  ): Observable<any> {
-    var formData: any = new FormData();
-    formData.append("user_id", user_id);
-    formData.append("companyName", companyName);
-    formData.append("companyType", companyType);
-    formData.append("companyIndustry", companyIndustry);
-    formData.append("Address", companyAddress);
-    formData.append("telephone", companyTel);
-    formData.append("email", companyEmail);
-    formData.append("AmountToRaise", raisedAmount);
-    formData.append("detailedDescription", DealDetailedDesc);
-    formData.append("image", profileImage);
-    formData.append("businessPlan", cbBussinessPlan);
-    formData.append("MOU", cbMou);
-    formData.append("certificateOfRegistration", cbCertificateOfRegistration);
-    formData.append("financialStatement", cbFinancialStatement);
-    formData.append("cashFlowStatement", cbCashFlowStatement);
-    formData.append("contractDocument", cbContractDocument);
-    formData.append("auditedAccounts", cbAuditedAccounts);
-
-    return this.http.post<Deal>(`${this.baseURL}/deals`, formData, {
-      reportProgress: true,
-      observe: "events"
-    });
-  }
-  // HttpClient API put() method => Update employee
-  updateDeal(id, companyName: string): Observable<any> {
-    var formData: any = new FormData();
-
-    formData.append("companyName", companyName);
-
-    return this.http
-      .put<Deal>(this.baseURL + "/deals/" + id, {
-        reportProgress: true,
-        observe: "events"
-      })
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
-  //investor update offer method
-  updateOffer2(id, offer): Observable<Offer> {
-    return this.http
-      .put<Offer>(this.baseURL + "/offers/" + id, offer, this.httpOptions)
-      .pipe(retry(1), catchError(this.handleError));
   }
 
   //confirm offer method
@@ -155,7 +81,7 @@ export class OfferDealService {
   changeOfferId(offerId: number) {
     this.offerIdSource.next(offerId);
   }
-
+  //update offer
   updateOffer(id, offer): Observable<Offer> {
     return this.http
       .put<Offer>(
@@ -165,6 +91,7 @@ export class OfferDealService {
       )
       .pipe(retry(1), catchError(this.handleError));
   }
+  //delete offer
   deleteOffer(id: string): Observable<number> {
     const httpOptions = {
       headers: new HttpHeaders({ "Content-Type": "application/json" })
@@ -180,11 +107,6 @@ export class OfferDealService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  getCategoryList() {
-    let header = new HttpHeaders();
-    header.append("Content-Type", "applications/json");
-    return this.http.get(this.baseURL + "getcategories", { headers: header });
-  }
   // Error handling
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = "";

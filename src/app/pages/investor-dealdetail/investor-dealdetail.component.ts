@@ -16,7 +16,6 @@ export class InvestorDealdetailComponent implements OnInit {
   offerData: any;
   dealData: any;
   event: EventEmitter<any> = new EventEmitter();
-  //dealData: any = {};
   companyName: string;
   companyType: string;
   companyIndustry: string;

@@ -35,36 +35,6 @@
           [formGroup]="registerOffer"
           (ngSubmit)="addNewOffer()"
         >
-          <!-- <div class="form-group">
-            <label for="offer_amount">Offer Amount:</label>
-            <input
-              type="text"
-              formControlName="offer_amount"
-              class="form-control"
-              [ngClass]="{
-                'is-invalid': submitted && f.offer_amount.errors
-              }"
-            />
-            <div
-              *ngIf="submitted && registerOffer.controls['offer_amount'].errors"
-              class="invalid-feedback"
-            >
-              <div
-                *ngIf="registerDeal.controls['offer_amount'].errors.required"
-              >
-                Offer Amount is required
-              </div>
-            </div>
-            <small class="form-text text-muted"
-              ><i
-                class="fa fa-info-circle fa-lg"
-                data-toggle="tooltip"
-                data-placement="top"
-                title="This is the Amount of money you are willing to offer
-                             "
-              ></i
-            ></small>
-          </div> -->
           <!-- Phone number -->
           <div class="mb-3">
             <label>Offer Amount</label>

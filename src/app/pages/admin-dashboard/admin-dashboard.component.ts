@@ -19,7 +19,6 @@ export class AdminDashboardComponent implements OnInit {
   public canvas: any;
   public ctx;
   public chartColor;
-
   decDeals: number = 0;
   novDeals: number = 0;
   octDeals: number = 0;
@@ -32,11 +31,9 @@ export class AdminDashboardComponent implements OnInit {
   marDeals: number = 0;
   febDeals: number = 0;
   janDeals: number = 0;
-
   Deal: any = [];
   totalDeals: number = 0;
   totalDealsThisYear: number = 0;
-
   decOffers: number = 0;
   novOffers: number = 0;
   octOffers: number = 0;
@@ -52,11 +49,9 @@ export class AdminDashboardComponent implements OnInit {
   Offer: any = [];
   totalOffers: number = 0;
   totalOffersThisYear: number = 0;
-
   yearlyOffers = [];
   yearlyDeals = [];
   display = true;
-
   year: number = new Date().getFullYear();
 
   angularForm = new FormGroup({

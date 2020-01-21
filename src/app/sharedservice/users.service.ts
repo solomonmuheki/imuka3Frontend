@@ -30,10 +30,11 @@ export class UsersService {
     this.offerIdData = this.offerIdSource.asObservable();
   }
 
-  // Get Users
+  // Get all Users
   getUsers() {
     return this.http.get(this.baseURL + "/users");
   }
+  // Get all deals
   getDeals(): Observable<Deal> {
     return this.http
       .get<Deal>(this.baseURL + "/deals")
@@ -45,7 +46,7 @@ export class UsersService {
       .get<Offer>(this.baseURL + "/user-agent/" + user_role)
       .pipe(retry(1), catchError(this.handleError));
   }
-  //get agent users
+  //get investor users
   getUserInvestors(user_role): Observable<Offer> {
     return this.http
       .get<Offer>(this.baseURL + "/user-investor/" + user_role)
@@ -56,32 +57,6 @@ export class UsersService {
     return this.http.get<Offer>(this.baseURL + "/deal-offers/" + deal_id);
   }
 
-  // HttpClient API put() method => Update employee
-  updateDeal(id, companyName: string): Observable<any> {
-    var formData: any = new FormData();
-
-    formData.append("companyName", companyName);
-
-    return this.http
-      .put<Deal>(this.baseURL + "/deals/" + id, {
-        reportProgress: true,
-        observe: "events"
-      })
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
-  //investor update offer method
-  updateOffer2(id, offer): Observable<Offer> {
-    return this.http
-      .put<Offer>(this.baseURL + "/offers/" + id, offer, this.httpOptions)
-      .pipe(retry(1), catchError(this.handleError));
-  }
-  updateEmployee(id, data): Observable<any> {
-    let url = `${this.baseURL}/deal/update/${id}`;
-    return this.http
-      .put(url, data, { headers: this.headers })
-      .pipe(catchError(this.errorMgmt));
-  }
   //verify user method
   verifyUser(id, data): Observable<any> {
     let url = `${this.baseURL}/verify-user/${id}`;
@@ -123,7 +98,7 @@ export class UsersService {
   changeOfferId(offerId: number) {
     this.offerIdSource.next(offerId);
   }
-
+  //updating the offer amount on a particular deal
   updateOffer(id, offer): Observable<Offer> {
     return this.http
       .put<Offer>(
@@ -133,6 +108,7 @@ export class UsersService {
       )
       .pipe(retry(1), catchError(this.handleError));
   }
+  //delete agent user
   deleteAgentUser(id: string): Observable<number> {
     const httpOptions = {
       headers: new HttpHeaders({ "Content-Type": "application/json" })
@@ -141,6 +117,7 @@ export class UsersService {
       .delete<number>(this.baseURL + "/user-agent/delete/" + id, httpOptions)
       .pipe(retry(1), catchError(this.handleError));
   }
+  //delete investor user
   deleteInvestorUser(id): Observable<number> {
     const httpOptions = {
       headers: new HttpHeaders({ "Content-Type": "application/json" })
@@ -156,11 +133,6 @@ export class UsersService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  getCategoryList() {
-    let header = new HttpHeaders();
-    header.append("Content-Type", "applications/json");
-    return this.http.get(this.baseURL + "getcategories", { headers: header });
-  }
   // Error handling
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = "";

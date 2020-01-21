@@ -3,7 +3,6 @@ import { CommonModule } from "@angular/common";
 import { BodyComponent } from "./body/body.component";
 import { LoginComponent } from "../signup/login/login.component";
 import { RegisterComponent } from "../signup/register/register.component";
-import { SearchFilterComponent } from "./search-filter/search-filter.component";
 import { HomeRoutingModule } from "./home-routing.module";
 import { AboutuspageComponent } from "../aboutuspage/aboutuspage.component";
 import { DealspageComponent } from "../../dealspage/dealspage.component";
@@ -16,7 +15,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { LoopingRhumbusesSpinnerModule } from "angular-epic-spinners";
-import { IntersectingCirclesSpinnerModule } from "angular-epic-spinners";
 import { HalfCircleSpinnerModule } from "angular-epic-spinners";
 import { BackToTopComponent } from "../../backtopcomponents/back-to-top.component";
 
@@ -30,7 +28,6 @@ import { BackToTopComponent } from "../../backtopcomponents/back-to-top.componen
     ResponseResetComponent,
     AboutuspageComponent,
     HowItWorksComponent,
-    SearchFilterComponent,
     BackToTopComponent
   ],
   imports: [
@@ -39,7 +36,6 @@ import { BackToTopComponent } from "../../backtopcomponents/back-to-top.componen
     NgxPaginationModule,
     NgbModule,
     NgxSpinnerModule,
-
     LoopingRhumbusesSpinnerModule,
     HalfCircleSpinnerModule,
     HalfCircleSpinnerModule,

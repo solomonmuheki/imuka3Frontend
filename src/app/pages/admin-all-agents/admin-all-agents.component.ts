@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
 import { UsersService } from "../../sharedservice/users.service";
 import { ToastrService } from "ngx-toastr"; // Alert message using NGX toastr
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-admin-all-agents",
@@ -43,19 +43,14 @@ export class AdminAllAgentsComponent implements OnInit {
       this.display = false;
     });
   }
-  // loadUsers() {
-  //   return this.restApi.getUserAgents(this.user_role).subscribe(
-  //     data => this.handleResponse(data),
-  //     error => this.handleError(error)
-  //   );
-  // }
+
   handleResponse(data) {
     this.Users = data;
 
     this.display = false;
   }
   handleError(error) {
-    console.log(error);
+    //console.log(error);
 
     this.error = error.Message;
     console.log(this.error);

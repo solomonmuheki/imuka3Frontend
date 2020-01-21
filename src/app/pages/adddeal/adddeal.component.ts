@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Router } from "@angular/router";
-import { DealrestApiService } from "../../sharedservice/dealrest-api.service";
 import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
 import { HttpEvent, HttpEventType } from "@angular/common/http";
 import { DealRegistrationApiService } from "../../sharedservice/deal-registration-api.service";
@@ -18,16 +17,13 @@ export class AdddealComponent implements OnInit {
   registerDeal: FormGroup;
   submitted = false;
   display = false;
-
   preview: string;
-  //form: FormGroup;
   percentDone: any = 0;
   users = [];
 
   constructor(
     private formBuilder: FormBuilder,
     public DealRegistrationApi: DealRegistrationApiService,
-    public restApi: DealrestApiService,
     public router: Router,
     public toastr: ToastrService
   ) {

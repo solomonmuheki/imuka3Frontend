@@ -1,9 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-
+import { DealRegistrationApiService } from "../../sharedservice/deal-registration-api.service";
 import { ToastrService } from "ngx-toastr"; // Alert message using NGX toastr
-
-import { DealrestApiService } from "../../sharedservice/dealrest-api.service";
 import { OfferDealService } from "../../sharedservice/offer-deal.service";
 
 @Component({
@@ -21,14 +19,13 @@ export class OffersComponent implements OnInit {
   user_id = this.getUserId();
   display = true;
   constructor(
-    public restApi: DealrestApiService,
+    public restApi: DealRegistrationApiService,
     public router: Router,
     public toastr: ToastrService,
     public offerRestApi: OfferDealService
   ) {}
 
   ngOnInit() {
-    //this.loadDeals();
     this.loadOffers();
   }
   //getting user id

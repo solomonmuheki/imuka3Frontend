@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { NgbRatingConfig } from "@ng-bootstrap/ng-bootstrap";
 import { ToastrService } from "ngx-toastr"; // Alert message using NGX toastr
 import { DealRegistrationApiService } from "../../sharedservice/deal-registration-api.service";
-
 import { OfferDealService } from "../../sharedservice/offer-deal.service";
 
 @Component({
@@ -18,7 +17,6 @@ export class DealOffersComponent implements OnInit {
   // Pagination parameters.
   p: number = 1;
   count: number = 5;
-
   display = true;
   companyName: string;
   companyType: string;
@@ -48,7 +46,6 @@ export class DealOffersComponent implements OnInit {
     this.loadOffers();
   }
   loadDeal() {
-    //const id = this.actRoute.snapshot.paramMap.get("id"); // Getting current component's id or information using ActivatedRoute service
     return this.restApi.getDeal(this.deal_id).subscribe(
       (data: {}) => {
         this.companyName = data[0]["companyName"];
@@ -155,7 +152,7 @@ export class DealOffersComponent implements OnInit {
     let id = dealId;
     this.restApi.updateDealStatus(id, json).subscribe(
       res => {
-        // this.toastr.success(" Deal status successfully updated!");
+        this.toastr.success(" Deal status successfully updated!");
       },
       error => {
         this.toastr.error(error);

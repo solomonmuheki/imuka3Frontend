@@ -12,7 +12,6 @@ import { ToastrService } from "ngx-toastr"; // Alert message using NGX toastr
 })
 export class EditdealComponent implements OnInit {
   id = this.actRoute.snapshot.params["id"];
-  // const id = this.actRoute.snapshot.paramMap.get('id');
   dealData: any = {};
   submitted = false;
   registerDeal: FormGroup;
@@ -20,7 +19,6 @@ export class EditdealComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public editDealService: DealRegistrationApiService,
-
     public actRoute: ActivatedRoute,
     public router: Router,
     public toastr: ToastrService
@@ -288,7 +286,7 @@ export class EditdealComponent implements OnInit {
     if (window.confirm("Are you sure you want to update?")) {
       let id = this.actRoute.snapshot.paramMap.get("id");
 
-      this.editDealService.updateEmployee(id, json).subscribe(
+      this.editDealService.updateDeal(id, json).subscribe(
         res => {
           this.router.navigateByUrl("/alldeals");
 
