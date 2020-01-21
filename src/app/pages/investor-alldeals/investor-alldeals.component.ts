@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { DealrestApiService } from "../../sharedservice/dealrest-api.service";
 import { OfferDealService } from "../../sharedservice/offer-deal.service";
-
+import { DealRegistrationApiService } from "../../sharedservice/deal-registration-api.service";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import { MakeOfferComponent } from "../make-offer/make-offer.component";
+//import { MakeOfferComponent } from "../make-offer/make-offer.component";
 
 @Component({
   selector: "app-investor-alldeals",
@@ -29,7 +28,7 @@ export class InvestorAlldealsComponent implements OnInit {
     this.reverse = !this.reverse;
   }
   constructor(
-    public restApi: DealrestApiService,
+    public restApi: DealRegistrationApiService,
     public offerRestApi: OfferDealService,
     private bsModalService: BsModalService
   ) {}
@@ -84,15 +83,15 @@ export class InvestorAlldealsComponent implements OnInit {
       });
     }
   }
-  addNewOffer(id: number) {
-    this.bsModalRef = this.bsModalService.show(MakeOfferComponent);
-    this.bsModalRef.content.id = id;
-    console.log("deal id:", id);
-    this.bsModalRef.content.event.subscribe(result => {
-      console.log("result:" + result);
-      if (result == "OK") {
-        this.loadDeals();
-      }
-    });
-  }
+  // addNewOffer(id: number) {
+  //   this.bsModalRef = this.bsModalService.show(MakeOfferComponent);
+  //   this.bsModalRef.content.id = id;
+  //   console.log("deal id:", id);
+  //   this.bsModalRef.content.event.subscribe(result => {
+  //     console.log("result:" + result);
+  //     if (result == "OK") {
+  //       this.loadDeals();
+  //     }
+  //   });
+  // }
 }

@@ -3,8 +3,6 @@ import { NgbRatingConfig } from "@ng-bootstrap/ng-bootstrap";
 import { NgxSpinnerService } from "ngx-spinner";
 import { DealRegistrationApiService } from "../sharedservice/deal-registration-api.service";
 
-import { DealrestApiService } from "../sharedservice/dealrest-api.service";
-
 @Component({
   selector: "app-dealspage",
   templateUrl: "./dealspage.component.html",
@@ -80,6 +78,7 @@ export class DealspageComponent implements OnInit {
 
     return this.noDays;
   }
+  //function called when searching for deals
   search() {
     let searchedDeals;
 
@@ -101,9 +100,7 @@ export class DealspageComponent implements OnInit {
         );
       });
     }
-    console.log(this.selectedLocation);
-    console.log(this.selectedIndustry);
-    console.log(searchedDeals);
+
     this.Deal3 = searchedDeals;
     if (this.Deal3.length == 0) {
       this.empty = "no matching results";

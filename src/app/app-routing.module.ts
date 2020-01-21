@@ -23,8 +23,7 @@ export const AppRoutes: Routes = [
       }
     ]
   },
-  // { path: "login", component: LoginComponent },
-  // { path: "signup", component: RegisterComponent },
+
   {
     path: "",
     component: AdminLayoutComponent,

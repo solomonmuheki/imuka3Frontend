@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { DealrestApiService } from "../../sharedservice/dealrest-api.service";
 import { OfferDealService } from "../../sharedservice/offer-deal.service";
-
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import { MakeOfferComponent } from "../make-offer/make-offer.component";
+//import { MakeOfferComponent } from "../make-offer/make-offer.component";
+import { DealRegistrationApiService } from "../../sharedservice/deal-registration-api.service";
 
 @Component({
   selector: "app-investor-dashboard",
@@ -21,7 +20,6 @@ export class InvestorDashboardComponent implements OnInit {
   confirmedOffers: any = 0;
   rejectedOffers: any = 0;
   pendingOffers: any = 0;
-
   // Pagination parameters.
   p: number = 1;
   count: number = 5;
@@ -29,7 +27,7 @@ export class InvestorDashboardComponent implements OnInit {
   status = this.getUserStatus();
 
   constructor(
-    public restApi: DealrestApiService,
+    public restApi: DealRegistrationApiService,
     public offerRestApi: OfferDealService,
     private bsModalService: BsModalService
   ) {}
@@ -106,16 +104,5 @@ export class InvestorDashboardComponent implements OnInit {
         this.loadDeals();
       });
     }
-  }
-  addNewOffer(id: number) {
-    this.bsModalRef = this.bsModalService.show(MakeOfferComponent);
-    this.bsModalRef.content.id = id;
-    console.log("deal id:", id);
-    this.bsModalRef.content.event.subscribe(result => {
-      console.log("result:" + result);
-      if (result == "OK") {
-        this.loadDeals();
-      }
-    });
   }
 }

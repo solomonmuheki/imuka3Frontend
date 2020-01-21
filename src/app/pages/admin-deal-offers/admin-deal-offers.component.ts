@@ -48,7 +48,6 @@ export class AdminDealOffersComponent implements OnInit {
     this.loadOffers();
   }
   loadDeal() {
-    //const id = this.actRoute.snapshot.paramMap.get("id"); // Getting current component's id or information using ActivatedRoute service
     return this.restApi.getDeal(this.deal_id).subscribe(
       (data: {}) => {
         this.companyName = data[0]["companyName"];
@@ -78,6 +77,7 @@ export class AdminDealOffersComponent implements OnInit {
       },
       error => {
         console.log(error.message);
+        this.display = false;
       }
     );
   }

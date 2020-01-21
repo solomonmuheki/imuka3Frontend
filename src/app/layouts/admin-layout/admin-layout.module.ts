@@ -7,15 +7,12 @@ import { AdminLayoutRoutes } from "./admin-layout.routing";
 import { RoleGuardService } from "../../sharedservice/guards/role-guard.service";
 import { RoleGuardAdminService } from "../../sharedservice/guards/role-guard-admin.service";
 import { RoleGuardInvestorService } from "../../sharedservice/guards/role-guard-investor.service";
-
 import { DashboardComponent } from "../../pages/dashboard/dashboard.component";
-
 import { AdddealComponent } from "../../pages/adddeal/adddeal.component";
 import { AlldealsComponent } from "../../pages/alldeals/alldeals.component";
 import { DealdetailsComponent } from "../../pages/dealdetails/dealdetails.component";
 import { EditdealComponent } from "../../pages/editdeal/editdeal.component";
 import { InvestorDashboardComponent } from "../../pages/investor-dashboard/investor-dashboard.component";
-import { MakeOfferComponent } from "../../pages/make-offer/make-offer.component";
 import { InvestorAlldealsComponent } from "../../pages/investor-alldeals/investor-alldeals.component";
 import { InvestorDealdetailComponent } from "../../pages/investor-dealdetail/investor-dealdetail.component";
 import { InvestorAlloffersComponent } from "../../pages/investor-alloffers/investor-alloffers.component";
@@ -56,7 +53,6 @@ import { ModalModule, BsModalService } from "ngx-bootstrap/modal";
     OrderModule,
     IntersectingCirclesSpinnerModule,
     HalfCircleSpinnerModule,
-
     ModalModule.forRoot()
   ],
   declarations: [
@@ -73,7 +69,6 @@ import { ModalModule, BsModalService } from "ngx-bootstrap/modal";
     InvestorAlloffersComponent,
     InvestorMakeofferComponent,
     InvestorUpdateOfferComponent,
-    MakeOfferComponent,
     AdminDashboardComponent,
     AdminAllAgentsComponent,
     AdminAllInvestorsComponent,
@@ -88,10 +83,6 @@ import { ModalModule, BsModalService } from "ngx-bootstrap/modal";
     RoleGuardAdminService,
     RoleGuardInvestorService
   ],
-  entryComponents: [
-    MakeOfferComponent,
-    InvestorUpdateOfferComponent,
-    InvestorDealdetailComponent
-  ]
+  entryComponents: [InvestorUpdateOfferComponent, InvestorDealdetailComponent]
 })
 export class AdminLayoutModule {}

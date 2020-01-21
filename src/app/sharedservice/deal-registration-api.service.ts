@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-//import { User } from './user';
 import { Observable, throwError } from "rxjs";
 import {
   HttpHeaders,
@@ -8,7 +7,6 @@ import {
 } from "@angular/common/http";
 import { retry, catchError } from "rxjs/operators";
 import { Deal } from "./deal";
-import { Offer } from "./offer";
 
 @Injectable({
   providedIn: "root"
@@ -24,11 +22,7 @@ export class DealRegistrationApiService {
     })
   };
   constructor(private http: HttpClient) {}
-
-  // Get Users
-  getUsers() {
-    return this.http.get(this.baseURL + "/deals");
-  }
+  //get all deals
   getDeals(): Observable<Deal> {
     return this.http
       .get<Deal>(this.baseURL + "/deals")
@@ -40,6 +34,7 @@ export class DealRegistrationApiService {
       .get<Deal>(this.baseURL + "/deals/" + id)
       .pipe(retry(1), catchError(this.handleError));
   }
+  //get deals for a particular user
   getUserDeals(user_id): Observable<Deal> {
     return this.http
       .get<Deal>(this.baseURL + "/user-deals/" + user_id)
@@ -93,19 +88,7 @@ export class DealRegistrationApiService {
       observe: "events"
     });
   }
-  // HttpClient API put() method => Update employee
-  updateDeal(id, companyName: string): Observable<any> {
-    var formData: any = new FormData();
 
-    formData.append("companyName", companyName);
-
-    return this.http
-      .put<Deal>(this.baseURL + "/deals/" + id, {
-        reportProgress: true,
-        observe: "events"
-      })
-      .pipe(retry(1), catchError(this.handleError));
-  }
   //update deal status method
   updateDealStatus(id, data): Observable<any> {
     let url = `${this.baseURL}/deal/deal-status/${id}`;
@@ -113,39 +96,14 @@ export class DealRegistrationApiService {
       .put(url, data, { headers: this.headers })
       .pipe(catchError(this.errorMgmt));
   }
-  updateDeal2(id, deal): Observable<Deal> {
-    return this.http
-      .put<Deal>(this.baseURL + "/deals/" + id, deal, this.httpOptions)
-      .pipe(retry(1), catchError(this.handleError));
-  }
-  updateEmployee(id, data): Observable<any> {
+  //update deal  method
+  updateDeal(id, data): Observable<any> {
     let url = `${this.baseURL}/deal/update/${id}`;
     return this.http
       .put(url, data, { headers: this.headers })
       .pipe(catchError(this.errorMgmt));
   }
-  //get all offers
-  getOffers(): Observable<Offer> {
-    return this.http
-      .get<Offer>(this.baseURL + "/offers")
-      .pipe(retry(1), catchError(this.handleError));
-  }
-  //Register an offer
-  addOffer(
-    user_id: number,
-    deal_id: number,
-    offer_amount: string
-  ): Observable<any> {
-    var formData: any = new FormData();
-    formData.append("user_id", user_id);
-    formData.append("deal_id", deal_id);
-    formData.append("offer_amount", offer_amount);
-
-    return this.http.post<Deal>(`${this.baseURL}/offer`, formData, {
-      reportProgress: true,
-      observe: "events"
-    });
-  }
+  //delete deal method
   deleteDeal(id: string): Observable<number> {
     const httpOptions = {
       headers: new HttpHeaders({ "Content-Type": "application/json" })

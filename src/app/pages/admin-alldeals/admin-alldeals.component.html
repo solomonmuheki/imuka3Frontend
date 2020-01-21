@@ -29,7 +29,6 @@
           ><span [hidden]="!reverse">▲</span>
         </th>
         <th scope="col">Phone No</th>
-        <th scope="col">Email</th>
         <th
           scope="col"
           [class.active]="order === 'AmountToRaise'"
@@ -54,7 +53,7 @@
         <td>{{ deal.companyName }}</td>
         <td>{{ deal.created_at | date }}</td>
         <td>{{ deal.telephone }}</td>
-        <td>{{ deal.email }}</td>
+
         <td>{{ deal.AmountToRaise }}</td>
         <td class="text-center edit-block">
           <span *ngIf="deal.status == 1" class="label-success">

@@ -1,10 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { DealrestApiService } from "../../sharedservice/dealrest-api.service";
 import { OfferDealService } from "../../sharedservice/offer-deal.service";
 import { OrderPipe } from "ngx-order-pipe";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import { MakeOfferComponent } from "../make-offer/make-offer.component";
-
+import { DealRegistrationApiService } from "../../sharedservice/deal-registration-api.service";
 @Component({
   selector: "app-admin-alldeals",
   templateUrl: "./admin-alldeals.component.html",
@@ -24,7 +22,7 @@ export class AdminAlldealsComponent implements OnInit {
   reverse: boolean = false;
 
   constructor(
-    public restApi: DealrestApiService,
+    public restApi: DealRegistrationApiService,
     public offerRestApi: OfferDealService,
     private bsModalService: BsModalService,
     private orderPipe: OrderPipe
@@ -62,16 +60,5 @@ export class AdminAlldealsComponent implements OnInit {
         this.loadDeals();
       });
     }
-  }
-  addNewOffer(id: number) {
-    this.bsModalRef = this.bsModalService.show(MakeOfferComponent);
-    this.bsModalRef.content.id = id;
-    console.log("deal id:", id);
-    this.bsModalRef.content.event.subscribe(result => {
-      console.log("result:" + result);
-      if (result == "OK") {
-        this.loadDeals();
-      }
-    });
   }
 }
