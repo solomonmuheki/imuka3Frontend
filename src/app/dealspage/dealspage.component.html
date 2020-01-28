@@ -80,10 +80,13 @@
           let deal of Deal3 | paginate: { itemsPerPage: count, currentPage: p }
         "
       >
-        <div class="blog-box" style=" margin-bottom: 40px;">
+        <div
+          class="blog-box"
+          style=" margin-bottom: 40px; padding-bottom: 10px;"
+        >
           <img
-            src="http://localhost:8000/uploads/{{ deal.image }}"
-            alt="deal"
+            src="http://3.91.247.160/uploads/{{ deal.image }}"
+            alt="Loading.."
           />
           <div style="text-align: center;">
             <label class="label">{{ deal.companyName }}</label>
@@ -100,7 +103,9 @@
               >
               Day(s) time
             </p>
-            <p>{{ deal.detailedDescription }}</p>
+            <div style="margin:10px">
+              <p class="b">{{ deal.detailedDescription }}</p>
+            </div>
           </div>
 
           <div style="text-align: center;">
