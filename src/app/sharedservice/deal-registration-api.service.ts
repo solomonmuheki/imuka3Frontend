@@ -12,7 +12,8 @@ import { Deal } from "./deal";
   providedIn: "root"
 })
 export class DealRegistrationApiService {
-  baseURL = "http://localhost:8000/api";
+  //baseURL = "http://localhost:8000/api";
+  baseURL = "http://3.91.247.160/api";
 
   headers = new HttpHeaders().set("Content-Type", "application/json");
   // Http Options

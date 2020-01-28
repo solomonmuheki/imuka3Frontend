@@ -107,3 +107,11 @@ span {
   color: #000;
   font-family: "Times New Roman", Times, serif;
 }
+//hiding text in a paragraph
+.b {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-align: justify;
+}

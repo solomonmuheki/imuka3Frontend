@@ -3,9 +3,13 @@ import * as jwt_decode from "jwt-decode";
 
 @Injectable()
 export class TokenService {
+  // private iss = {
+  //   login: "http://localhost:8000/api/login",
+  //   signup: "http://localhost:8000/api/signup"
+  // };
   private iss = {
-    login: "http://localhost:8000/api/login",
-    signup: "http://localhost:8000/api/signup"
+    login: "http://3.91.247.160/api/login",
+    signup: "http://3.91.247.160/api/signup"
   };
 
   constructor() {}

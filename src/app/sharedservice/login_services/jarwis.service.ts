@@ -5,7 +5,7 @@ import { Observable, throwError } from "rxjs";
 
 @Injectable()
 export class JarwisService {
-  private baseUrl = "http://localhost:8000/api";
+  private baseUrl = "http://3.91.247.160/api";
 
   constructor(private http: HttpClient) {}
 
