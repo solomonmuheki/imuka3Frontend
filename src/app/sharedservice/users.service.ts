@@ -16,7 +16,7 @@ import { Offer } from "../sharedservice/offer";
 })
 export class UsersService {
   // baseURL = "http://localhost:8000/api";
-  baseURL = "http://3.91.247.160/api";
+  baseURL = "http://35.173.247.160/api";
 
   headers = new HttpHeaders().set("Content-Type", "application/json");
   // Http Options

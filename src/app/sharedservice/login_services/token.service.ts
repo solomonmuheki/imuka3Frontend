@@ -8,8 +8,8 @@ export class TokenService {
   //   signup: "http://localhost:8000/api/signup"
   // };
   private iss = {
-    login: "http://3.91.247.160/api/login",
-    signup: "http://3.91.247.160/api/signup"
+    login: "http://35.173.247.160/api/login",
+    signup: "http://35.173.247.160/api/signup"
   };
 
   constructor() {}
